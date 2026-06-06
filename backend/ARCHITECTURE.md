@@ -38,54 +38,68 @@ The AI should describe the edit. The planner should convert that description int
    - Owns execution manifests, progress state, result inspection packets, and repair packets.
    - It should describe what happened, not perform media edits.
 
-6. `media_runner.py`
+6. `edit_effectiveness.py`
+   - Owns job-level inspection for whether a plan produced evidence of applied editing work.
+   - It combines execution metadata from special operations, video/audio filters, uploaded audio, output aspect enforcement, and final encode dimensions.
+   - A valid output artifact is not enough; jobs with planned edit operations and no applied-edit evidence must fail instead of being reported as complete.
+
+7. `media_runner.py`
    - Owns subprocess execution for FFmpeg, ffprobe, rubberband, and related media tooling.
    - Centralizes Termux/Ubuntu-proot command preparation, timeouts, compact error tails, structured command errors, and command execution stats.
    - Server code should call `run_command()` or `run_command_result()` wrappers, not raw `subprocess.run()`.
 
-7. `job_lifecycle.py`
+8. `job_lifecycle.py`
    - Owns job statuses, allowed transitions, terminal-state semantics, command-acceptance rules, and status history.
    - `/command` must reject jobs whose lifecycle state does not accept a new command.
 
-8. `job_store.py`
+9. `job_errors.py`
+   - Owns the stable `job_error` object stored on failed or rejected jobs.
+   - Terminal failures should keep the legacy `error` string for compatibility, but frontend and retry logic should prefer `job_error`.
+   - Error objects include code, phase, retryability, user action, details, and creation time.
+
+10. `job_store.py`
    - Owns in-memory job records, persisted `job.json` files, disk reload, startup recovery, and atomic command claims.
    - A command must claim a job into `planning` before model planning starts, so concurrent requests cannot schedule multiple edits for the same job.
    - This is the state boundary that can later be replaced with SQLite, Redis, or a queue-backed store without rewriting route and executor logic.
 
-9. `job_queue.py`
+11. `job_queue.py`
    - Owns asynchronous execution queueing, bounded pending capacity, worker-pool metrics, and overload rejection.
    - `/command` must reject with `503` when the queue is saturated instead of submitting unbounded work.
    - This is the execution-queue boundary that can later be replaced with Celery, RQ, Dramatiq, or a remote worker service.
 
-10. `editing_capabilities.py`
+12. `editing_capabilities.py`
    - Adds runtime and environment knowledge to AI prompts.
    - It must keep capability context grounded in approved local knowledge files and runtime probes.
    - Runtime capability notes should describe readiness, but they do not decide whether a plan is allowed to execute. The validator does that from `editing_architecture.py`.
 
-11. `plan_contract.py`
+13. `plan_contract.py`
    - Owns the public JSON plan boundary before planner validation.
    - Normalizes model, cache, repair, and heuristic plans into one predictable root shape.
    - Fills safe defaults for missing intent, list sections, special params, filter timing, and final encode settings.
    - Exposes `public_plan_contract_fingerprint()` so planner cache entries are invalidated when the public plan contract changes.
 
-12. `planner_cache.py`
+14. `planner_cache.py`
    - Owns planner-cache storage, TTL handling, fallback-plan TTL, LRU eviction, cloning, and cache stats.
    - Cache keys must include the model, system prompt hash, runtime readiness context, architecture fingerprint, public plan contract fingerprint, special parameter contract fingerprint, and normalized user command.
    - Heuristic fallback plans must use a shorter TTL than model plans because they are lower confidence.
 
-13. `special_params.py`
+15. `special_params.py`
    - Owns type normalization and clamping for supported special-operation params.
    - Known special params are normalized before planner validation and before execution can see them.
    - Exposes `special_param_contract_fingerprint()` so planner cache entries are invalidated when param semantics change.
 
-14. `intent_contract.py`
+16. `intent_contract.py`
    - Owns conservative natural-language intent coverage checks.
    - It does not try to understand every possible request; it catches high-signal misses such as beat sync without beat logic, auto captions without `auto_captions`, silence removal without `silence_remove`, and privacy redaction without the matching special worker.
    - Missing intent coverage is a model-repairable validation error.
 
-15. `runtime_cache.py`
+17. `runtime_cache.py`
    - Owns runtime capability cache TTL, freshness state, forced refresh handling, and cache diagnostics.
    - It does not probe tools itself; `server.py` still owns the concrete environment probes until those are extracted behind a runtime-probe service.
+
+18. `upload_policy.py`
+   - Owns upload filename normalization, allowed media extensions, safe storage names, and upload-policy diagnostics.
+   - Original upload names remain job metadata for UI display; filesystem paths must use sanitized storage names.
 
 ## Planning Flow
 
@@ -116,7 +130,8 @@ The AI should describe the edit. The planner should convert that description int
 5. Video and audio filter phases may use safe per-filter fallbacks, but the phase fails if none of the planned filters can be applied.
 6. Final encode may retry with safe defaults because it packages an already-created edit rather than replacing a requested creative operation.
 7. Result inspection verifies that a non-empty output artifact exists and has positive duration.
-8. Failures persist a repair packet so the next architecture pass can target real failure causes.
+8. Edit-effectiveness inspection verifies that planned editing work produced applied-edit evidence.
+9. Failures persist a repair packet so the next architecture pass can target real failure causes.
 
 ## Operational Endpoints
 
@@ -155,6 +170,7 @@ The AI should describe the edit. The planner should convert that description int
 - Planner cache behavior belongs in `planner_cache.py`. Route code should not own raw cache dicts, TTL expiry, or eviction policy.
 - Validation should reject impossible plans before execution rather than silently skipping requested work.
 - Executor phases should fail when required planned work cannot be applied. Silent unchanged exports are not acceptable production behavior.
+- Workers must record execution metadata that proves applied work. Final output existence alone is not enough to complete a job.
 - Runtime probes in `server.py` must publish every capability named by `CAPABILITY_SPECS`. If a capability is added to the registry, the backend should expose an executor readiness bit for it.
 - `architecture_integrity()` must compare registry capability names against executor probe keys. `/command` should fail fast if a capability exists in the product contract but has no runtime probe.
 - `architecture_registry_issues()` must report internal contract mistakes, including operation specs or filter mappings that reference undefined capabilities, invalid capability severities, and incomplete validation issue specs.
@@ -168,5 +184,7 @@ The AI should describe the edit. The planner should convert that description int
 - `/live` and `/ready` should remain cheap enough for deployment probes. Keep expensive media tests out of readiness checks.
 - Broad live prompt sweeps are not the primary architecture tool. Prefer contract hardening, focused probes, and failure-driven repairs.
 - Job status writes must go through `transition_job_status()` so persisted jobs retain lifecycle history and invalid command races are blocked.
+- Terminal job failures must include `job_error` from `job_errors.py`; do not add new bare error-string-only failure paths.
 - Job persistence and command claiming must go through `job_store.py`. Do not mutate the global job map directly from routes or workers.
 - Execution queue capacity must be bounded and visible through `/ready` and `/health`. Unbounded hidden work queues are not production behavior.
+- Upload validation belongs in `upload_policy.py`. Routes should not write user-controlled filenames directly to disk.

@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from threading import RLock
 
+from job_errors import apply_job_error, job_error
 from job_lifecycle import (
     STATUS_COMPLETE,
     STATUS_ERROR,
@@ -32,8 +33,16 @@ class JobStore:
         if from_disk and job.get("status") in {STATUS_PLANNING, STATUS_PROCESSING}:
             previous_status = job.get("status")
             transition_job_status(job, STATUS_ERROR, reason=f"{previous_status}_interrupted", force=True)
-            job["error"] = f"{previous_status} interrupted before completion; retry the command"
-            job["failed_at"] = job.get("failed_at") or datetime.now(timezone.utc).isoformat()
+            apply_job_error(
+                job,
+                job_error(
+                    code=f"{previous_status}_interrupted",
+                    message=f"{previous_status} interrupted before completion; retry the command",
+                    phase=previous_status,
+                    retryable=True,
+                    user_action="Retry the command after the backend is running.",
+                ),
+            )
         return job
 
     def save(self, job):

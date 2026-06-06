@@ -14,6 +14,8 @@ from uuid import uuid4
 from flask import Flask, jsonify, request, send_file
 from werkzeug.exceptions import RequestEntityTooLarge
 
+from clarification import clarification_for_command
+from creator_memory import CreatorMemoryStore
 from ai_orchestrator import (
     create_execution_manifest,
     inspect_output_artifact,
@@ -42,6 +44,7 @@ from editing_architecture import (
     validation_is_model_repairable,
     validation_repair_summary,
 )
+from edit_effectiveness import inspect_edit_effectiveness
 from job_lifecycle import (
     STATUS_COMPLETE,
     STATUS_ERROR,
@@ -49,8 +52,10 @@ from job_lifecycle import (
     STATUS_PROCESSING,
     STATUS_UPLOADED,
     job_lifecycle_summary,
+    status_accepts_command,
     transition_job_status,
 )
+from job_errors import apply_job_error, exception_job_error, plan_validation_job_error
 from job_store import JobStore
 from job_queue import ThreadedJobQueue
 from llm_provider import NimChatProvider
@@ -63,6 +68,7 @@ from plan_contract import (
 from planner_cache import PlannerCache, clone_plan
 from runtime_cache import RuntimeCapabilityCache
 from special_params import special_param_contract, special_param_contract_fingerprint
+from upload_policy import UploadPolicyError, safe_upload_filename, upload_policy_summary
 
 
 app = Flask(__name__)
@@ -118,12 +124,17 @@ CAPABILITY_CACHE_SECONDS = int(os.environ.get("LINGUIST_CAPABILITY_CACHE_SECONDS
 PLAN_CACHE_SECONDS = max(0, int(os.environ.get("LINGUIST_PLAN_CACHE_SECONDS", "900")))
 FALLBACK_PLAN_CACHE_SECONDS = max(0, int(os.environ.get("LINGUIST_FALLBACK_PLAN_CACHE_SECONDS", "60")))
 PLAN_CACHE_MAX_ENTRIES = max(0, int(os.environ.get("LINGUIST_PLAN_CACHE_MAX_ENTRIES", "128")))
+CREATOR_MEMORY_PATH = Path(os.environ.get(
+    "LINGUIST_CREATOR_MEMORY_PATH",
+    str(Path.home() / ".linguist_video" / "creator_memory.json"),
+))
 runtime_capability_cache = RuntimeCapabilityCache(CAPABILITY_CACHE_SECONDS)
 planner_cache = PlannerCache(
     ttl_seconds=PLAN_CACHE_SECONDS,
     fallback_ttl_seconds=FALLBACK_PLAN_CACHE_SECONDS,
     max_entries=PLAN_CACHE_MAX_ENTRIES,
 )
+creator_memory = CreatorMemoryStore(CREATOR_MEMORY_PATH)
 
 app.config["MAX_CONTENT_LENGTH"] = MAX_UPLOAD_MB * 1024 * 1024
 
@@ -517,11 +528,6 @@ def upload_root_health():
 
 
 load_persisted_jobs()
-
-
-def original_filename(file_storage):
-    filename = (file_storage.filename or "").replace("\\", "/")
-    return Path(filename).name
 
 
 def media_stream_types(path):
@@ -3458,12 +3464,24 @@ def planner_context_metadata(prompt, runtime_note, architecture_hash, cache_key)
     }
 
 
+def prompt_with_creator_memory(prompt):
+    memory_context = creator_memory.prompt_context()
+    if not memory_context:
+        return str(prompt or "")
+    return "\n\n".join([
+        str(prompt or "").strip(),
+        memory_context,
+        "Use creator memory only as preference context. Do not ignore the user's current command.",
+    ])
+
+
 def build_plan(prompt, job=None):
     capabilities = runtime_capabilities()
     runtime_note = runtime_planning_prompt(capabilities)
     architecture_hash = architecture_fingerprint()
-    cache_key = planner_cache_key(prompt, runtime_note, architecture_hash)
-    planner_context = planner_context_metadata(prompt, runtime_note, architecture_hash, cache_key)
+    planning_prompt = prompt_with_creator_memory(prompt)
+    cache_key = planner_cache_key(planning_prompt, runtime_note, architecture_hash)
+    planner_context = planner_context_metadata(planning_prompt, runtime_note, architecture_hash, cache_key)
     use_cache = job is not None
     cached = get_cached_plan(cache_key) if use_cache else None
     if cached:
@@ -3485,7 +3503,7 @@ def build_plan(prompt, job=None):
 
     try:
         planner_prompt = augment_prompt_for_capabilities(
-            prompt,
+            planning_prompt,
             runtime_note,
             architecture_prompt_contract(),
         )
@@ -3497,7 +3515,7 @@ def build_plan(prompt, job=None):
             job,
             f"NIM planning failed; used heuristic fallback: {concise_error(exc)}",
         )
-        plan = heuristic_plan(prompt)
+        plan = heuristic_plan(planning_prompt)
         source = "heuristic"
 
     if use_cache:
@@ -5229,12 +5247,24 @@ def fail_execution_phase(job, phase, message):
 
 def apply_special(input_path, job_dir, special, job=None, context=None):
     current = input_path
+    planned_count = len(special or [])
+    applied_count = 0
+    no_op_count = 0
     for index, step in enumerate(special, start=1):
         step_type = step.get("type")
         try:
             next_current = apply_special_step(current, job_dir, step, job, context)
             if next_current != current:
                 current = next_current
+                applied_count += 1
+                if job is not None:
+                    job["special_execution"] = {
+                        "planned_count": planned_count,
+                        "applied_count": applied_count,
+                        "no_op_count": no_op_count,
+                        "last_successful_step": index,
+                        "last_successful_type": step_type,
+                    }
             elif step_type in SUPPORTED_SPECIAL_TYPES and step_type not in SPECIAL_EXECUTORS:
                 fail_execution_phase(
                     job,
@@ -5247,6 +5277,16 @@ def apply_special(input_path, job_dir, special, job=None, context=None):
                     "special",
                     f"special step {index} has unsupported type: {step_type}",
                 )
+            else:
+                no_op_count += 1
+                if job is not None:
+                    job["special_execution"] = {
+                        "planned_count": planned_count,
+                        "applied_count": applied_count,
+                        "no_op_count": no_op_count,
+                        "last_no_op_step": index,
+                        "last_no_op_type": step_type,
+                    }
         except Exception as exc:
             if isinstance(exc, ExecutionPolicyError):
                 raise
@@ -5757,6 +5797,11 @@ def apply_output_aspect_enforcement(input_path, job_dir, job, plan):
         "-c:a", "copy",
         str(output_path),
     ])
+    if job is not None:
+        job["output_aspect_execution"] = {
+            "format": label,
+            "filter": filter_chain,
+        }
     return output_path
 
 
@@ -6181,6 +6226,7 @@ def operation_count(plan):
 def clear_previous_execution_fields(job):
     for key in [
         "error",
+        "job_error",
         "failed_at",
         "completed_at",
         "output_path",
@@ -6190,9 +6236,12 @@ def clear_previous_execution_fields(job):
         "repair_packet",
         "result_inspection",
         "final_encode_execution",
+        "special_execution",
         "video_filter_execution",
         "audio_filter_execution",
         "uploaded_audio_action",
+        "output_aspect_execution",
+        "edit_effectiveness",
     ]:
         job.pop(key, None)
 
@@ -6203,7 +6252,7 @@ def record_plan_rejection(job, command_text, plan, internal_plan, validation):
     job["internal_plan"] = internal_plan
     job["plan_validation"] = validation
     transition_job_status(job, STATUS_PLAN_REJECTED, reason="plan_validation_failed", force=True)
-    job["error"] = "plan validation failed"
+    apply_job_error(job, plan_validation_job_error(validation))
     job["updated_at"] = datetime.now(timezone.utc).isoformat()
     persist_job(job)
 
@@ -6351,6 +6400,10 @@ def execute_job_async(job_id):
         job["result_inspection"] = inspection
         if not inspection.get("ok"):
             raise RuntimeError(f"output inspection failed: {inspection.get('issues')}")
+        effectiveness = inspect_edit_effectiveness(job, plan)
+        job["edit_effectiveness"] = effectiveness
+        if not effectiveness.get("ok"):
+            raise RuntimeError(f"edit effectiveness inspection failed: {effectiveness.get('issues')}")
 
         job["output_path"] = str(output_path)
         job["output_name"] = output_path.name
@@ -6358,6 +6411,7 @@ def execute_job_async(job_id):
         transition_job_status(job, STATUS_COMPLETE, reason="execution_complete")
         job["execution_manifest"] = mark_manifest_complete(job.get("execution_manifest"))
         job.pop("error", None)
+        job.pop("job_error", None)
         job.pop("failed_at", None)
         job.pop("repair_packet", None)
         job["completed_at"] = datetime.now(timezone.utc).isoformat()
@@ -6367,10 +6421,20 @@ def execute_job_async(job_id):
         persist_job(job)
     except Exception as exc:
         transition_job_status(job, STATUS_ERROR, reason="execution_exception", force=True)
-        job["error"] = str(exc)
         job["execution_manifest"] = mark_manifest_failed(job.get("execution_manifest"), exc)
-        job["repair_packet"] = repair_packet_from_exception(exc, job.get("internal_plan"))
-        job["failed_at"] = datetime.now(timezone.utc).isoformat()
+        repair_packet = repair_packet_from_exception(exc, job.get("internal_plan"))
+        job["repair_packet"] = repair_packet
+        apply_job_error(
+            job,
+            exception_job_error(
+                code="execution_exception",
+                phase="execution",
+                exc=exc,
+                retryable=True,
+                user_action="Retry after simplifying the command or inspect the repair packet for the failing operation.",
+                details={"repair_packet_schema_version": repair_packet.get("schema_version")},
+            ),
+        )
         persist_job(job)
 
 
@@ -6399,23 +6463,32 @@ def upload():
         if video is None or not video.filename:
             return jsonify({"error": "video file required"}), 400
 
-        video_name = original_filename(video)
-        if not video_name:
-            return jsonify({"error": "video file required"}), 400
+        try:
+            video_upload = safe_upload_filename(video, "video")
+        except UploadPolicyError as exc:
+            return jsonify({"error": str(exc)}), 400
+        video_name = video_upload["original_name"]
 
         audio = request.files.get("audio")
-        audio_name = original_filename(audio) if audio and audio.filename else None
+        audio_upload = None
+        audio_name = None
+        if audio and audio.filename:
+            try:
+                audio_upload = safe_upload_filename(audio, "audio")
+            except UploadPolicyError as exc:
+                return jsonify({"error": str(exc)}), 400
+            audio_name = audio_upload["original_name"]
 
         job_id = uuid4().hex[:10]
         job_dir = UPLOAD_ROOT / job_id
         job_dir.mkdir(parents=True, exist_ok=False)
 
-        video_path = job_dir / video_name
+        video_path = job_dir / video_upload["safe_name"]
         video.save(video_path)
 
         audio_path = None
-        if audio and audio_name:
-            audio_path = job_dir / audio_name
+        if audio and audio_upload:
+            audio_path = job_dir / audio_upload["safe_name"]
             audio.save(audio_path)
 
         try:
@@ -6430,6 +6503,8 @@ def upload():
             "audio_path": str(audio_path.resolve()) if audio_path else None,
             "video_name": video_name,
             "audio_name": audio_name,
+            "video_storage_name": video_upload["safe_name"],
+            "audio_storage_name": audio_upload["safe_name"] if audio_upload else None,
             "created_at": datetime.now(timezone.utc).isoformat(),
         }
         transition_job_status(job, STATUS_UPLOADED, reason="upload_accepted")
@@ -6462,6 +6537,22 @@ def command():
             return jsonify({"error": "job_id required"}), 400
         if not command_text:
             return jsonify({"error": "command required"}), 400
+
+        known_job = get_job_record(job_id)
+        if known_job is None:
+            return jsonify({"error": "job not found"}), 404
+        if not status_accepts_command(known_job.get("status")):
+            return jsonify({
+                "error": "job is not ready for a new command",
+                "job_id": job_id,
+                "status": known_job.get("status"),
+                "retry_after": "wait until the current job is complete or failed",
+            }), 409
+
+        if data.get("skip_clarification") is not True:
+            clarification = clarification_for_command(command_text, creator_memory.get())
+            if clarification:
+                return jsonify(clarification)
 
         integrity = architecture_integrity()
         if not integrity["ok"]:
@@ -6496,19 +6587,34 @@ def command():
             append_job_warning(active_job, f"planner warning: {warning.get('message', warning)}")
         if not validation_allows_execution(internal_plan):
             record_plan_rejection(active_job, command_text, plan, internal_plan, validation)
-            return jsonify({"error": "plan validation failed", "validation": validation, "plan": plan}), 400
+            return jsonify({
+                "error": "plan validation failed",
+                "job_error": active_job.get("job_error"),
+                "validation": validation,
+                "plan": plan,
+            }), 400
 
         record_plan_acceptance(active_job, command_text, plan, internal_plan, validation)
         future = job_queue.submit(execute_job_async, job_id)
         if future is None:
             error = RuntimeError("execution queue is full")
             transition_job_status(active_job, STATUS_ERROR, reason="execution_queue_full", force=True)
-            active_job["error"] = str(error)
             active_job["execution_manifest"] = mark_manifest_failed(active_job.get("execution_manifest"), error)
-            active_job["failed_at"] = datetime.now(timezone.utc).isoformat()
+            apply_job_error(
+                active_job,
+                exception_job_error(
+                    code="execution_queue_full",
+                    phase="queue",
+                    exc=error,
+                    retryable=True,
+                    user_action="Retry after current jobs finish.",
+                    details={"queue": job_queue.stats()},
+                ),
+            )
             persist_job(active_job)
             return jsonify({
                 "error": "execution queue is full",
+                "job_error": active_job.get("job_error"),
                 "queue": job_queue.stats(),
                 "retry_after": "try again after current jobs finish",
             }), 503
@@ -6516,8 +6622,34 @@ def command():
     except Exception as exc:
         if active_job is not None:
             transition_job_status(active_job, STATUS_ERROR, reason="command_exception", force=True)
-            active_job["error"] = str(exc)
+            apply_job_error(
+                active_job,
+                exception_job_error(
+                    code="command_exception",
+                    phase="command",
+                    exc=exc,
+                    retryable=True,
+                    user_action="Retry the command after checking the job status.",
+                ),
+            )
             persist_job(active_job)
+        response = {"error": str(exc)}
+        if active_job is not None:
+            response["job_error"] = active_job.get("job_error")
+        return jsonify(response), 500
+
+
+@app.route("/memory", methods=["GET", "POST", "OPTIONS"])
+def memory():
+    if request.method == "OPTIONS":
+        return ("", 204)
+
+    try:
+        if request.method == "GET":
+            return jsonify(creator_memory.get())
+        payload = request.get_json(silent=True) or {}
+        return jsonify(creator_memory.update(payload))
+    except Exception as exc:
         return jsonify({"error": str(exc)}), 500
 
 
@@ -6606,6 +6738,7 @@ def health():
             "jobs_persisted": persisted_job_count(),
             "upload_root": str(UPLOAD_ROOT),
             "max_upload_mb": MAX_UPLOAD_MB,
+            "upload_policy": upload_policy_summary(),
             "worker_count": WORKER_COUNT,
             "queue_max_pending": QUEUE_MAX_PENDING,
             "execution_queue": job_queue.stats(),
@@ -6614,6 +6747,7 @@ def health():
             "ai_provider": nim_provider.metadata(),
             "runtime_capability_cache": runtime_capability_cache.stats(),
             "plan_cache": plan_cache_stats(),
+            "creator_memory": creator_memory.summary(),
             "architecture": architecture_summary(),
             "public_plan_contract": {
                 **public_plan_contract(),
