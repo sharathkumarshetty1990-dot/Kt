@@ -1,0 +1,1403 @@
+                                                      Termux Media Stack Manual v2
+                                             Practical when-to-use guidance plus 10 example user instructions for each package
+
+This edition is tuned for real work: the 'When to use' column explains the package role, and the examples are phrased as user instructions you can hand to a script, assistant, or
+terminal workflow. Many entries are libraries, so their examples describe the jobs they enable rather than standalone commands.
+
+
+
+
+Video codecs and containers
+ Package                                                       When to use                                                        10 user instruction examples
+ ffmpeg                                                        Main multimedia workhorse. Convert, trim, join, filter, encode,    1. Convert MP4 to MP3.
+                                                               mux, demux, and burn subtitles. Typical patterns: ffmpeg -i        2. Trim a clip from 00:00:10 to 00:00:25.
+                                                               input.mp4 -c:v libx264 -crf 23 -preset medium out.mp4; ffmpeg -i   3. Re-encode a video for mobile playback.
+                                                               in.mp4 -vn audio.m4a; ffmpeg -i in.mp4 -vf "scale=1280:-           4. Burn subtitles into a movie file.
+                                                               2,fps=30" out.mp4.                                                 5. Scale a video to 1280 pixels wide.
+                                                                                                                                  6. Change frame rate to 30 fps.
+                                                                                                                                  7. Extract a single audio track from a video.
+                                                                                                                                  8. Concatenate short clips into one output.
+                                                                                                                                  9. Add a watermark or logo overlay.
+                                                                                                                                  10. Automate a full transcode pipeline in a script.
+ frei0r-plugins                                                Collection of video effect plugins used by FFmpeg and MLT.         1. Convert a clip to a web-friendly format with frei0r-plugins.
+                                                                                                                                  2. Trim a long recording down to the useful section with frei0r-plugins.
+                                                                                                                                  3. Extract audio from a video file with frei0r-plugins.
+                                                                                                                                  4. Resize footage for phone or web playback with frei0r-plugins.
+                                                                                                                                  5. Add subtitles or burn captions into video with frei0r-plugins.
+                                                                                                                                  6. Batch-process a folder of videos with frei0r-plugins.
+                                                                                                                                  7. Change frame rate or bitrate for better compatibility with frei0r-
+                                                                                                                                  plugins.
+                                                                                                                                  8. Merge multiple clips into one output using frei0r-plugins.
+                                                                                                                                  9. Make a smaller backup copy of a large video with frei0r-plugins.
+                                                                                                                                  10. Build an automated transcode pipeline around frei0r-plugins.
+ libaom                                                        AV1 codec reference library.                                       1. Convert a clip to a web-friendly format with libaom.
+                                                                                                                                  2. Trim a long recording down to the useful section with libaom.
+                                                                                                                                  3. Extract audio from a video file with libaom.
+                                                                                                                                  4. Resize footage for phone or web playback with libaom.
+                                                                                                                                  5. Add subtitles or burn captions into video with libaom.
+                                                                                                                                  6. Batch-process a folder of videos with libaom.
+                                                                                                                                  7. Change frame rate or bitrate for better compatibility with libaom.
+                                                                                                                                  8. Merge multiple clips into one output using libaom.
+                                                                                                                                  9. Make a smaller backup copy of a large video with libaom.
+                                                                                                                                  10. Build an automated transcode pipeline around libaom.
+ libass                                                        Subtitle rendering library used by FFmpeg for subtitles and        1. Convert a clip to a web-friendly format with libass.
+                                                               karaoke effects.                                                   2. Trim a long recording down to the useful section with libass.
+                                                                                                                                  3. Extract audio from a video file with libass.
+                                                                                                                                  4. Resize footage for phone or web playback with libass.
+                                                                                                                                  5. Add subtitles or burn captions into video with libass.
+                                                                                                                                  6. Batch-process a folder of videos with libass.
+                                                                                                                                  7. Change frame rate or bitrate for better compatibility with libass.
+                                                                                                                                  8. Merge multiple clips into one output using libass.
+                                                                                                                                  9. Make a smaller backup copy of a large video with libass.
+                                                                                                                                  10. Build an automated transcode pipeline around libass.
+ libavif                                                       AVIF image format library.                                         1. Convert a clip to a web-friendly format with libavif.
+                                                                                                                                  2. Trim a long recording down to the useful section with libavif.
+                                                                                                                                  3. Extract audio from a video file with libavif.
+Package      When to use                                                              10 user instruction examples
+                                                                                      4. Resize footage for phone or web playback with libavif.
+                                                                                      5. Add subtitles or burn captions into video with libavif.
+                                                                                      6. Batch-process a folder of videos with libavif.
+                                                                                      7. Change frame rate or bitrate for better compatibility with libavif.
+                                                                                      8. Merge multiple clips into one output using libavif.
+                                                                                      9. Make a smaller backup copy of a large video with libavif.
+                                                                                      10. Build an automated transcode pipeline around libavif.
+libbluray    Blu-ray disc and playlist handling library.                              1. Convert a clip to a web-friendly format with libbluray.
+                                                                                      2. Trim a long recording down to the useful section with libbluray.
+                                                                                      3. Extract audio from a video file with libbluray.
+                                                                                      4. Resize footage for phone or web playback with libbluray.
+                                                                                      5. Add subtitles or burn captions into video with libbluray.
+                                                                                      6. Batch-process a folder of videos with libbluray.
+                                                                                      7. Change frame rate or bitrate for better compatibility with libbluray.
+                                                                                      8. Merge multiple clips into one output using libbluray.
+                                                                                      9. Make a smaller backup copy of a large video with libbluray.
+                                                                                      10. Build an automated transcode pipeline around libbluray.
+libdav1d     Fast AV1 decoder library.                                                1. Convert a clip to a web-friendly format with libdav1d.
+                                                                                      2. Trim a long recording down to the useful section with libdav1d.
+                                                                                      3. Extract audio from a video file with libdav1d.
+                                                                                      4. Resize footage for phone or web playback with libdav1d.
+                                                                                      5. Add subtitles or burn captions into video with libdav1d.
+                                                                                      6. Batch-process a folder of videos with libdav1d.
+                                                                                      7. Change frame rate or bitrate for better compatibility with libdav1d.
+                                                                                      8. Merge multiple clips into one output using libdav1d.
+                                                                                      9. Make a smaller backup copy of a large video with libdav1d.
+                                                                                      10. Build an automated transcode pipeline around libdav1d.
+libde265     HEVC/H.265 decoder library.                                              1. Convert a clip to a web-friendly format with libde265.
+                                                                                      2. Trim a long recording down to the useful section with libde265.
+                                                                                      3. Extract audio from a video file with libde265.
+                                                                                      4. Resize footage for phone or web playback with libde265.
+                                                                                      5. Add subtitles or burn captions into video with libde265.
+                                                                                      6. Batch-process a folder of videos with libde265.
+                                                                                      7. Change frame rate or bitrate for better compatibility with libde265.
+                                                                                      8. Merge multiple clips into one output using libde265.
+                                                                                      9. Make a smaller backup copy of a large video with libde265.
+                                                                                      10. Build an automated transcode pipeline around libde265.
+libplacebo   Modern GPU rendering and video presentation library. Often               1. Convert a clip to a web-friendly format with libplacebo.
+             used by players and render pipelines for color management and            2. Trim a long recording down to the useful section with libplacebo.
+             scaling.                                                                 3. Extract audio from a video file with libplacebo.
+                                                                                      4. Resize footage for phone or web playback with libplacebo.
+                                                                                      5. Add subtitles or burn captions into video with libplacebo.
+                                                                                      6. Batch-process a folder of videos with libplacebo.
+                                                                                      7. Change frame rate or bitrate for better compatibility with libplacebo.
+                                                                                      8. Merge multiple clips into one output using libplacebo.
+                                                                                      9. Make a smaller backup copy of a large video with libplacebo.
+                                                                                      10. Build an automated transcode pipeline around libplacebo.
+librav1e     Rust-based AV1 encoder library. Another path for AV1 encoding.           1. Convert a clip to a web-friendly format with librav1e.
+                                                                                      2. Trim a long recording down to the useful section with librav1e.
+                                                                                      3. Extract audio from a video file with librav1e.
+                                                                                      4. Resize footage for phone or web playback with librav1e.
+                                                                                      5. Add subtitles or burn captions into video with librav1e.
+                                                                                      6. Batch-process a folder of videos with librav1e.
+                                                                                      7. Change frame rate or bitrate for better compatibility with librav1e.
+                                                                                      8. Merge multiple clips into one output using librav1e.
+                                                                                      9. Make a smaller backup copy of a large video with librav1e.
+                                                                                      10. Build an automated transcode pipeline around librav1e.
+libsrt       Low-level library, usually not run directly. It is typically installed   1. Convert a clip to a web-friendly format with libsrt.
+             so FFmpeg, Python, or another app can decode, encode, render,            2. Trim a long recording down to the useful section with libsrt.
+             or process media with the related feature.                               3. Extract audio from a video file with libsrt.
+                                                                                      4. Resize footage for phone or web playback with libsrt.
+Package      When to use                                                     10 user instruction examples
+                                                                             5. Add subtitles or burn captions into video with libsrt.
+                                                                             6. Batch-process a folder of videos with libsrt.
+                                                                             7. Change frame rate or bitrate for better compatibility with libsrt.
+                                                                             8. Merge multiple clips into one output using libsrt.
+                                                                             9. Make a smaller backup copy of a large video with libsrt.
+                                                                             10. Build an automated transcode pipeline around libsrt.
+libtheora    Theora video codec library for Ogg video.                       1. Convert a clip to a web-friendly format with libtheora.
+                                                                             2. Trim a long recording down to the useful section with libtheora.
+                                                                             3. Extract audio from a video file with libtheora.
+                                                                             4. Resize footage for phone or web playback with libtheora.
+                                                                             5. Add subtitles or burn captions into video with libtheora.
+                                                                             6. Batch-process a folder of videos with libtheora.
+                                                                             7. Change frame rate or bitrate for better compatibility with libtheora.
+                                                                             8. Merge multiple clips into one output using libtheora.
+                                                                             9. Make a smaller backup copy of a large video with libtheora.
+                                                                             10. Build an automated transcode pipeline around libtheora.
+libudfread   UDF filesystem reader, useful for disc image and Blu-ray        1. Convert a clip to a web-friendly format with libudfread.
+             workflows.                                                      2. Trim a long recording down to the useful section with libudfread.
+                                                                             3. Extract audio from a video file with libudfread.
+                                                                             4. Resize footage for phone or web playback with libudfread.
+                                                                             5. Add subtitles or burn captions into video with libudfread.
+                                                                             6. Batch-process a folder of videos with libudfread.
+                                                                             7. Change frame rate or bitrate for better compatibility with libudfread.
+                                                                             8. Merge multiple clips into one output using libudfread.
+                                                                             9. Make a smaller backup copy of a large video with libudfread.
+                                                                             10. Build an automated transcode pipeline around libudfread.
+libvidstab   Video stabilization library for shaky footage.                  1. Convert a clip to a web-friendly format with libvidstab.
+                                                                             2. Trim a long recording down to the useful section with libvidstab.
+                                                                             3. Extract audio from a video file with libvidstab.
+                                                                             4. Resize footage for phone or web playback with libvidstab.
+                                                                             5. Add subtitles or burn captions into video with libvidstab.
+                                                                             6. Batch-process a folder of videos with libvidstab.
+                                                                             7. Change frame rate or bitrate for better compatibility with libvidstab.
+                                                                             8. Merge multiple clips into one output using libvidstab.
+                                                                             9. Make a smaller backup copy of a large video with libvidstab.
+                                                                             10. Build an automated transcode pipeline around libvidstab.
+libvmaf      Video quality measurement library for comparing encoded video   1. Convert a clip to a web-friendly format with libvmaf.
+             quality.                                                        2. Trim a long recording down to the useful section with libvmaf.
+                                                                             3. Extract audio from a video file with libvmaf.
+                                                                             4. Resize footage for phone or web playback with libvmaf.
+                                                                             5. Add subtitles or burn captions into video with libvmaf.
+                                                                             6. Batch-process a folder of videos with libvmaf.
+                                                                             7. Change frame rate or bitrate for better compatibility with libvmaf.
+                                                                             8. Merge multiple clips into one output using libvmaf.
+                                                                             9. Make a smaller backup copy of a large video with libvmaf.
+                                                                             10. Build an automated transcode pipeline around libvmaf.
+libvpx       VP8/VP9 codec support library.                                  1. Convert a clip to a web-friendly format with libvpx.
+                                                                             2. Trim a long recording down to the useful section with libvpx.
+                                                                             3. Extract audio from a video file with libvpx.
+                                                                             4. Resize footage for phone or web playback with libvpx.
+                                                                             5. Add subtitles or burn captions into video with libvpx.
+                                                                             6. Batch-process a folder of videos with libvpx.
+                                                                             7. Change frame rate or bitrate for better compatibility with libvpx.
+                                                                             8. Merge multiple clips into one output using libvpx.
+                                                                             9. Make a smaller backup copy of a large video with libvpx.
+                                                                             10. Build an automated transcode pipeline around libvpx.
+libwebp      WebP image codec library for smaller, web-friendly images.      1. Convert a clip to a web-friendly format with libwebp.
+                                                                             2. Trim a long recording down to the useful section with libwebp.
+                                                                             3. Extract audio from a video file with libwebp.
+                                                                             4. Resize footage for phone or web playback with libwebp.
+                                                                             5. Add subtitles or burn captions into video with libwebp.
+Package   When to use                                                   10 user instruction examples
+                                                                        6. Batch-process a folder of videos with libwebp.
+                                                                        7. Change frame rate or bitrate for better compatibility with libwebp.
+                                                                        8. Merge multiple clips into one output using libwebp.
+                                                                        9. Make a smaller backup copy of a large video with libwebp.
+                                                                        10. Build an automated transcode pipeline around libwebp.
+libx264   H.264 encoder library used by FFmpeg.                         1. Convert a clip to a web-friendly format with libx264.
+                                                                        2. Trim a long recording down to the useful section with libx264.
+                                                                        3. Extract audio from a video file with libx264.
+                                                                        4. Resize footage for phone or web playback with libx264.
+                                                                        5. Add subtitles or burn captions into video with libx264.
+                                                                        6. Batch-process a folder of videos with libx264.
+                                                                        7. Change frame rate or bitrate for better compatibility with libx264.
+                                                                        8. Merge multiple clips into one output using libx264.
+                                                                        9. Make a smaller backup copy of a large video with libx264.
+                                                                        10. Build an automated transcode pipeline around libx264.
+libx265   HEVC/H.265 encoder library used by FFmpeg.                    1. Convert a clip to a web-friendly format with libx265.
+                                                                        2. Trim a long recording down to the useful section with libx265.
+                                                                        3. Extract audio from a video file with libx265.
+                                                                        4. Resize footage for phone or web playback with libx265.
+                                                                        5. Add subtitles or burn captions into video with libx265.
+                                                                        6. Batch-process a folder of videos with libx265.
+                                                                        7. Change frame rate or bitrate for better compatibility with libx265.
+                                                                        8. Merge multiple clips into one output using libx265.
+                                                                        9. Make a smaller backup copy of a large video with libx265.
+                                                                        10. Build an automated transcode pipeline around libx265.
+libzimg   Image and colorspace scaling library often used in video      1. Convert a clip to a web-friendly format with libzimg.
+          pipelines.                                                    2. Trim a long recording down to the useful section with libzimg.
+                                                                        3. Extract audio from a video file with libzimg.
+                                                                        4. Resize footage for phone or web playback with libzimg.
+                                                                        5. Add subtitles or burn captions into video with libzimg.
+                                                                        6. Batch-process a folder of videos with libzimg.
+                                                                        7. Change frame rate or bitrate for better compatibility with libzimg.
+                                                                        8. Merge multiple clips into one output using libzimg.
+                                                                        9. Make a smaller backup copy of a large video with libzimg.
+                                                                        10. Build an automated transcode pipeline around libzimg.
+mlt       Media Lovin' Toolkit. Framework used by editors and video     1. Convert a clip to a web-friendly format with mlt.
+          pipelines for compositing, transitions, and timeline-based    2. Trim a long recording down to the useful section with mlt.
+          processing.                                                   3. Extract audio from a video file with mlt.
+                                                                        4. Resize footage for phone or web playback with mlt.
+                                                                        5. Add subtitles or burn captions into video with mlt.
+                                                                        6. Batch-process a folder of videos with mlt.
+                                                                        7. Change frame rate or bitrate for better compatibility with mlt.
+                                                                        8. Merge multiple clips into one output using mlt.
+                                                                        9. Make a smaller backup copy of a large video with mlt.
+                                                                        10. Build an automated transcode pipeline around mlt.
+movit     GPU-accelerated video effects library. Useful when you need   1. Convert a clip to a web-friendly format with movit.
+          shader-based effects in a media pipeline.                     2. Trim a long recording down to the useful section with movit.
+                                                                        3. Extract audio from a video file with movit.
+                                                                        4. Resize footage for phone or web playback with movit.
+                                                                        5. Add subtitles or burn captions into video with movit.
+                                                                        6. Batch-process a folder of videos with movit.
+                                                                        7. Change frame rate or bitrate for better compatibility with movit.
+                                                                        8. Merge multiple clips into one output using movit.
+                                                                        9. Make a smaller backup copy of a large video with movit.
+                                                                        10. Build an automated transcode pipeline around movit.
+svt-av1   AV1 encoder focused on speed and quality balance. Use when    1. Convert a clip to a web-friendly format with svt-av1.
+          exporting AV1 video through FFmpeg.                           2. Trim a long recording down to the useful section with svt-av1.
+                                                                        3. Extract audio from a video file with svt-av1.
+                                                                        4. Resize footage for phone or web playback with svt-av1.
+                                                                        5. Add subtitles or burn captions into video with svt-av1.
+                                                                        6. Batch-process a folder of videos with svt-av1.
+Package                        When to use                                                      10 user instruction examples
+                                                                                                7. Change frame rate or bitrate for better compatibility with svt-av1.
+                                                                                                8. Merge multiple clips into one output using svt-av1.
+                                                                                                9. Make a smaller backup copy of a large video with svt-av1.
+                                                                                                10. Build an automated transcode pipeline around svt-av1.
+xvidcore                       MPEG-4 Part 2 video codec library.                               1. Convert a clip to a web-friendly format with xvidcore.
+                                                                                                2. Trim a long recording down to the useful section with xvidcore.
+                                                                                                3. Extract audio from a video file with xvidcore.
+                                                                                                4. Resize footage for phone or web playback with xvidcore.
+                                                                                                5. Add subtitles or burn captions into video with xvidcore.
+                                                                                                6. Batch-process a folder of videos with xvidcore.
+                                                                                                7. Change frame rate or bitrate for better compatibility with xvidcore.
+                                                                                                8. Merge multiple clips into one output using xvidcore.
+                                                                                                9. Make a smaller backup copy of a large video with xvidcore.
+                                                                                                10. Build an automated transcode pipeline around xvidcore.
+
+
+
+
+Audio capture and processing
+Package                        When to use                                                      10 user instruction examples
+alsa-lib                       ALSA audio library. Low-level audio input/output plumbing on     1. Convert a recording to a different audio format with alsa-lib.
+                               Linux.                                                           2. Trim silence or cut a voice note with alsa-lib.
+                                                                                                3. Normalize loudness before publishing with alsa-lib.
+                                                                                                4. Resample audio to 44.1 kHz or 48 kHz with alsa-lib.
+                                                                                                5. Merge or split tracks in a batch workflow with alsa-lib.
+                                                                                                6. Reduce noise, echo, or harshness in a rough recording with alsa-
+                                                                                                lib.
+                                                                                                7. Prepare audio for phone playback or editing with alsa-lib.
+                                                                                                8. Inspect, decode, or encode a compressed audio file with alsa-lib.
+                                                                                                9. Automate repeated audio cleanup tasks with alsa-lib.
+                                                                                                10. Use alsa-lib inside a script or media pipeline when sound
+                                                                                                handling is needed.
+jack                           JACK audio library for professional low-latency audio routing.   1. Convert a recording to a different audio format with jack.
+                                                                                                2. Trim silence or cut a voice note with jack.
+                                                                                                3. Normalize loudness before publishing with jack.
+                                                                                                4. Resample audio to 44.1 kHz or 48 kHz with jack.
+                                                                                                5. Merge or split tracks in a batch workflow with jack.
+                                                                                                6. Reduce noise, echo, or harshness in a rough recording with jack.
+                                                                                                7. Prepare audio for phone playback or editing with jack.
+                                                                                                8. Inspect, decode, or encode a compressed audio file with jack.
+                                                                                                9. Automate repeated audio cleanup tasks with jack.
+                                                                                                10. Use jack inside a script or media pipeline when sound handling is
+                                                                                                needed.
+jack2                          JACK2 implementation, often chosen for flexible professional     1. Convert a recording to a different audio format with jack2.
+                               audio workflows.                                                 2. Trim silence or cut a voice note with jack2.
+                                                                                                3. Normalize loudness before publishing with jack2.
+                                                                                                4. Resample audio to 44.1 kHz or 48 kHz with jack2.
+                                                                                                5. Merge or split tracks in a batch workflow with jack2.
+                                                                                                6. Reduce noise, echo, or harshness in a rough recording with jack2.
+                                                                                                7. Prepare audio for phone playback or editing with jack2.
+                                                                                                8. Inspect, decode, or encode a compressed audio file with jack2.
+                                                                                                9. Automate repeated audio cleanup tasks with jack2.
+                                                                                                10. Use jack2 inside a script or media pipeline when sound handling
+                                                                                                is needed.
+Package         When to use                                                      10 user instruction examples
+libao           Simple audio output library for sending sound to different       1. Convert a recording to a different audio format with libao.
+                backends.                                                        2. Trim silence or cut a voice note with libao.
+                                                                                 3. Normalize loudness before publishing with libao.
+                                                                                 4. Resample audio to 44.1 kHz or 48 kHz with libao.
+                                                                                 5. Merge or split tracks in a batch workflow with libao.
+                                                                                 6. Reduce noise, echo, or harshness in a rough recording with libao.
+                                                                                 7. Prepare audio for phone playback or editing with libao.
+                                                                                 8. Inspect, decode, or encode a compressed audio file with libao.
+                                                                                 9. Automate repeated audio cleanup tasks with libao.
+                                                                                 10. Use libao inside a script or media pipeline when sound handling is
+                                                                                 needed.
+libebur128      Loudness measurement library based on EBU R128 standards.        1. Convert a recording to a different audio format with libebur128.
+                                                                                 2. Trim silence or cut a voice note with libebur128.
+                                                                                 3. Normalize loudness before publishing with libebur128.
+                                                                                 4. Resample audio to 44.1 kHz or 48 kHz with libebur128.
+                                                                                 5. Merge or split tracks in a batch workflow with libebur128.
+                                                                                 6. Reduce noise, echo, or harshness in a rough recording with
+                                                                                 libebur128.
+                                                                                 7. Prepare audio for phone playback or editing with libebur128.
+                                                                                 8. Inspect, decode, or encode a compressed audio file with
+                                                                                 libebur128.
+                                                                                 9. Automate repeated audio cleanup tasks with libebur128.
+                                                                                 10. Use libebur128 inside a script or media pipeline when sound
+                                                                                 handling is needed.
+pulseaudio      Sound server for audio playback and capture in user-space.       1. Convert a recording to a different audio format with pulseaudio.
+                                                                                 2. Trim silence or cut a voice note with pulseaudio.
+                                                                                 3. Normalize loudness before publishing with pulseaudio.
+                                                                                 4. Resample audio to 44.1 kHz or 48 kHz with pulseaudio.
+                                                                                 5. Merge or split tracks in a batch workflow with pulseaudio.
+                                                                                 6. Reduce noise, echo, or harshness in a rough recording with
+                                                                                 pulseaudio.
+                                                                                 7. Prepare audio for phone playback or editing with pulseaudio.
+                                                                                 8. Inspect, decode, or encode a compressed audio file with
+                                                                                 pulseaudio.
+                                                                                 9. Automate repeated audio cleanup tasks with pulseaudio.
+                                                                                 10. Use pulseaudio inside a script or media pipeline when sound
+                                                                                 handling is needed.
+libsamplerate   High-quality audio sample-rate conversion library.               1. Convert a recording to a different audio format with libsamplerate.
+                                                                                 2. Trim silence or cut a voice note with libsamplerate.
+                                                                                 3. Normalize loudness before publishing with libsamplerate.
+                                                                                 4. Resample audio to 44.1 kHz or 48 kHz with libsamplerate.
+                                                                                 5. Merge or split tracks in a batch workflow with libsamplerate.
+                                                                                 6. Reduce noise, echo, or harshness in a rough recording with
+                                                                                 libsamplerate.
+                                                                                 7. Prepare audio for phone playback or editing with libsamplerate.
+                                                                                 8. Inspect, decode, or encode a compressed audio file with
+                                                                                 libsamplerate.
+                                                                                 9. Automate repeated audio cleanup tasks with libsamplerate.
+                                                                                 10. Use libsamplerate inside a script or media pipeline when sound
+                                                                                 handling is needed.
+libsoxr         Very high-quality sample-rate conversion library used in audio   1. Convert a recording to a different audio format with libsoxr.
+                processing.                                                      2. Trim silence or cut a voice note with libsoxr.
+                                                                                 3. Normalize loudness before publishing with libsoxr.
+                                                                                 4. Resample audio to 44.1 kHz or 48 kHz with libsoxr.
+                                                                                 5. Merge or split tracks in a batch workflow with libsoxr.
+                                                                                 6. Reduce noise, echo, or harshness in a rough recording with
+                                                                                 libsoxr.
+                                                                                 7. Prepare audio for phone playback or editing with libsoxr.
+                                                                                 8. Inspect, decode, or encode a compressed audio file with libsoxr.
+                                                                                 9. Automate repeated audio cleanup tasks with libsoxr.
+                                                                                 10. Use libsoxr inside a script or media pipeline when sound handling
+Package                      When to use                                                      10 user instruction examples
+                                                                                              is needed.
+libbs2b                      Bauer stereo-to-binaural audio conversion library.               1. Convert a recording to a different audio format with libbs2b.
+                                                                                              2. Trim silence or cut a voice note with libbs2b.
+                                                                                              3. Normalize loudness before publishing with libbs2b.
+                                                                                              4. Resample audio to 44.1 kHz or 48 kHz with libbs2b.
+                                                                                              5. Merge or split tracks in a batch workflow with libbs2b.
+                                                                                              6. Reduce noise, echo, or harshness in a rough recording with
+                                                                                              libbs2b.
+                                                                                              7. Prepare audio for phone playback or editing with libbs2b.
+                                                                                              8. Inspect, decode, or encode a compressed audio file with libbs2b.
+                                                                                              9. Automate repeated audio cleanup tasks with libbs2b.
+                                                                                              10. Use libbs2b inside a script or media pipeline when sound
+                                                                                              handling is needed.
+speexdsp                     Audio DSP library with echo cancellation and resampling tools.   1. Convert a recording to a different audio format with speexdsp.
+                                                                                              2. Trim silence or cut a voice note with speexdsp.
+                                                                                              3. Normalize loudness before publishing with speexdsp.
+                                                                                              4. Resample audio to 44.1 kHz or 48 kHz with speexdsp.
+                                                                                              5. Merge or split tracks in a batch workflow with speexdsp.
+                                                                                              6. Reduce noise, echo, or harshness in a rough recording with
+                                                                                              speexdsp.
+                                                                                              7. Prepare audio for phone playback or editing with speexdsp.
+                                                                                              8. Inspect, decode, or encode a compressed audio file with
+                                                                                              speexdsp.
+                                                                                              9. Automate repeated audio cleanup tasks with speexdsp.
+                                                                                              10. Use speexdsp inside a script or media pipeline when sound
+                                                                                              handling is needed.
+libwebrtc-audio-processing   WebRTC audio processing library for noise suppression, echo      1. Convert a recording to a different audio format with libwebrtc-
+                             cancellation, and gain control.                                  audio-processing.
+                                                                                              2. Trim silence or cut a voice note with libwebrtc-audio-processing.
+                                                                                              3. Normalize loudness before publishing with libwebrtc-audio-
+                                                                                              processing.
+                                                                                              4. Resample audio to 44.1 kHz or 48 kHz with libwebrtc-audio-
+                                                                                              processing.
+                                                                                              5. Merge or split tracks in a batch workflow with libwebrtc-audio-
+                                                                                              processing.
+                                                                                              6. Reduce noise, echo, or harshness in a rough recording with
+                                                                                              libwebrtc-audio-processing.
+                                                                                              7. Prepare audio for phone playback or editing with libwebrtc-audio-
+                                                                                              processing.
+                                                                                              8. Inspect, decode, or encode a compressed audio file with libwebrtc-
+                                                                                              audio-processing.
+                                                                                              9. Automate repeated audio cleanup tasks with libwebrtc-audio-
+                                                                                              processing.
+                                                                                              10. Use libwebrtc-audio-processing inside a script or media pipeline
+                                                                                              when sound handling is needed.
+libflac                      FLAC lossless audio codec library.                               1. Convert a recording to a different audio format with libflac.
+                                                                                              2. Trim silence or cut a voice note with libflac.
+                                                                                              3. Normalize loudness before publishing with libflac.
+                                                                                              4. Resample audio to 44.1 kHz or 48 kHz with libflac.
+                                                                                              5. Merge or split tracks in a batch workflow with libflac.
+                                                                                              6. Reduce noise, echo, or harshness in a rough recording with libflac.
+                                                                                              7. Prepare audio for phone playback or editing with libflac.
+                                                                                              8. Inspect, decode, or encode a compressed audio file with libflac.
+                                                                                              9. Automate repeated audio cleanup tasks with libflac.
+                                                                                              10. Use libflac inside a script or media pipeline when sound handling
+                                                                                              is needed.
+libid3tag                    Read and write ID3 metadata tags in audio files.                 1. Convert a recording to a different audio format with libid3tag.
+                                                                                              2. Trim silence or cut a voice note with libid3tag.
+                                                                                              3. Normalize loudness before publishing with libid3tag.
+                                                                                              4. Resample audio to 44.1 kHz or 48 kHz with libid3tag.
+                                                                                              5. Merge or split tracks in a batch workflow with libid3tag.
+Package      When to use                                                 10 user instruction examples
+                                                                         6. Reduce noise, echo, or harshness in a rough recording with
+                                                                         libid3tag.
+                                                                         7. Prepare audio for phone playback or editing with libid3tag.
+                                                                         8. Inspect, decode, or encode a compressed audio file with libid3tag.
+                                                                         9. Automate repeated audio cleanup tasks with libid3tag.
+                                                                         10. Use libid3tag inside a script or media pipeline when sound
+                                                                         handling is needed.
+libmad       MPEG audio decoder library, mostly for MP3 decoding.        1. Convert a recording to a different audio format with libmad.
+                                                                         2. Trim silence or cut a voice note with libmad.
+                                                                         3. Normalize loudness before publishing with libmad.
+                                                                         4. Resample audio to 44.1 kHz or 48 kHz with libmad.
+                                                                         5. Merge or split tracks in a batch workflow with libmad.
+                                                                         6. Reduce noise, echo, or harshness in a rough recording with
+                                                                         libmad.
+                                                                         7. Prepare audio for phone playback or editing with libmad.
+                                                                         8. Inspect, decode, or encode a compressed audio file with libmad.
+                                                                         9. Automate repeated audio cleanup tasks with libmad.
+                                                                         10. Use libmad inside a script or media pipeline when sound handling
+                                                                         is needed.
+libmp3lame   MP3 encoder library. Use in FFmpeg for MP3 audio exports.   1. Convert a recording to a different audio format with libmp3lame.
+                                                                         2. Trim silence or cut a voice note with libmp3lame.
+                                                                         3. Normalize loudness before publishing with libmp3lame.
+                                                                         4. Resample audio to 44.1 kHz or 48 kHz with libmp3lame.
+                                                                         5. Merge or split tracks in a batch workflow with libmp3lame.
+                                                                         6. Reduce noise, echo, or harshness in a rough recording with
+                                                                         libmp3lame.
+                                                                         7. Prepare audio for phone playback or editing with libmp3lame.
+                                                                         8. Inspect, decode, or encode a compressed audio file with
+                                                                         libmp3lame.
+                                                                         9. Automate repeated audio cleanup tasks with libmp3lame.
+                                                                         10. Use libmp3lame inside a script or media pipeline when sound
+                                                                         handling is needed.
+libmpg123    High-performance MP3 decoder library.                       1. Convert a recording to a different audio format with libmpg123.
+                                                                         2. Trim silence or cut a voice note with libmpg123.
+                                                                         3. Normalize loudness before publishing with libmpg123.
+                                                                         4. Resample audio to 44.1 kHz or 48 kHz with libmpg123.
+                                                                         5. Merge or split tracks in a batch workflow with libmpg123.
+                                                                         6. Reduce noise, echo, or harshness in a rough recording with
+                                                                         libmpg123.
+                                                                         7. Prepare audio for phone playback or editing with libmpg123.
+                                                                         8. Inspect, decode, or encode a compressed audio file with
+                                                                         libmpg123.
+                                                                         9. Automate repeated audio cleanup tasks with libmpg123.
+                                                                         10. Use libmpg123 inside a script or media pipeline when sound
+                                                                         handling is needed.
+libogg       Ogg container support library.                              1. Convert a recording to a different audio format with libogg.
+                                                                         2. Trim silence or cut a voice note with libogg.
+                                                                         3. Normalize loudness before publishing with libogg.
+                                                                         4. Resample audio to 44.1 kHz or 48 kHz with libogg.
+                                                                         5. Merge or split tracks in a batch workflow with libogg.
+                                                                         6. Reduce noise, echo, or harshness in a rough recording with libogg.
+                                                                         7. Prepare audio for phone playback or editing with libogg.
+                                                                         8. Inspect, decode, or encode a compressed audio file with libogg.
+                                                                         9. Automate repeated audio cleanup tasks with libogg.
+                                                                         10. Use libogg inside a script or media pipeline when sound handling
+                                                                         is needed.
+libopenmpt   Module music playback library for tracker formats.          1. Convert a recording to a different audio format with libopenmpt.
+                                                                         2. Trim silence or cut a voice note with libopenmpt.
+                                                                         3. Normalize loudness before publishing with libopenmpt.
+                                                                         4. Resample audio to 44.1 kHz or 48 kHz with libopenmpt.
+                                                                         5. Merge or split tracks in a batch workflow with libopenmpt.
+Package      When to use                                                          10 user instruction examples
+                                                                                  6. Reduce noise, echo, or harshness in a rough recording with
+                                                                                  libopenmpt.
+                                                                                  7. Prepare audio for phone playback or editing with libopenmpt.
+                                                                                  8. Inspect, decode, or encode a compressed audio file with
+                                                                                  libopenmpt.
+                                                                                  9. Automate repeated audio cleanup tasks with libopenmpt.
+                                                                                  10. Use libopenmpt inside a script or media pipeline when sound
+                                                                                  handling is needed.
+libopus      Opus audio codec library for efficient speech and music              1. Convert a recording to a different audio format with libopus.
+             compression.                                                         2. Trim silence or cut a voice note with libopus.
+                                                                                  3. Normalize loudness before publishing with libopus.
+                                                                                  4. Resample audio to 44.1 kHz or 48 kHz with libopus.
+                                                                                  5. Merge or split tracks in a batch workflow with libopus.
+                                                                                  6. Reduce noise, echo, or harshness in a rough recording with
+                                                                                  libopus.
+                                                                                  7. Prepare audio for phone playback or editing with libopus.
+                                                                                  8. Inspect, decode, or encode a compressed audio file with libopus.
+                                                                                  9. Automate repeated audio cleanup tasks with libopus.
+                                                                                  10. Use libopus inside a script or media pipeline when sound
+                                                                                  handling is needed.
+sox          Swiss-army audio processor. Trim, fade, normalize, resample,         1. Trim a noisy voice recording.
+             mix, and generate tones. Typical pattern: sox in.wav out.wav trim    2. Normalize volume before sharing.
+             10 20 norm fade 0.2 0 0.2.                                           3. Convert WAV to MP3 or FLAC.
+                                                                                  4. Fade audio in or out cleanly.
+                                                                                  5. Remove silence from a lecture recording.
+                                                                                  6. Resample a file for phone playback.
+                                                                                  7. Mix two tracks into one output.
+                                                                                  8. Speed up or slow down a clip.
+                                                                                  9. Repair a rough recording with simple filters.
+                                                                                  10. Batch-process a folder of audio files.
+rubberband   Time-stretching and pitch-shifting engine. Great for slowing audio   1. Convert a recording to a different audio format with rubberband.
+             without changing pitch, or retiming music to a beat.                 2. Trim silence or cut a voice note with rubberband.
+                                                                                  3. Normalize loudness before publishing with rubberband.
+                                                                                  4. Resample audio to 44.1 kHz or 48 kHz with rubberband.
+                                                                                  5. Merge or split tracks in a batch workflow with rubberband.
+                                                                                  6. Reduce noise, echo, or harshness in a rough recording with
+                                                                                  rubberband.
+                                                                                  7. Prepare audio for phone playback or editing with rubberband.
+                                                                                  8. Inspect, decode, or encode a compressed audio file with
+                                                                                  rubberband.
+                                                                                  9. Automate repeated audio cleanup tasks with rubberband.
+                                                                                  10. Use rubberband inside a script or media pipeline when sound
+                                                                                  handling is needed.
+libsndfile   Read and write common audio file formats like WAV and FLAC.          1. Convert a recording to a different audio format with libsndfile.
+                                                                                  2. Trim silence or cut a voice note with libsndfile.
+                                                                                  3. Normalize loudness before publishing with libsndfile.
+                                                                                  4. Resample audio to 44.1 kHz or 48 kHz with libsndfile.
+                                                                                  5. Merge or split tracks in a batch workflow with libsndfile.
+                                                                                  6. Reduce noise, echo, or harshness in a rough recording with
+                                                                                  libsndfile.
+                                                                                  7. Prepare audio for phone playback or editing with libsndfile.
+                                                                                  8. Inspect, decode, or encode a compressed audio file with libsndfile.
+                                                                                  9. Automate repeated audio cleanup tasks with libsndfile.
+                                                                                  10. Use libsndfile inside a script or media pipeline when sound
+                                                                                  handling is needed.
+fftw         Fast Fourier Transform library for signal analysis and frequency-    1. Convert a recording to a different audio format with fftw.
+             domain processing.                                                   2. Trim silence or cut a voice note with fftw.
+                                                                                  3. Normalize loudness before publishing with fftw.
+                                                                                  4. Resample audio to 44.1 kHz or 48 kHz with fftw.
+                                                                                  5. Merge or split tracks in a batch workflow with fftw.
+                                                                                  6. Reduce noise, echo, or harshness in a rough recording with fftw.
+Package           When to use                                                         10 user instruction examples
+                                                                                      7. Prepare audio for phone playback or editing with fftw.
+                                                                                      8. Inspect, decode, or encode a compressed audio file with fftw.
+                                                                                      9. Automate repeated audio cleanup tasks with fftw.
+                                                                                      10. Use fftw inside a script or media pipeline when sound handling is
+                                                                                      needed.
+libvorbis         Vorbis audio codec library. Older but still useful for open audio   1. Convert a recording to a different audio format with libvorbis.
+                  workflows.                                                          2. Trim silence or cut a voice note with libvorbis.
+                                                                                      3. Normalize loudness before publishing with libvorbis.
+                                                                                      4. Resample audio to 44.1 kHz or 48 kHz with libvorbis.
+                                                                                      5. Merge or split tracks in a batch workflow with libvorbis.
+                                                                                      6. Reduce noise, echo, or harshness in a rough recording with
+                                                                                      libvorbis.
+                                                                                      7. Prepare audio for phone playback or editing with libvorbis.
+                                                                                      8. Inspect, decode, or encode a compressed audio file with libvorbis.
+                                                                                      9. Automate repeated audio cleanup tasks with libvorbis.
+                                                                                      10. Use libvorbis inside a script or media pipeline when sound
+                                                                                      handling is needed.
+game-music-emu    Emulator library for extracting and playing chiptune and game       1. Convert a recording to a different audio format with game-music-
+                  audio formats.                                                      emu.
+                                                                                      2. Trim silence or cut a voice note with game-music-emu.
+                                                                                      3. Normalize loudness before publishing with game-music-emu.
+                                                                                      4. Resample audio to 44.1 kHz or 48 kHz with game-music-emu.
+                                                                                      5. Merge or split tracks in a batch workflow with game-music-emu.
+                                                                                      6. Reduce noise, echo, or harshness in a rough recording with game-
+                                                                                      music-emu.
+                                                                                      7. Prepare audio for phone playback or editing with game-music-emu.
+                                                                                      8. Inspect, decode, or encode a compressed audio file with game-
+                                                                                      music-emu.
+                                                                                      9. Automate repeated audio cleanup tasks with game-music-emu.
+                                                                                      10. Use game-music-emu inside a script or media pipeline when
+                                                                                      sound handling is needed.
+opusfile          Ogg Opus audio file reading library.                                1. Convert a recording to a different audio format with opusfile.
+                                                                                      2. Trim silence or cut a voice note with opusfile.
+                                                                                      3. Normalize loudness before publishing with opusfile.
+                                                                                      4. Resample audio to 44.1 kHz or 48 kHz with opusfile.
+                                                                                      5. Merge or split tracks in a batch workflow with opusfile.
+                                                                                      6. Reduce noise, echo, or harshness in a rough recording with
+                                                                                      opusfile.
+                                                                                      7. Prepare audio for phone playback or editing with opusfile.
+                                                                                      8. Inspect, decode, or encode a compressed audio file with opusfile.
+                                                                                      9. Automate repeated audio cleanup tasks with opusfile.
+                                                                                      10. Use opusfile inside a script or media pipeline when sound
+                                                                                      handling is needed.
+libvo-amrwbenc    AMR-WB speech codec encoder library.                                1. Convert a clip to a web-friendly format with libvo-amrwbenc.
+                                                                                      2. Trim a long recording down to the useful section with libvo-
+                                                                                      amrwbenc.
+                                                                                      3. Extract audio from a video file with libvo-amrwbenc.
+                                                                                      4. Resize footage for phone or web playback with libvo-amrwbenc.
+                                                                                      5. Add subtitles or burn captions into video with libvo-amrwbenc.
+                                                                                      6. Batch-process a folder of videos with libvo-amrwbenc.
+                                                                                      7. Change frame rate or bitrate for better compatibility with libvo-
+                                                                                      amrwbenc.
+                                                                                      8. Merge multiple clips into one output using libvo-amrwbenc.
+                                                                                      9. Make a smaller backup copy of a large video with libvo-amrwbenc.
+                                                                                      10. Build an automated transcode pipeline around libvo-amrwbenc.
+libopencore-amr   AMR-NB/AMR-WB speech codec library used for telephony               1. Convert a clip to a web-friendly format with libopencore-amr.
+                  audio.                                                              2. Trim a long recording down to the useful section with libopencore-
+                                                                                      amr.
+                                                                                      3. Extract audio from a video file with libopencore-amr.
+                                                                                      4. Resize footage for phone or web playback with libopencore-amr.
+                                                                                      5. Add subtitles or burn captions into video with libopencore-amr.
+Package                        When to use                                                       10 user instruction examples
+                                                                                                 6. Batch-process a folder of videos with libopencore-amr.
+                                                                                                 7. Change frame rate or bitrate for better compatibility with
+                                                                                                 libopencore-amr.
+                                                                                                 8. Merge multiple clips into one output using libopencore-amr.
+                                                                                                 9. Make a smaller backup copy of a large video with libopencore-amr.
+                                                                                                 10. Build an automated transcode pipeline around libopencore-amr.
+
+
+
+
+Images, fonts, text, and OCR
+Package                        When to use                                                       10 user instruction examples
+fontconfig                     Font discovery and matching system. Helps apps find installed     1. Render multilingual text cleanly with fontconfig.
+                               fonts.                                                            2. Shape Arabic, Indic, or mixed-script text with fontconfig.
+                                                                                                 3. Fix font fallback in a document or UI pipeline using fontconfig.
+                                                                                                 4. Make captions, labels, or subtitles display correctly with fontconfig.
+                                                                                                 5. Preserve ligatures, kerning, and glyph coverage with fontconfig.
+                                                                                                 6. Build text-heavy graphics or PDFs with fontconfig.
+                                                                                                 7. Use fontconfig when script direction or shaping matters.
+                                                                                                 8. Repair broken or missing glyphs in output with fontconfig.
+                                                                                                 9. Prepare font assets for an app or renderer with fontconfig.
+                                                                                                 10. Support right-to-left and left-to-right mixing with fontconfig.
+freetype                       Font rasterization library used to draw scalable text.            1. Render multilingual text cleanly with freetype.
+                                                                                                 2. Shape Arabic, Indic, or mixed-script text with freetype.
+                                                                                                 3. Fix font fallback in a document or UI pipeline using freetype.
+                                                                                                 4. Make captions, labels, or subtitles display correctly with freetype.
+                                                                                                 5. Preserve ligatures, kerning, and glyph coverage with freetype.
+                                                                                                 6. Build text-heavy graphics or PDFs with freetype.
+                                                                                                 7. Use freetype when script direction or shaping matters.
+                                                                                                 8. Repair broken or missing glyphs in output with freetype.
+                                                                                                 9. Prepare font assets for an app or renderer with freetype.
+                                                                                                 10. Support right-to-left and left-to-right mixing with freetype.
+fribidi                        Bidirectional text handling for Arabic, Hebrew, and mixed-        1. Render multilingual text cleanly with fribidi.
+                               direction text.                                                   2. Shape Arabic, Indic, or mixed-script text with fribidi.
+                                                                                                 3. Fix font fallback in a document or UI pipeline using fribidi.
+                                                                                                 4. Make captions, labels, or subtitles display correctly with fribidi.
+                                                                                                 5. Preserve ligatures, kerning, and glyph coverage with fribidi.
+                                                                                                 6. Build text-heavy graphics or PDFs with fribidi.
+                                                                                                 7. Use fribidi when script direction or shaping matters.
+                                                                                                 8. Repair broken or missing glyphs in output with fribidi.
+                                                                                                 9. Prepare font assets for an app or renderer with fribidi.
+                                                                                                 10. Support right-to-left and left-to-right mixing with fribidi.
+gdk-pixbuf                     Image loading and pixel buffer library used by GTK and graphics   1. Convert an image to or from a format supported by gdk-pixbuf.
+                               apps.                                                             2. Resize or crop pictures for sharing with gdk-pixbuf.
+                                                                                                 3. Preserve transparency or alpha channels with gdk-pixbuf.
+                                                                                                 4. Build thumbnails or previews from a photo set with gdk-pixbuf.
+                                                                                                 5. Process scanned pages or screenshots with gdk-pixbuf.
+                                                                                                 6. Render text, shapes, or icons into an image with gdk-pixbuf.
+                                                                                                 7. Clean up metadata or optimize file size with gdk-pixbuf.
+                                                                                                 8. Prepare image assets for a website or app with gdk-pixbuf.
+                                                                                                 9. Handle lossless graphics work that must keep detail with gdk-
+                                                                                                 pixbuf.
+                                                                                                 10. Use gdk-pixbuf when an app needs image read/write support
+                                                                                                 behind the scenes.
+giflib                         GIF image support library.                                        1. Convert an image to or from a format supported by giflib.
+                                                                                                 2. Resize or crop pictures for sharing with giflib.
+                                                                                                 3. Preserve transparency or alpha channels with giflib.
+                                                                                                 4. Build thumbnails or previews from a photo set with giflib.
+                                                                                                 5. Process scanned pages or screenshots with giflib.
+                                                                                                 6. Render text, shapes, or icons into an image with giflib.
+Package          When to use                                                    10 user instruction examples
+                                                                                7. Clean up metadata or optimize file size with giflib.
+                                                                                8. Prepare image assets for a website or app with giflib.
+                                                                                9. Handle lossless graphics work that must keep detail with giflib.
+                                                                                10. Use giflib when an app needs image read/write support behind
+                                                                                the scenes.
+graphicsmagick   Fast image conversion and batch image manipulation. Good for   1. Convert an image to or from a format supported by
+                 resizing, format conversion, and automation.                   graphicsmagick.
+                                                                                2. Resize or crop pictures for sharing with graphicsmagick.
+                                                                                3. Preserve transparency or alpha channels with graphicsmagick.
+                                                                                4. Build thumbnails or previews from a photo set with
+                                                                                graphicsmagick.
+                                                                                5. Process scanned pages or screenshots with graphicsmagick.
+                                                                                6. Render text, shapes, or icons into an image with graphicsmagick.
+                                                                                7. Clean up metadata or optimize file size with graphicsmagick.
+                                                                                8. Prepare image assets for a website or app with graphicsmagick.
+                                                                                9. Handle lossless graphics work that must keep detail with
+                                                                                graphicsmagick.
+                                                                                10. Use graphicsmagick when an app needs image read/write
+                                                                                support behind the scenes.
+harfbuzz         Text shaping engine for complex scripts and ligatures.         1. Render multilingual text cleanly with harfbuzz.
+                                                                                2. Shape Arabic, Indic, or mixed-script text with harfbuzz.
+                                                                                3. Fix font fallback in a document or UI pipeline using harfbuzz.
+                                                                                4. Make captions, labels, or subtitles display correctly with harfbuzz.
+                                                                                5. Preserve ligatures, kerning, and glyph coverage with harfbuzz.
+                                                                                6. Build text-heavy graphics or PDFs with harfbuzz.
+                                                                                7. Use harfbuzz when script direction or shaping matters.
+                                                                                8. Repair broken or missing glyphs in output with harfbuzz.
+                                                                                9. Prepare font assets for an app or renderer with harfbuzz.
+                                                                                10. Support right-to-left and left-to-right mixing with harfbuzz.
+leptonica        Utility package used as a dependency in media workflows,       1. Turn a screenshot into text with leptonica.
+                 usually not invoked directly.                                  2. Extract words from a scanned page using leptonica.
+                                                                                3. Batch-OCR a folder of images with leptonica.
+                                                                                4. Read labels, receipts, or posters from photos with leptonica.
+                                                                                5. Clean a noisy scan and then recognize the text with leptonica.
+                                                                                6. Build a searchable-text workflow around leptonica.
+                                                                                7. Use leptonica when you need text from an image, not a plain file
+                                                                                parser.
+                                                                                8. Capture text from a camera photo with leptonica.
+                                                                                9. Compare OCR quality across multiple images with leptonica.
+                                                                                10. Automate image-to-text extraction in a local script with leptonica.
+libexif          EXIF metadata reader and writer for photos.                    1. Convert an image to or from a format supported by libexif.
+                                                                                2. Resize or crop pictures for sharing with libexif.
+                                                                                3. Preserve transparency or alpha channels with libexif.
+                                                                                4. Build thumbnails or previews from a photo set with libexif.
+                                                                                5. Process scanned pages or screenshots with libexif.
+                                                                                6. Render text, shapes, or icons into an image with libexif.
+                                                                                7. Clean up metadata or optimize file size with libexif.
+                                                                                8. Prepare image assets for a website or app with libexif.
+                                                                                9. Handle lossless graphics work that must keep detail with libexif.
+                                                                                10. Use libexif when an app needs image read/write support behind
+                                                                                the scenes.
+libgd            Simple graphics and drawing library for raster images.         1. Convert an image to or from a format supported by libgd.
+                                                                                2. Resize or crop pictures for sharing with libgd.
+                                                                                3. Preserve transparency or alpha channels with libgd.
+                                                                                4. Build thumbnails or previews from a photo set with libgd.
+                                                                                5. Process scanned pages or screenshots with libgd.
+                                                                                6. Render text, shapes, or icons into an image with libgd.
+                                                                                7. Clean up metadata or optimize file size with libgd.
+                                                                                8. Prepare image assets for a website or app with libgd.
+                                                                                9. Handle lossless graphics work that must keep detail with libgd.
+                                                                                10. Use libgd when an app needs image read/write support behind
+Package         When to use                                                              10 user instruction examples
+                                                                                         the scenes.
+libheif         HEIF/HEIC image support library for modern image formats.                1. Convert an image to or from a format supported by libheif.
+                                                                                         2. Resize or crop pictures for sharing with libheif.
+                                                                                         3. Preserve transparency or alpha channels with libheif.
+                                                                                         4. Build thumbnails or previews from a photo set with libheif.
+                                                                                         5. Process scanned pages or screenshots with libheif.
+                                                                                         6. Render text, shapes, or icons into an image with libheif.
+                                                                                         7. Clean up metadata or optimize file size with libheif.
+                                                                                         8. Prepare image assets for a website or app with libheif.
+                                                                                         9. Handle lossless graphics work that must keep detail with libheif.
+                                                                                         10. Use libheif when an app needs image read/write support behind
+                                                                                         the scenes.
+libjpeg-turbo   Optimized JPEG codec library.                                            1. Convert an image to or from a format supported by libjpeg-turbo.
+                                                                                         2. Resize or crop pictures for sharing with libjpeg-turbo.
+                                                                                         3. Preserve transparency or alpha channels with libjpeg-turbo.
+                                                                                         4. Build thumbnails or previews from a photo set with libjpeg-turbo.
+                                                                                         5. Process scanned pages or screenshots with libjpeg-turbo.
+                                                                                         6. Render text, shapes, or icons into an image with libjpeg-turbo.
+                                                                                         7. Clean up metadata or optimize file size with libjpeg-turbo.
+                                                                                         8. Prepare image assets for a website or app with libjpeg-turbo.
+                                                                                         9. Handle lossless graphics work that must keep detail with libjpeg-
+                                                                                         turbo.
+                                                                                         10. Use libjpeg-turbo when an app needs image read/write support
+                                                                                         behind the scenes.
+libjxl          JPEG XL image format library.                                            1. Convert an image to or from a format supported by libjxl.
+                                                                                         2. Resize or crop pictures for sharing with libjxl.
+                                                                                         3. Preserve transparency or alpha channels with libjxl.
+                                                                                         4. Build thumbnails or previews from a photo set with libjxl.
+                                                                                         5. Process scanned pages or screenshots with libjxl.
+                                                                                         6. Render text, shapes, or icons into an image with libjxl.
+                                                                                         7. Clean up metadata or optimize file size with libjxl.
+                                                                                         8. Prepare image assets for a website or app with libjxl.
+                                                                                         9. Handle lossless graphics work that must keep detail with libjxl.
+                                                                                         10. Use libjxl when an app needs image read/write support behind
+                                                                                         the scenes.
+libpng          PNG image codec library.                                                 1. Convert an image to or from a format supported by libpng.
+                                                                                         2. Resize or crop pictures for sharing with libpng.
+                                                                                         3. Preserve transparency or alpha channels with libpng.
+                                                                                         4. Build thumbnails or previews from a photo set with libpng.
+                                                                                         5. Process scanned pages or screenshots with libpng.
+                                                                                         6. Render text, shapes, or icons into an image with libpng.
+                                                                                         7. Clean up metadata or optimize file size with libpng.
+                                                                                         8. Prepare image assets for a website or app with libpng.
+                                                                                         9. Handle lossless graphics work that must keep detail with libpng.
+                                                                                         10. Use libpng when an app needs image read/write support behind
+                                                                                         the scenes.
+librsvg         Render SVG images to bitmaps and other targets.                          1. Convert an image to or from a format supported by librsvg.
+                                                                                         2. Resize or crop pictures for sharing with librsvg.
+                                                                                         3. Preserve transparency or alpha channels with librsvg.
+                                                                                         4. Build thumbnails or previews from a photo set with librsvg.
+                                                                                         5. Process scanned pages or screenshots with librsvg.
+                                                                                         6. Render text, shapes, or icons into an image with librsvg.
+                                                                                         7. Clean up metadata or optimize file size with librsvg.
+                                                                                         8. Prepare image assets for a website or app with librsvg.
+                                                                                         9. Handle lossless graphics work that must keep detail with librsvg.
+                                                                                         10. Use librsvg when an app needs image read/write support behind
+                                                                                         the scenes.
+libsixel        Low-level library, usually not run directly. It is typically installed   1. Preview images directly in the terminal with libsixel.
+                so FFmpeg, Python, or another app can decode, encode, render,            2. Show a quick thumbnail for a file using libsixel.
+                or process media with the related feature.                               3. Inspect a picture without opening a full GUI using libsixel.
+                                                                                         4. Render a small image demo in a shell session with libsixel.
+Package          When to use                                                           10 user instruction examples
+                                                                                       5. Check whether SIXEL or terminal graphics are working with
+                                                                                       libsixel.
+                                                                                       6. View a batch of screenshots from the command line using libsixel.
+                                                                                       7. Use libsixel when you want quick visual feedback in Termux.
+                                                                                       8. Print an image preview in scripts that stay in the terminal with
+                                                                                       libsixel.
+                                                                                       9. Test terminal image support before building a tool around it with
+                                                                                       libsixel.
+                                                                                       10. Display image assets in a lightweight CLI workflow with libsixel.
+libtiff          TIFF image codec library, often used for high-quality scans and       1. Convert an image to or from a format supported by libtiff.
+                 graphics.                                                             2. Resize or crop pictures for sharing with libtiff.
+                                                                                       3. Preserve transparency or alpha channels with libtiff.
+                                                                                       4. Build thumbnails or previews from a photo set with libtiff.
+                                                                                       5. Process scanned pages or screenshots with libtiff.
+                                                                                       6. Render text, shapes, or icons into an image with libtiff.
+                                                                                       7. Clean up metadata or optimize file size with libtiff.
+                                                                                       8. Prepare image assets for a website or app with libtiff.
+                                                                                       9. Handle lossless graphics work that must keep detail with libtiff.
+                                                                                       10. Use libtiff when an app needs image read/write support behind
+                                                                                       the scenes.
+openjpeg         JPEG 2000 codec library.                                              1. Convert an image to or from a format supported by openjpeg.
+                                                                                       2. Resize or crop pictures for sharing with openjpeg.
+                                                                                       3. Preserve transparency or alpha channels with openjpeg.
+                                                                                       4. Build thumbnails or previews from a photo set with openjpeg.
+                                                                                       5. Process scanned pages or screenshots with openjpeg.
+                                                                                       6. Render text, shapes, or icons into an image with openjpeg.
+                                                                                       7. Clean up metadata or optimize file size with openjpeg.
+                                                                                       8. Prepare image assets for a website or app with openjpeg.
+                                                                                       9. Handle lossless graphics work that must keep detail with openjpeg.
+                                                                                       10. Use openjpeg when an app needs image read/write support
+                                                                                       behind the scenes.
+openjpeg-tools   Command-line tools for JPEG 2000 processing.                          1. Convert an image to or from a format supported by openjpeg-tools.
+                                                                                       2. Resize or crop pictures for sharing with openjpeg-tools.
+                                                                                       3. Preserve transparency or alpha channels with openjpeg-tools.
+                                                                                       4. Build thumbnails or previews from a photo set with openjpeg-tools.
+                                                                                       5. Process scanned pages or screenshots with openjpeg-tools.
+                                                                                       6. Render text, shapes, or icons into an image with openjpeg-tools.
+                                                                                       7. Clean up metadata or optimize file size with openjpeg-tools.
+                                                                                       8. Prepare image assets for a website or app with openjpeg-tools.
+                                                                                       9. Handle lossless graphics work that must keep detail with openjpeg-
+                                                                                       tools.
+                                                                                       10. Use openjpeg-tools when an app needs image read/write support
+                                                                                       behind the scenes.
+pango            Text layout and shaping library. Important for correct rendering of   1. Render multilingual text cleanly with pango.
+                 complex scripts and rich typography.                                  2. Shape Arabic, Indic, or mixed-script text with pango.
+                                                                                       3. Fix font fallback in a document or UI pipeline using pango.
+                                                                                       4. Make captions, labels, or subtitles display correctly with pango.
+                                                                                       5. Preserve ligatures, kerning, and glyph coverage with pango.
+                                                                                       6. Build text-heavy graphics or PDFs with pango.
+                                                                                       7. Use pango when script direction or shaping matters.
+                                                                                       8. Repair broken or missing glyphs in output with pango.
+                                                                                       9. Prepare font assets for an app or renderer with pango.
+                                                                                       10. Support right-to-left and left-to-right mixing with pango.
+qt6-qtsvg        Qt SVG module for rendering or handling SVG in Qt apps.               1. Render multilingual text cleanly with qt6-qtsvg.
+                                                                                       2. Shape Arabic, Indic, or mixed-script text with qt6-qtsvg.
+                                                                                       3. Fix font fallback in a document or UI pipeline using qt6-qtsvg.
+                                                                                       4. Make captions, labels, or subtitles display correctly with qt6-qtsvg.
+                                                                                       5. Preserve ligatures, kerning, and glyph coverage with qt6-qtsvg.
+                                                                                       6. Build text-heavy graphics or PDFs with qt6-qtsvg.
+                                                                                       7. Use qt6-qtsvg when script direction or shaping matters.
+                                                                                       8. Repair broken or missing glyphs in output with qt6-qtsvg.
+Package          When to use                                                        10 user instruction examples
+                                                                                    9. Prepare font assets for an app or renderer with qt6-qtsvg.
+                                                                                    10. Support right-to-left and left-to-right mixing with qt6-qtsvg.
+termimage        Terminal-based image display utility.                              1. Preview images directly in the terminal with termimage.
+                                                                                    2. Show a quick thumbnail for a file using termimage.
+                                                                                    3. Inspect a picture without opening a full GUI using termimage.
+                                                                                    4. Render a small image demo in a shell session with termimage.
+                                                                                    5. Check whether SIXEL or terminal graphics are working with
+                                                                                    termimage.
+                                                                                    6. View a batch of screenshots from the command line using
+                                                                                    termimage.
+                                                                                    7. Use termimage when you want quick visual feedback in Termux.
+                                                                                    8. Print an image preview in scripts that stay in the terminal with
+                                                                                    termimage.
+                                                                                    9. Test terminal image support before building a tool around it with
+                                                                                    termimage.
+                                                                                    10. Display image assets in a lightweight CLI workflow with
+                                                                                    termimage.
+tesseract        OCR engine. Extract text from screenshots, posters, and            1. Read text from a screenshot.
+                 scanned frames.                                                    2. Extract text from a scanned receipt.
+                                                                                    3. Turn an image of a page into searchable text.
+                                                                                    4. OCR a label or poster photo.
+                                                                                    5. Run OCR on a batch of document images.
+                                                                                    6. Pull text from a phone photo with low light.
+                                                                                    7. Use it before indexing images in a search tool.
+                                                                                    8. Test recognition quality on a cleaned-up scan.
+                                                                                    9. Recognize text inside a chart or banner image.
+                                                                                    10. Build a simple OCR pipeline for local files.
+timg             Terminal image viewer. Great for previewing images directly in     1. Preview images directly in the terminal with timg.
+                 the shell.                                                         2. Show a quick thumbnail for a file using timg.
+                                                                                    3. Inspect a picture without opening a full GUI using timg.
+                                                                                    4. Render a small image demo in a shell session with timg.
+                                                                                    5. Check whether SIXEL or terminal graphics are working with timg.
+                                                                                    6. View a batch of screenshots from the command line using timg.
+                                                                                    7. Use timg when you want quick visual feedback in Termux.
+                                                                                    8. Print an image preview in scripts that stay in the terminal with timg.
+                                                                                    9. Test terminal image support before building a tool around it with
+                                                                                    timg.
+                                                                                    10. Display image assets in a lightweight CLI workflow with timg.
+ttf-dejavu       DejaVu TrueType font family, useful as a dependable default font   1. Render multilingual text cleanly with ttf-dejavu.
+                 set.                                                               2. Shape Arabic, Indic, or mixed-script text with ttf-dejavu.
+                                                                                    3. Fix font fallback in a document or UI pipeline using ttf-dejavu.
+                                                                                    4. Make captions, labels, or subtitles display correctly with ttf-dejavu.
+                                                                                    5. Preserve ligatures, kerning, and glyph coverage with ttf-dejavu.
+                                                                                    6. Build text-heavy graphics or PDFs with ttf-dejavu.
+                                                                                    7. Use ttf-dejavu when script direction or shaping matters.
+                                                                                    8. Repair broken or missing glyphs in output with ttf-dejavu.
+                                                                                    9. Prepare font assets for an app or renderer with ttf-dejavu.
+                                                                                    10. Support right-to-left and left-to-right mixing with ttf-dejavu.
+xcb-util-image   X11/XCB image helper library used by graphics stacks.              1. Convert an image to or from a format supported by xcb-util-image.
+                                                                                    2. Resize or crop pictures for sharing with xcb-util-image.
+                                                                                    3. Preserve transparency or alpha channels with xcb-util-image.
+                                                                                    4. Build thumbnails or previews from a photo set with xcb-util-image.
+                                                                                    5. Process scanned pages or screenshots with xcb-util-image.
+                                                                                    6. Render text, shapes, or icons into an image with xcb-util-image.
+                                                                                    7. Clean up metadata or optimize file size with xcb-util-image.
+                                                                                    8. Prepare image assets for a website or app with xcb-util-image.
+                                                                                    9. Handle lossless graphics work that must keep detail with xcb-util-
+                                                                                    image.
+                                                                                    10. Use xcb-util-image when an app needs image read/write support
+                                                                                    behind the scenes.
+libcairo         2D graphics library for vector drawing and compositing.            1. Convert an image to or from a format supported by libcairo.
+Package     When to use                                                              10 user instruction examples
+                                                                                     2. Resize or crop pictures for sharing with libcairo.
+                                                                                     3. Preserve transparency or alpha channels with libcairo.
+                                                                                     4. Build thumbnails or previews from a photo set with libcairo.
+                                                                                     5. Process scanned pages or screenshots with libcairo.
+                                                                                     6. Render text, shapes, or icons into an image with libcairo.
+                                                                                     7. Clean up metadata or optimize file size with libcairo.
+                                                                                     8. Prepare image assets for a website or app with libcairo.
+                                                                                     9. Handle lossless graphics work that must keep detail with libcairo.
+                                                                                     10. Use libcairo when an app needs image read/write support behind
+                                                                                     the scenes.
+libjasper   Low-level library, usually not run directly. It is typically installed   1. Convert an image to or from a format supported by libjasper.
+            so FFmpeg, Python, or another app can decode, encode, render,            2. Resize or crop pictures for sharing with libjasper.
+            or process media with the related feature.                               3. Preserve transparency or alpha channels with libjasper.
+                                                                                     4. Build thumbnails or previews from a photo set with libjasper.
+                                                                                     5. Process scanned pages or screenshots with libjasper.
+                                                                                     6. Render text, shapes, or icons into an image with libjasper.
+                                                                                     7. Clean up metadata or optimize file size with libjasper.
+                                                                                     8. Prepare image assets for a website or app with libjasper.
+                                                                                     9. Handle lossless graphics work that must keep detail with libjasper.
+                                                                                     10. Use libjasper when an app needs image read/write support
+                                                                                     behind the scenes.
+libavif     AVIF image format library.                                               1. Convert a clip to a web-friendly format with libavif.
+                                                                                     2. Trim a long recording down to the useful section with libavif.
+                                                                                     3. Extract audio from a video file with libavif.
+                                                                                     4. Resize footage for phone or web playback with libavif.
+                                                                                     5. Add subtitles or burn captions into video with libavif.
+                                                                                     6. Batch-process a folder of videos with libavif.
+                                                                                     7. Change frame rate or bitrate for better compatibility with libavif.
+                                                                                     8. Merge multiple clips into one output using libavif.
+                                                                                     9. Make a smaller backup copy of a large video with libavif.
+                                                                                     10. Build an automated transcode pipeline around libavif.
+libwebp     WebP image codec library for smaller, web-friendly images.               1. Convert a clip to a web-friendly format with libwebp.
+                                                                                     2. Trim a long recording down to the useful section with libwebp.
+                                                                                     3. Extract audio from a video file with libwebp.
+                                                                                     4. Resize footage for phone or web playback with libwebp.
+                                                                                     5. Add subtitles or burn captions into video with libwebp.
+                                                                                     6. Batch-process a folder of videos with libwebp.
+                                                                                     7. Change frame rate or bitrate for better compatibility with libwebp.
+                                                                                     8. Merge multiple clips into one output using libwebp.
+                                                                                     9. Make a smaller backup copy of a large video with libwebp.
+                                                                                     10. Build an automated transcode pipeline around libwebp.
+fonttools   Utility package used as a dependency in media workflows,                 1. Inspect or edit a font file in Python.
+            usually not invoked directly.                                            2. Subset a font for a smaller app bundle.
+                                                                                     3. Read glyphs, names, or tables from a font.
+                                                                                     4. Fix font data for a rendering pipeline.
+                                                                                     5. Convert or analyze typeface metadata.
+                                                                                     6. Prepare a font for an embedded or mobile app.
+                                                                                     7. Batch-process font files in a script.
+                                                                                     8. Check whether a font contains the glyphs you need.
+                                                                                     9. Support text rendering or design tooling.
+                                                                                     10. Use it when fonts themselves are the data you need to handle.
+pycaption   Python subtitle format conversion and caption processing library.        1. Convert subtitles between caption formats.
+                                                                                     2. Read caption files from a video project.
+                                                                                     3. Generate subtitles from structured text.
+                                                                                     4. Move captions into a format another editor accepts.
+                                                                                     5. Batch-convert subtitle tracks in Python.
+                                                                                     6. Clean up timing data before export.
+                                                                                     7. Combine captions with a media pipeline.
+                                                                                     8. Prepare text tracks for publishing.
+                                                                                     9. Extract captions for review or translation.
+                                                                                     10. Use it when subtitle files need Python-level handling.
+Package                            When to use                                                            10 user instruction examples
+pysubs2                            Python subtitle editing library. Use for reading, writing, shifting,   1. Edit subtitle timing in Python.
+                                   and converting subtitle files.                                         2. Convert between ASS, SRT, and similar formats.
+                                                                                                          3. Fix subtitle line breaks or styles.
+                                                                                                          4. Shift a whole subtitle file forward or backward.
+                                                                                                          5. Batch-process captions for many clips.
+                                                                                                          6. Merge subtitle files into one track.
+                                                                                                          7. Prepare subtitles before burning them into video.
+                                                                                                          8. Inspect subtitle events in a script.
+                                                                                                          9. Automate subtitle cleanup for a project.
+                                                                                                          10. Use it when you need programmable subtitle editing.
+pytesseract                        Python wrapper around Tesseract OCR.                                   1. Call Tesseract from Python.
+                                                                                                          2. OCR screenshots inside a script.
+                                                                                                          3. Extract text from scanned images in batch.
+                                                                                                          4. Read text from one file and pass it to another tool.
+                                                                                                          5. Compare OCR output in a Python notebook.
+                                                                                                          6. Use Tesseract without leaving Python.
+                                                                                                          7. Add OCR to a document-processing pipeline.
+                                                                                                          8. Recognize text from a camera snapshot in code.
+                                                                                                          9. Test OCR settings programmatically.
+                                                                                                          10. Build a Python wrapper around image-to-text work.
+rapidocr                           Python OCR package for fast text extraction from images and            1. Extract text from images quickly in Python.
+                                   screenshots.                                                           2. OCR screenshots in a batch script.
+                                                                                                          3. Read text from phone photos before cleanup.
+                                                                                                          4. Test a fast OCR fallback when Tesseract is too heavy.
+                                                                                                          5. Pull text from receipts, signs, or labels.
+                                                                                                          6. Run OCR inside a small automation script.
+                                                                                                          7. Use it for quick preview extraction on many images.
+                                                                                                          8. Recognize text from screenshots sent by users.
+                                                                                                          9. Compare OCR results against another engine.
+                                                                                                          10. Build a lightweight image-to-text helper.
+
+
+
+
+Graphics runtimes, vision, and hardware
+Package                            When to use                                                            10 user instruction examples
+mesa                               OpenGL software and driver stack. Useful for rendering and GPU         1. Show live graphics or a game window with mesa.
+                                   compatibility on Android/Termux.                                       2. Test hardware-accelerated rendering support with mesa.
+                                                                                                          3. Capture frames from a camera or video source with mesa.
+                                                                                                          4. Run computer vision or image-analysis code with mesa.
+                                                                                                          5. Build a small visual demo that needs screen output with mesa.
+                                                                                                          6. Use mesa when another app needs display, GPU, or windowing
+                                                                                                          plumbing.
+                                                                                                          7. Compare image-processing results inside a script using mesa.
+                                                                                                          8. Debug OpenGL or Vulkan support in the environment with mesa.
+                                                                                                          9. Prototype a GUI or multimedia preview tool with mesa.
+                                                                                                          10. Use mesa to bridge media input, processing, and display.
+mesa-vulkan-icd-swrast             Software Vulkan ICD for rendering when hardware Vulkan is              1. Show live graphics or a game window with mesa-vulkan-icd-
+                                   unavailable.                                                           swrast.
+                                                                                                          2. Test hardware-accelerated rendering support with mesa-vulkan-
+                                                                                                          icd-swrast.
+                                                                                                          3. Capture frames from a camera or video source with mesa-vulkan-
+                                                                                                          icd-swrast.
+                                                                                                          4. Run computer vision or image-analysis code with mesa-vulkan-icd-
+                                                                                                          swrast.
+                                                                                                          5. Build a small visual demo that needs screen output with mesa-
+                                                                                                          vulkan-icd-swrast.
+                                                                                                          6. Use mesa-vulkan-icd-swrast when another app needs display,
+                                                                                                          GPU, or windowing plumbing.
+                                                                                                          7. Compare image-processing results inside a script using mesa-
+Package         When to use                                                         10 user instruction examples
+                                                                                    vulkan-icd-swrast.
+                                                                                    8. Debug OpenGL or Vulkan support in the environment with mesa-
+                                                                                    vulkan-icd-swrast.
+                                                                                    9. Prototype a GUI or multimedia preview tool with mesa-vulkan-icd-
+                                                                                    swrast.
+                                                                                    10. Use mesa-vulkan-icd-swrast to bridge media input, processing,
+                                                                                    and display.
+opengl          OpenGL interface package for graphics applications and testing.     1. Show live graphics or a game window with opengl.
+                                                                                    2. Test hardware-accelerated rendering support with opengl.
+                                                                                    3. Capture frames from a camera or video source with opengl.
+                                                                                    4. Run computer vision or image-analysis code with opengl.
+                                                                                    5. Build a small visual demo that needs screen output with opengl.
+                                                                                    6. Use opengl when another app needs display, GPU, or windowing
+                                                                                    plumbing.
+                                                                                    7. Compare image-processing results inside a script using opengl.
+                                                                                    8. Debug OpenGL or Vulkan support in the environment with opengl.
+                                                                                    9. Prototype a GUI or multimedia preview tool with opengl.
+                                                                                    10. Use opengl to bridge media input, processing, and display.
+sdl             Simple DirectMedia Layer 1.x. Useful for cross-platform graphics,   1. Show live graphics or a game window with sdl.
+                input, and audio.                                                   2. Test hardware-accelerated rendering support with sdl.
+                                                                                    3. Capture frames from a camera or video source with sdl.
+                                                                                    4. Run computer vision or image-analysis code with sdl.
+                                                                                    5. Build a small visual demo that needs screen output with sdl.
+                                                                                    6. Use sdl when another app needs display, GPU, or windowing
+                                                                                    plumbing.
+                                                                                    7. Compare image-processing results inside a script using sdl.
+                                                                                    8. Debug OpenGL or Vulkan support in the environment with sdl.
+                                                                                    9. Prototype a GUI or multimedia preview tool with sdl.
+                                                                                    10. Use sdl to bridge media input, processing, and display.
+sdl2            SDL2 multimedia library for windowing, input, graphics, and         1. Show live graphics or a game window with sdl2.
+                audio.                                                              2. Test hardware-accelerated rendering support with sdl2.
+                                                                                    3. Capture frames from a camera or video source with sdl2.
+                                                                                    4. Run computer vision or image-analysis code with sdl2.
+                                                                                    5. Build a small visual demo that needs screen output with sdl2.
+                                                                                    6. Use sdl2 when another app needs display, GPU, or windowing
+                                                                                    plumbing.
+                                                                                    7. Compare image-processing results inside a script using sdl2.
+                                                                                    8. Debug OpenGL or Vulkan support in the environment with sdl2.
+                                                                                    9. Prototype a GUI or multimedia preview tool with sdl2.
+                                                                                    10. Use sdl2 to bridge media input, processing, and display.
+vulkan-icd      Vulkan Installable Client Driver support.                           1. Show live graphics or a game window with vulkan-icd.
+                                                                                    2. Test hardware-accelerated rendering support with vulkan-icd.
+                                                                                    3. Capture frames from a camera or video source with vulkan-icd.
+                                                                                    4. Run computer vision or image-analysis code with vulkan-icd.
+                                                                                    5. Build a small visual demo that needs screen output with vulkan-icd.
+                                                                                    6. Use vulkan-icd when another app needs display, GPU, or
+                                                                                    windowing plumbing.
+                                                                                    7. Compare image-processing results inside a script using vulkan-icd.
+                                                                                    8. Debug OpenGL or Vulkan support in the environment with vulkan-
+                                                                                    icd.
+                                                                                    9. Prototype a GUI or multimedia preview tool with vulkan-icd.
+                                                                                    10. Use vulkan-icd to bridge media input, processing, and display.
+vulkan-loader   Loads Vulkan drivers so apps can access Vulkan APIs.                1. Show live graphics or a game window with vulkan-loader.
+                                                                                    2. Test hardware-accelerated rendering support with vulkan-loader.
+                                                                                    3. Capture frames from a camera or video source with vulkan-loader.
+                                                                                    4. Run computer vision or image-analysis code with vulkan-loader.
+                                                                                    5. Build a small visual demo that needs screen output with vulkan-
+                                                                                    loader.
+                                                                                    6. Use vulkan-loader when another app needs display, GPU, or
+                                                                                    windowing plumbing.
+                                                                                    7. Compare image-processing results inside a script using vulkan-
+Package                 When to use                                                   10 user instruction examples
+                                                                                      loader.
+                                                                                      8. Debug OpenGL or Vulkan support in the environment with vulkan-
+                                                                                      loader.
+                                                                                      9. Prototype a GUI or multimedia preview tool with vulkan-loader.
+                                                                                      10. Use vulkan-loader to bridge media input, processing, and display.
+vulkan-loader-generic   Generic Vulkan loader variant for compatibility.              1. Show live graphics or a game window with vulkan-loader-generic.
+                                                                                      2. Test hardware-accelerated rendering support with vulkan-loader-
+                                                                                      generic.
+                                                                                      3. Capture frames from a camera or video source with vulkan-loader-
+                                                                                      generic.
+                                                                                      4. Run computer vision or image-analysis code with vulkan-loader-
+                                                                                      generic.
+                                                                                      5. Build a small visual demo that needs screen output with vulkan-
+                                                                                      loader-generic.
+                                                                                      6. Use vulkan-loader-generic when another app needs display, GPU,
+                                                                                      or windowing plumbing.
+                                                                                      7. Compare image-processing results inside a script using vulkan-
+                                                                                      loader-generic.
+                                                                                      8. Debug OpenGL or Vulkan support in the environment with vulkan-
+                                                                                      loader-generic.
+                                                                                      9. Prototype a GUI or multimedia preview tool with vulkan-loader-
+                                                                                      generic.
+                                                                                      10. Use vulkan-loader-generic to bridge media input, processing, and
+                                                                                      display.
+vulkan-tools            Command-line Vulkan diagnostic tools.                         1. Show live graphics or a game window with vulkan-tools.
+                                                                                      2. Test hardware-accelerated rendering support with vulkan-tools.
+                                                                                      3. Capture frames from a camera or video source with vulkan-tools.
+                                                                                      4. Run computer vision or image-analysis code with vulkan-tools.
+                                                                                      5. Build a small visual demo that needs screen output with vulkan-
+                                                                                      tools.
+                                                                                      6. Use vulkan-tools when another app needs display, GPU, or
+                                                                                      windowing plumbing.
+                                                                                      7. Compare image-processing results inside a script using vulkan-
+                                                                                      tools.
+                                                                                      8. Debug OpenGL or Vulkan support in the environment with vulkan-
+                                                                                      tools.
+                                                                                      9. Prototype a GUI or multimedia preview tool with vulkan-tools.
+                                                                                      10. Use vulkan-tools to bridge media input, processing, and display.
+libv4l                  Video4Linux support library for camera and capture devices.   1. Show live graphics or a game window with libv4l.
+                                                                                      2. Test hardware-accelerated rendering support with libv4l.
+                                                                                      3. Capture frames from a camera or video source with libv4l.
+                                                                                      4. Run computer vision or image-analysis code with libv4l.
+                                                                                      5. Build a small visual demo that needs screen output with libv4l.
+                                                                                      6. Use libv4l when another app needs display, GPU, or windowing
+                                                                                      plumbing.
+                                                                                      7. Compare image-processing results inside a script using libv4l.
+                                                                                      8. Debug OpenGL or Vulkan support in the environment with libv4l.
+                                                                                      9. Prototype a GUI or multimedia preview tool with libv4l.
+                                                                                      10. Use libv4l to bridge media input, processing, and display.
+opencv                  Native OpenCV library and tools. Use for computer vision,     1. Detect faces or objects in a video frame.
+                        image/video I/O, and frame analysis.                          2. Track motion across frames.
+                                                                                      3. Resize, crop, or threshold images in code.
+                                                                                      4. Capture frames from a camera or local video.
+                                                                                      5. Measure edges, contours, or corners.
+                                                                                      6. Build a computer-vision prototype on Termux.
+                                                                                      7. Test image filters before wiring them into an app.
+                                                                                      8. Read and write common image and video formats.
+                                                                                      9. Analyze frames for a timeline or scene change.
+                                                                                      10. Automate a vision workflow instead of editing manually.
+opencv-python           Python bindings for OpenCV. Use for computer vision, frame    1. Use OpenCV from Python for image analysis.
+                        processing, and image transforms.                             2. Capture webcam or video frames in a script.
+Package                 When to use                                                          10 user instruction examples
+                                                                                             3. Detect shapes, faces, or motion in Python.
+                                                                                             4. Resize, rotate, or crop pictures programmatically.
+                                                                                             5. Build a small vision tool without writing C++.
+                                                                                             6. Debug a Python computer-vision pipeline.
+                                                                                             7. Save annotated frames for later review.
+                                                                                             8. Combine OpenCV with NumPy or SciPy.
+                                                                                             9. Prototype a tracking or recognition script.
+                                                                                             10. Automate image handling in Python projects.
+python-opencv-python    Termux package exposing OpenCV to Python. Good for cv2-              1. Use OpenCV from Python for image analysis.
+                        based scripts on Android.                                            2. Capture webcam or video frames in a script.
+                                                                                             3. Detect shapes, faces, or motion in Python.
+                                                                                             4. Resize, rotate, or crop pictures programmatically.
+                                                                                             5. Build a small vision tool without writing C++.
+                                                                                             6. Debug a Python computer-vision pipeline.
+                                                                                             7. Save annotated frames for later review.
+                                                                                             8. Combine OpenCV with NumPy or SciPy.
+                                                                                             9. Prototype a tracking or recognition script.
+                                                                                             10. Automate image handling in Python projects.
+numpy                   Core array math for Python. Almost every media or ML workflow        1. Store and reshape arrays in a script.
+                        uses it for frame and signal data.                                   2. Run fast math on image or audio data.
+                                                                                             3. Normalize values before analysis.
+                                                                                             4. Vectorize a slow loop.
+                                                                                             5. Prepare data for computer vision or signal processing.
+                                                                                             6. Load a dataset into arrays.
+                                                                                             7. Convert raw samples into matrices.
+                                                                                             8. Stack, slice, and index many measurements.
+                                                                                             9. Feed numerical data into another Python package.
+                                                                                             10. Prototype a scientific calculation quickly.
+scipy                   Scientific Python toolkit with signal processing and numerical       1. Filter or analyze a signal in Python.
+                        routines.                                                            2. Run interpolation or optimization on data.
+                                                                                             3. Compute FFTs or spectral features.
+                                                                                             4. Do scientific work beyond plain NumPy.
+                                                                                             5. Process audio or sensor data numerically.
+                                                                                             6. Fit curves or compare distributions.
+                                                                                             7. Use advanced linear algebra routines.
+                                                                                             8. Test algorithms for a media or vision project.
+                                                                                             9. Handle statistics for an experiment.
+                                                                                             10. Build a research-style calculation script.
+python-numpy            Termux system package for NumPy bindings. Use when Python            1. Store and reshape arrays in a script.
+                        scripts need fast array math in the Termux environment.              2. Run fast math on image or audio data.
+                                                                                             3. Normalize values before analysis.
+                                                                                             4. Vectorize a slow loop.
+                                                                                             5. Prepare data for computer vision or signal processing.
+                                                                                             6. Load a dataset into arrays.
+                                                                                             7. Convert raw samples into matrices.
+                                                                                             8. Stack, slice, and index many measurements.
+                                                                                             9. Feed numerical data into another Python package.
+                                                                                             10. Prototype a scientific calculation quickly.
+python-scipy            Termux system package for SciPy routines. Use for signal             1. Filter or analyze a signal in Python.
+                        processing, optimization, interpolation, and scientific computing.   2. Run interpolation or optimization on data.
+                                                                                             3. Compute FFTs or spectral features.
+                                                                                             4. Do scientific work beyond plain NumPy.
+                                                                                             5. Process audio or sensor data numerically.
+                                                                                             6. Fit curves or compare distributions.
+                                                                                             7. Use advanced linear algebra routines.
+                                                                                             8. Test algorithms for a media or vision project.
+                                                                                             9. Handle statistics for an experiment.
+                                                                                             10. Build a research-style calculation script.
+opencv-contrib-python   OpenCV bindings with extra modules. Handy for advanced CV            1. Show live graphics or a game window with opencv-contrib-python.
+                        features beyond the base package.                                    2. Test hardware-accelerated rendering support with opencv-contrib-
+                                                                                             python.
+Package                              When to use                                                       10 user instruction examples
+                                                                                                       3. Capture frames from a camera or video source with opencv-
+                                                                                                       contrib-python.
+                                                                                                       4. Run computer vision or image-analysis code with opencv-contrib-
+                                                                                                       python.
+                                                                                                       5. Build a small visual demo that needs screen output with opencv-
+                                                                                                       contrib-python.
+                                                                                                       6. Use opencv-contrib-python when another app needs display, GPU,
+                                                                                                       or windowing plumbing.
+                                                                                                       7. Compare image-processing results inside a script using opencv-
+                                                                                                       contrib-python.
+                                                                                                       8. Debug OpenGL or Vulkan support in the environment with opencv-
+                                                                                                       contrib-python.
+                                                                                                       9. Prototype a GUI or multimedia preview tool with opencv-contrib-
+                                                                                                       python.
+                                                                                                       10. Use opencv-contrib-python to bridge media input, processing, and
+                                                                                                       display.
+shapely                              Utility package used as a dependency in media workflows,          1. Work with 2D shapes and geometry in Python.
+                                     usually not invoked directly.                                     2. Measure overlap, intersection, or containment.
+                                                                                                       3. Clean up polygons before image or map work.
+                                                                                                       4. Compare bounding boxes or masks.
+                                                                                                       5. Use geometry operations in a vision pipeline.
+                                                                                                       6. Clip or merge shapes in a script.
+                                                                                                       7. Handle layout or contour logic numerically.
+                                                                                                       8. Build spatial tests for shapes in data.
+                                                                                                       9. Support a tool that reasons about regions.
+                                                                                                       10. Use it when a workflow needs geometry math.
+pyclipper                            Utility package used as a dependency in media workflows,          1. Show live graphics or a game window with pyclipper.
+                                     usually not invoked directly.                                     2. Test hardware-accelerated rendering support with pyclipper.
+                                                                                                       3. Capture frames from a camera or video source with pyclipper.
+                                                                                                       4. Run computer vision or image-analysis code with pyclipper.
+                                                                                                       5. Build a small visual demo that needs screen output with pyclipper.
+                                                                                                       6. Use pyclipper when another app needs display, GPU, or
+                                                                                                       windowing plumbing.
+                                                                                                       7. Compare image-processing results inside a script using pyclipper.
+                                                                                                       8. Debug OpenGL or Vulkan support in the environment with
+                                                                                                       pyclipper.
+                                                                                                       9. Prototype a GUI or multimedia preview tool with pyclipper.
+                                                                                                       10. Use pyclipper to bridge media input, processing, and display.
+
+
+
+
+Python, scientific, and automation helpers
+Package                              When to use                                                       10 user instruction examples
+ffmpeg-python                        Pythonic wrapper around FFmpeg command graphs. Good when          1. Build an FFmpeg pipeline in Python.
+                                     you want to build FFmpeg pipelines from Python instead of shell   2. Generate a transcode command from code.
+                                     commands.                                                         3. Trim or resize media from a script.
+                                                                                                       4. Attach subtitles or filters programmatically.
+                                                                                                       5. Automate a folder of videos in Python.
+                                                                                                       6. Avoid hand-writing long FFmpeg command lines.
+                                                                                                       7. Integrate media conversion into another app.
+                                                                                                       8. Create repeatable batch jobs for editors.
+                                                                                                       9. Wrap a video workflow into a Python tool.
+                                                                                                       10. Test filter graphs from a notebook or script.
+ImageIO                              Utility package used as a dependency in media workflows,          1. Read or write images in Python.
+                                     usually not invoked directly.                                     2. Load a frame sequence for analysis.
+                                                                                                       3. Save an array as a picture.
+                                                                                                       4. Convert between common image formats in code.
+                                                                                                       5. Build a script that previews many files.
+                                                                                                       6. Use it as a bridge between NumPy and media files.
+Package          When to use                                                           10 user instruction examples
+                                                                                       7. Extract frames from a video for later processing.
+                                                                                       8. Create plots or frame dumps programmatically.
+                                                                                       9. Handle image files in a pipeline without manual steps.
+                                                                                       10. Use it when you need a friendly Python image reader/writer.
+imageio-ffmpeg   FFmpeg backend used by ImageIO and related Python video               1. Read and write video in Python through FFmpeg.
+                 tools.                                                                2. Extract frames from a movie into arrays.
+                                                                                       3. Save a NumPy animation as a video file.
+                                                                                       4. Support MP4 workflows in a Python script.
+                                                                                       5. Avoid calling FFmpeg by hand from Python.
+                                                                                       6. Process short clips inside a notebook.
+                                                                                       7. Build a video preview or export helper.
+                                                                                       8. Use it when ImageIO needs FFmpeg support.
+                                                                                       9. Automate basic video file handling from Python.
+                                                                                       10. Connect Python arrays to real video output.
+librosa          Python audio analysis library. Use for beat tracking, tempo, pitch,   1. Analyze music or speech in Python.
+                 spectrograms, and music feature extraction.                           2. Extract tempo, pitch, or spectral features.
+                                                                                       3. Visualize a waveform or spectrogram.
+                                                                                       4. Compare two audio clips numerically.
+                                                                                       5. Prepare audio features for a machine-learning script.
+                                                                                       6. Measure beats, onset times, or chroma features.
+                                                                                       7. Study voice or song characteristics.
+                                                                                       8. Process audio for a recommendation or research project.
+                                                                                       9. Build a notebook around audio feature extraction.
+                                                                                       10. Use it when you need deeper audio analysis than simple
+                                                                                       playback.
+moviepy          Python video editing layer built on FFmpeg. Useful for                1. Assemble clips into a short edited video.
+                 assembling clips, overlays, text, and simple effects in scripts.      2. Add text overlays or simple effects in Python.
+                                                                                       3. Trim, concatenate, or resize footage programmatically.
+                                                                                       4. Make a slideshow video from images.
+                                                                                       5. Automate simple editing without opening a full editor.
+                                                                                       6. Export a social-media clip from a script.
+                                                                                       7. Combine audio and video tracks in code.
+                                                                                       8. Create quick previews for a folder of media.
+                                                                                       9. Use it for Python-based motion graphics experiments.
+                                                                                       10. Build a scripted edit from reusable assets.
+pillow           Python imaging library for loading, resizing, compositing, and        1. Open, resize, crop, or rotate images in Python.
+                 saving images.                                                        2. Save screenshots in another format.
+                                                                                       3. Draw text or shapes onto a picture.
+                                                                                       4. Create thumbnails for a gallery.
+                                                                                       5. Edit image metadata or transparency.
+                                                                                       6. Preprocess images before OCR or vision work.
+                                                                                       7. Batch-convert files in a script.
+                                                                                       8. Composite one image over another.
+                                                                                       9. Generate simple graphics without a full editor.
+                                                                                       10. Use it as the basic image toolbox for Python.
+scikit-video     Utility package used as a dependency in media workflows,              1. Use video utilities inside a Python project.
+                 usually not invoked directly.                                         2. Inspect clips frame by frame in code.
+                                                                                       3. Prepare data for video analysis experiments.
+                                                                                       4. Load, transform, or sample video arrays.
+                                                                                       5. Prototype a study around motion or scenes.
+                                                                                       6. Build a quick research script for clips.
+                                                                                       7. Compare algorithm output against ground-truth frames.
+                                                                                       8. Support a notebook that treats video like data.
+                                                                                       9. Reuse helper routines instead of writing them from scratch.
+                                                                                       10. Use it for small academic-style video workflows.
+vidgear          Utility package used as a dependency in media workflows,              1. Build a Python video-processing helper.
+                 usually not invoked directly.                                         2. Capture streams or camera frames in code.
+                                                                                       3. Wrap streaming and recording tasks in a script.
+                                                                                       4. Make a quick multimedia prototype.
+                                                                                       5. Move frames between OpenCV and video outputs.
+                                                                                       6. Test a playback or stream pipeline.
+Package                  When to use                                                         10 user instruction examples
+                                                                                             7. Automate frame delivery for another tool.
+                                                                                             8. Create a utility around live video sources.
+                                                                                             9. Simplify video I/O in a Python project.
+                                                                                             10. Use it when your script needs friendly video plumbing.
+youtube-transcript-api   Python access to YouTube transcripts when captions are              1. Fetch YouTube captions in Python.
+                         available.                                                          2. Pull transcript text for notes or summaries.
+                                                                                             3. Check whether a video has subtitles available.
+                                                                                             4. Collect caption text for search or analysis.
+                                                                                             5. Automate transcript download in a script.
+                                                                                             6. Use it when you need text instead of audio.
+                                                                                             7. Compare transcript text with an edited video.
+                                                                                             8. Save captions for offline review.
+                                                                                             9. Build a script that reads many video transcripts.
+                                                                                             10. Use it for caption-aware automation around YouTube.
+yt-dlp                   Download videos, audio, subtitles, thumbnails, and metadata         1. Download a video from a supported site.
+                         from supported sites. Typical use: yt-dlp URL; yt-dlp -x --audio-   2. Extract audio only from an online clip.
+                         format mp3 URL; yt-dlp --write-subs --sub-langs en URL.             3. Save subtitles and thumbnails with the file.
+                                                                                             4. Grab metadata for archiving or notes.
+                                                                                             5. Batch-download a playlist or channel.
+                                                                                             6. Convert a download into an audio file.
+                                                                                             7. Pull a clip for offline editing or study.
+                                                                                             8. Store subtitles for later translation or OCR.
+                                                                                             9. Automate media collection from URLs.
+                                                                                             10. Use it when you need a flexible downloader for web media.
+editly                   Node-based video editing CLI built around FFmpeg. Good for          1. Assemble a scripted video slideshow.
+                         scripted slideshow or template-driven video assembly.               2. Build an edit from reusable templates.
+                                                                                             3. Turn images and clips into one presentation video.
+                                                                                             4. Generate a simple intro or promo automatically.
+                                                                                             5. Create a repeatable FFmpeg-based video project.
+                                                                                             6. Make a branded clip from text and assets.
+                                                                                             7. Batch-render short videos from a data file.
+                                                                                             8. Use it when you want automation instead of manual editing.
+                                                                                             9. Produce a quick social post video from a script.
+                                                                                             10. Use it for Node-based command-line video assembly.
+freebuff                 npm global video utility mentioned by the user. Treat it as a       1. Use its own help output to learn the available commands.
+                         command-line helper for automated edits; check its own help         2. Run a repeatable media helper task from the terminal.
+                         output with freebuff --help before use.                             3. Automate a video edit or conversion step.
+                                                                                             4. Use it when you want a CLI shortcut around media work.
+                                                                                             5. Test batch editing or utility actions it exposes.
+                                                                                             6. Wrap a custom workflow into one npm command.
+                                                                                             7. Call it from scripts instead of clicking through an editor.
+                                                                                             8. Use it as a lightweight helper for small edits.
+                                                                                             9. Chain it with FFmpeg or other tools in Termux.
+                                                                                             10. Treat it as a command-line assistant for media chores.
+srt                      Python library for parsing and generating SubRip subtitle files.    1. Parse or generate SRT subtitle files in Python.
+                                                                                             2. Shift subtitle timings by a few seconds.
+                                                                                             3. Merge caption text from many clips.
+                                                                                             4. Fix subtitle line breaks or order.
+                                                                                             5. Convert subtitle data before burning it into video.
+                                                                                             6. Read captions into a script for review.
+                                                                                             7. Write a new subtitle file from structured text.
+                                                                                             8. Batch-process subtitle files from a folder.
+                                                                                             9. Use it when subtitle text needs simple Python handling.
+                                                                                             10. Integrate subtitles into a media workflow.
+

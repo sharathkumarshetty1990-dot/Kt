@@ -1,0 +1,227 @@
+                      Termux Media Stack Usage Manual
+      Practical guidance for video editing, image processing, audio, OCR, Python, and npm tools
+
+Scope: This document gives a practical usage guide for every package in your list. Many entries are
+libraries, not standalone commands, so their 'usage' is usually through FFmpeg, Python, or another
+app that depends on them.
+
+
+
+Common workflow patterns
+   Trim and transcode video: ffmpeg -i input.mp4 -ss 00:00:05 -to 00:00:20 -c:v libx264 -crf 23
+    -preset medium -c:a aac output.mp4
+   Extract audio only: ffmpeg -i input.mp4 -vn -c:a libmp3lame output.mp3
+   Burn subtitles: ffmpeg -i input.mp4 -vf "subtitles=subs.srt" output.mp4
+   Normalize audio: sox input.wav output.wav gain -n -3
+   OCR from a screenshot: tesseract image.png stdout
+
+
+
+Package reference
+Tip: for libraries, install them when a tool asks for them or when a script fails with a missing
+dependency. They are the gears inside the machine, not usually the handle you grab directly.
+
+
+
+Video, codecs, and containers
+   ffmpeg: Main multimedia workhorse. Convert, trim, join, filter, encode, mux, demux, and burn
+    subtitles. Typical patterns: ffmpeg -i input.mp4 -c:v libx264 -crf 23 -preset medium out.mp4;
+    ffmpeg -i in.mp4 -vn audio.m4a; ffmpeg -i in.mp4 -vf "scale=1280:-2,fps=30" out.mp4.
+   frei0r-plugins: Collection of video effect plugins used by FFmpeg and MLT.
+   game-music-emu: Emulator library for extracting and playing chiptune and game audio
+    formats.
+   libaom: AV1 codec reference library.
+   libass: Subtitle rendering library used by FFmpeg for subtitles and karaoke effects.
+   libavif: AVIF image format library.
+   libbluray: Blu-ray disc and playlist handling library.
+   libcairo: 2D graphics library for vector drawing and compositing.
+   libdav1d: Fast AV1 decoder library.
+   libde265: HEVC/H.265 decoder library.
+   libflac: FLAC lossless audio codec library.
+   libid3tag: Read and write ID3 metadata tags in audio files.
+   libjasper: Low-level library, usually not run directly. It is typically installed so FFmpeg, Python, or
+    another app can decode, encode, render, or process media with the related feature.
+   libmad: MPEG audio decoder library, mostly for MP3 decoding.
+   libmp3lame: MP3 encoder library. Use in FFmpeg for MP3 audio exports.
+   libmpg123: High-performance MP3 decoder library.
+   libogg: Ogg container support library.
+   libopencore-amr: AMR-NB/AMR-WB speech codec library used for telephony audio.
+   libopenmpt: Module music playback library for tracker formats.
+   libopus: Opus audio codec library for efficient speech and music compression.
+   libplacebo: Modern GPU rendering and video presentation library. Often used by players and
+    render pipelines for color management and scaling.
+   librav1e: Rust-based AV1 encoder library. Another path for AV1 encoding.
+   libsndfile: Read and write common audio file formats like WAV and FLAC.
+   libsrt: Low-level library, usually not run directly. It is typically installed so FFmpeg, Python, or
+    another app can decode, encode, render, or process media with the related feature.
+   libtheora: Theora video codec library for Ogg video.
+   libudfread: UDF filesystem reader, useful for disc image and Blu-ray workflows.
+   libv4l: Video4Linux support library for camera and capture devices.
+   libvidstab: Video stabilization library for shaky footage.
+   libvmaf: Video quality measurement library for comparing encoded video quality.
+   libvo-amrwbenc: AMR-WB speech codec encoder library.
+   libvorbis: Vorbis audio codec library. Older but still useful for open audio workflows.
+   libvpx: VP8/VP9 codec support library.
+   libwebp: WebP image codec library for smaller, web-friendly images.
+   libx264: H.264 encoder library used by FFmpeg.
+   libx265: HEVC/H.265 encoder library used by FFmpeg.
+   libzimg: Image and colorspace scaling library often used in video pipelines.
+   mlt: Media Lovin' Toolkit. Framework used by editors and video pipelines for compositing,
+    transitions, and timeline-based processing.
+   movit: GPU-accelerated video effects library. Useful when you need shader-based effects in a
+    media pipeline.
+   opusfile: Ogg Opus audio file reading library.
+   rubberband: Time-stretching and pitch-shifting engine. Great for slowing audio without
+    changing pitch, or retiming music to a beat.
+   sox: Swiss-army audio processor. Trim, fade, normalize, resample, mix, and generate tones.
+    Typical pattern: sox in.wav out.wav trim 10 20 norm fade 0.2 0 0.2.
+   svt-av1: AV1 encoder focused on speed and quality balance. Use when exporting AV1 video
+    through FFmpeg.
+   xvidcore: MPEG-4 Part 2 video codec library.
+
+
+
+Audio plumbing
+   alsa-lib: ALSA audio library. Low-level audio input/output plumbing on Linux.
+   jack: JACK audio library for professional low-latency audio routing.
+   jack2: JACK2 implementation, often chosen for flexible professional audio workflows.
+   libao: Simple audio output library for sending sound to different backends.
+   libebur128: Loudness measurement library based on EBU R128 standards.
+   pulseaudio: Sound server for audio playback and capture in user-space.
+
+
+
+Audio, codecs, and signal processing
+   libsamplerate: High-quality audio sample-rate conversion library.
+   libsoxr: Very high-quality sample-rate conversion library used in audio processing.
+   libbs2b: Bauer stereo-to-binaural audio conversion library.
+   speexdsp: Audio DSP library with echo cancellation and resampling tools.
+   libwebrtc-audio-processing: WebRTC audio processing library for noise suppression, echo
+    cancellation, and gain control.
+
+
+
+Images, fonts, and text
+   fontconfig: Font discovery and matching system. Helps apps find installed fonts.
+   freetype: Font rasterization library used to draw scalable text.
+   fribidi: Bidirectional text handling for Arabic, Hebrew, and mixed-direction text.
+   gdk-pixbuf: Image loading and pixel buffer library used by GTK and graphics apps.
+   giflib: GIF image support library.
+   graphicsmagick: Fast image conversion and batch image manipulation. Good for resizing,
+    format conversion, and automation.
+   harfbuzz: Text shaping engine for complex scripts and ligatures.
+   leptonica: Utility package used as a dependency in media workflows, usually not invoked
+    directly.
+   libexif: EXIF metadata reader and writer for photos.
+   libgd: Simple graphics and drawing library for raster images.
+   libheif: HEIF/HEIC image support library for modern image formats.
+   libjpeg-turbo: Optimized JPEG codec library.
+   libjxl: JPEG XL image format library.
+   libpng: PNG image codec library.
+   librsvg: Render SVG images to bitmaps and other targets.
+   libsixel: Low-level library, usually not run directly. It is typically installed so FFmpeg, Python, or
+    another app can decode, encode, render, or process media with the related feature.
+   libtiff: TIFF image codec library, often used for high-quality scans and graphics.
+   openjpeg: JPEG 2000 codec library.
+   openjpeg-tools: Command-line tools for JPEG 2000 processing.
+   pango: Text layout and shaping library. Important for correct rendering of complex scripts and
+    rich typography.
+   qt6-qtsvg: Qt SVG module for rendering or handling SVG in Qt apps.
+   termimage: Terminal-based image display utility.
+   tesseract: OCR engine. Extract text from screenshots, posters, and scanned frames.
+   timg: Terminal image viewer. Great for previewing images directly in the shell.
+   ttf-dejavu: DejaVu TrueType font family, useful as a dependable default font set.
+   xcb-util-image: X11/XCB image helper library used by graphics stacks.
+
+
+
+Graphics and rendering
+   mesa: OpenGL software and driver stack. Useful for rendering and GPU compatibility on
+    Android/Termux.
+   mesa-vulkan-icd-swrast: Software Vulkan ICD for rendering when hardware Vulkan is
+    unavailable.
+   opengl: OpenGL interface package for graphics applications and testing.
+   sdl: Simple DirectMedia Layer 1.x. Useful for cross-platform graphics, input, and audio.
+   sdl2: SDL2 multimedia library for windowing, input, graphics, and audio.
+   vulkan-icd: Vulkan Installable Client Driver support.
+   vulkan-loader: Loads Vulkan drivers so apps can access Vulkan APIs.
+   vulkan-loader-generic: Generic Vulkan loader variant for compatibility.
+   vulkan-tools: Command-line Vulkan diagnostic tools.
+
+
+
+Computer vision and numerics
+   numpy: Core array math for Python. Almost every media or ML workflow uses it for frame and
+    signal data.
+   scipy: Scientific Python toolkit with signal processing and numerical routines.
+   python-numpy: Termux system package for NumPy bindings. Use when Python scripts need
+    fast array math in the Termux environment.
+   python-scipy: Termux system package for SciPy routines. Use for signal processing,
+    optimization, interpolation, and scientific computing.
+   opencv: Native OpenCV library and tools. Use for computer vision, image/video I/O, and frame
+    analysis.
+   opencv-python: Python bindings for OpenCV. Use for computer vision, frame processing, and
+    image transforms.
+   python-opencv-python: Termux package exposing OpenCV to Python. Good for cv2-based
+    scripts on Android.
+   shapely: Utility package used as a dependency in media workflows, usually not invoked directly.
+   pyclipper: Utility package used as a dependency in media workflows, usually not invoked
+    directly.
+   rapidocr: Python OCR package for fast text extraction from images and screenshots.
+
+
+
+Utilities
+   fftw: Fast Fourier Transform library for signal analysis and frequency-domain processing.
+
+
+
+Python packages
+   ffmpeg-python: Pythonic wrapper around FFmpeg command graphs. Good when you want to
+    build FFmpeg pipelines from Python instead of shell commands.
+   fonttools: Utility package used as a dependency in media workflows, usually not invoked
+    directly.
+   ImageIO: Utility package used as a dependency in media workflows, usually not invoked directly.
+   imageio-ffmpeg: FFmpeg backend used by ImageIO and related Python video tools.
+   librosa: Python audio analysis library. Use for beat tracking, tempo, pitch, spectrograms, and
+    music feature extraction.
+   moviepy: Python video editing layer built on FFmpeg. Useful for assembling clips, overlays, text,
+    and simple effects in scripts.
+   numpy: Core array math for Python. Almost every media or ML workflow uses it for frame and
+    signal data.
+   opencv-contrib-python: OpenCV bindings with extra modules. Handy for advanced CV features
+    beyond the base package.
+   opencv-python: Python bindings for OpenCV. Use for computer vision, frame processing, and
+    image transforms.
+   pillow: Python imaging library for loading, resizing, compositing, and saving images.
+   pycaption: Python subtitle format conversion and caption processing library.
+   pyclipper: Utility package used as a dependency in media workflows, usually not invoked
+    directly.
+   pysubs2: Python subtitle editing library. Use for reading, writing, shifting, and converting subtitle
+    files.
+   pytesseract: Python wrapper around Tesseract OCR.
+   rapidocr: Python OCR package for fast text extraction from images and screenshots.
+   scikit-video: Utility package used as a dependency in media workflows, usually not invoked
+    directly.
+   scipy: Scientific Python toolkit with signal processing and numerical routines.
+   shapely: Utility package used as a dependency in media workflows, usually not invoked directly.
+   srt: Python library for parsing and generating SubRip subtitle files.
+   vidgear: Utility package used as a dependency in media workflows, usually not invoked directly.
+   youtube-transcript-api: Python access to YouTube transcripts when captions are available.
+   yt-dlp: Download videos, audio, subtitles, thumbnails, and metadata from supported sites.
+    Typical use: yt-dlp URL; yt-dlp -x --audio-format mp3 URL; yt-dlp --write-subs --sub-langs en URL.
+npm globals
+   editly: Node-based video editing CLI built around FFmpeg. Good for scripted slideshow or
+    template-driven video assembly.
+   freebuff: npm global video utility mentioned by the user. Treat it as a command-line helper for
+    automated edits; check its own help output with freebuff --help before use.
+
+
+
+Best-practice notes
+   Use FFmpeg as the central hub and let codecs and helper libraries plug into it.
+   Use Python packages when you need repeatable automation, subtitle handling, analysis, or batch
+    processing.
+   Use npm globals only for CLI tools that specifically help with scripted video assembly.
+   Check each package's own --help, README, or man page for flags after installation.
+

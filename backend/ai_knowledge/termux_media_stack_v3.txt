@@ -1,0 +1,2379 @@
+Termux Media Stack Manual v3
+Expanded with when-to-use guidance, dependency notes, pairings, and 10 example user instructions per
+package.
+Scope note: packages that appear in both Termux and Python sections are kept as separate entries so the installation path
+stays clear.
+Video editing
+
+ffmpeg + libass + libx264/libx265 + libvpx/libaom + moviepy/editly
+
+Audio cleanup
+
+sox + rubberband + libsoxr/libsamplerate + librosa/scipy
+
+OCR
+
+tesseract + leptonica + pytesseract/rapidocr + Pillow/OpenCV
+
+Subtitle work
+
+libass + pysubs2 + pycaption + srt + fontconfig/harfbuzz/fribidi
+
+AI media automation
+
+ffmpeg-python + ImageIO + yt-dlp + numpy + OpenCV + transcripts
+
+How to read this guide
+Each package entry includes a short purpose line, a when-to-use note, a dependency note, a pairing note, and ten short
+example user instructions. The four target workflows are video editing, audio cleanup, OCR, subtitle work, and AI media
+automation.
+
+Termux Media Stack Manual v3
+
+Page 1
+
+Audio cleanup and processing
+Best for audio repair, loudness, resampling, pitch, and spectral work.
+
+alsa-lib
+Workflow focus: audio cleanup
+Purpose: Low-level audio interface library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use alsa-lib to clean, resample, or normalize audio.
+2. Use alsa-lib when a waveform or soundtrack sounds uneven.
+3. Use alsa-lib to convert between lossless and compressed audio formats.
+4. Use alsa-lib to trim silence, fade, or smooth audio clips.
+5. Use alsa-lib when you need better playback or recording support.
+6. Use alsa-lib to reduce noise, echo, or rough edges in speech.
+7. Use alsa-lib for batch audio repair in a media workflow.
+8. Use alsa-lib with sox, librosa, scipy, or ffmpeg.
+9. Use alsa-lib when your project is voice cleanup or sound analysis.
+10. Use alsa-lib whenever the audio step is the bottleneck.
+
+fftw
+Workflow focus: audio cleanup
+Purpose: Fast Fourier transform library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use fftw to clean, resample, or normalize audio.
+2. Use fftw when a waveform or soundtrack sounds uneven.
+3. Use fftw to convert between lossless and compressed audio formats.
+4. Use fftw to trim silence, fade, or smooth audio clips.
+5. Use fftw when you need better playback or recording support.
+6. Use fftw to reduce noise, echo, or rough edges in speech.
+7. Use fftw for batch audio repair in a media workflow.
+8. Use fftw with sox, librosa, scipy, or ffmpeg.
+9. Use fftw when your project is voice cleanup or sound analysis.
+10. Use fftw whenever the audio step is the bottleneck.
+
+game-music-emu
+Workflow focus: audio cleanup
+Purpose: Classic game music playback library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use game-music-emu to clean, resample, or normalize audio.
+2. Use game-music-emu when a waveform or soundtrack sounds uneven.
+3. Use game-music-emu to convert between lossless and compressed audio formats.
+4. Use game-music-emu to trim silence, fade, or smooth audio clips.
+5. Use game-music-emu when you need better playback or recording support.
+6. Use game-music-emu to reduce noise, echo, or rough edges in speech.
+7. Use game-music-emu for batch audio repair in a media workflow.
+8. Use game-music-emu with sox, librosa, scipy, or ffmpeg.
+9. Use game-music-emu when your project is voice cleanup or sound analysis.
+10. Use game-music-emu whenever the audio step is the bottleneck.
+
+jack
+Workflow focus: audio cleanup
+Purpose: JACK audio connection library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: jack2, alsa-lib, pulseaudio
+10 example user instructions:
+1. Use jack to clean, resample, or normalize audio.
+2. Use jack when a waveform or soundtrack sounds uneven.
+3. Use jack to convert between lossless and compressed audio formats.
+4. Use jack to trim silence, fade, or smooth audio clips.
+
+Termux Media Stack Manual v3
+
+Page 2
+
+5. Use jack when you need better playback or recording support.
+6. Use jack to reduce noise, echo, or rough edges in speech.
+7. Use jack for batch audio repair in a media workflow.
+8. Use jack with sox, librosa, scipy, or ffmpeg.
+9. Use jack when your project is voice cleanup or sound analysis.
+10. Use jack whenever the audio step is the bottleneck.
+
+jack2
+Workflow focus: audio cleanup
+Purpose: JACK2 audio server and library stack.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: jack, alsa-lib, pulseaudio
+10 example user instructions:
+1. Use jack2 to clean, resample, or normalize audio.
+2. Use jack2 when a waveform or soundtrack sounds uneven.
+3. Use jack2 to convert between lossless and compressed audio formats.
+4. Use jack2 to trim silence, fade, or smooth audio clips.
+5. Use jack2 when you need better playback or recording support.
+6. Use jack2 to reduce noise, echo, or rough edges in speech.
+7. Use jack2 for batch audio repair in a media workflow.
+8. Use jack2 with sox, librosa, scipy, or ffmpeg.
+9. Use jack2 when your project is voice cleanup or sound analysis.
+10. Use jack2 whenever the audio step is the bottleneck.
+
+libao
+Workflow focus: audio cleanup
+Purpose: Cross-platform audio output library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libao to clean, resample, or normalize audio.
+2. Use libao when a waveform or soundtrack sounds uneven.
+3. Use libao to convert between lossless and compressed audio formats.
+4. Use libao to trim silence, fade, or smooth audio clips.
+5. Use libao when you need better playback or recording support.
+6. Use libao to reduce noise, echo, or rough edges in speech.
+7. Use libao for batch audio repair in a media workflow.
+8. Use libao with sox, librosa, scipy, or ffmpeg.
+9. Use libao when your project is voice cleanup or sound analysis.
+10. Use libao whenever the audio step is the bottleneck.
+
+libbs2b
+Workflow focus: audio cleanup
+Purpose: Binaural stereo processing library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libbs2b to clean, resample, or normalize audio.
+2. Use libbs2b when a waveform or soundtrack sounds uneven.
+3. Use libbs2b to convert between lossless and compressed audio formats.
+4. Use libbs2b to trim silence, fade, or smooth audio clips.
+5. Use libbs2b when you need better playback or recording support.
+6. Use libbs2b to reduce noise, echo, or rough edges in speech.
+7. Use libbs2b for batch audio repair in a media workflow.
+8. Use libbs2b with sox, librosa, scipy, or ffmpeg.
+9. Use libbs2b when your project is voice cleanup or sound analysis.
+10. Use libbs2b whenever the audio step is the bottleneck.
+
+libebur128
+Workflow focus: audio cleanup
+Purpose: Loudness measurement library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libebur128 to clean, resample, or normalize audio.
+
+Termux Media Stack Manual v3
+
+Page 3
+
+2. Use libebur128 when a waveform or soundtrack sounds uneven.
+3. Use libebur128 to convert between lossless and compressed audio formats.
+4. Use libebur128 to trim silence, fade, or smooth audio clips.
+5. Use libebur128 when you need better playback or recording support.
+6. Use libebur128 to reduce noise, echo, or rough edges in speech.
+7. Use libebur128 for batch audio repair in a media workflow.
+8. Use libebur128 with sox, librosa, scipy, or ffmpeg.
+9. Use libebur128 when your project is voice cleanup or sound analysis.
+10. Use libebur128 whenever the audio step is the bottleneck.
+
+libflac
+Workflow focus: audio cleanup
+Purpose: FLAC lossless audio codec library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libflac to clean, resample, or normalize audio.
+2. Use libflac when a waveform or soundtrack sounds uneven.
+3. Use libflac to convert between lossless and compressed audio formats.
+4. Use libflac to trim silence, fade, or smooth audio clips.
+5. Use libflac when you need better playback or recording support.
+6. Use libflac to reduce noise, echo, or rough edges in speech.
+7. Use libflac for batch audio repair in a media workflow.
+8. Use libflac with sox, librosa, scipy, or ffmpeg.
+9. Use libflac when your project is voice cleanup or sound analysis.
+10. Use libflac whenever the audio step is the bottleneck.
+
+libid3tag
+Workflow focus: audio cleanup
+Purpose: ID3 tag reading and writing library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libid3tag to clean, resample, or normalize audio.
+2. Use libid3tag when a waveform or soundtrack sounds uneven.
+3. Use libid3tag to convert between lossless and compressed audio formats.
+4. Use libid3tag to trim silence, fade, or smooth audio clips.
+5. Use libid3tag when you need better playback or recording support.
+6. Use libid3tag to reduce noise, echo, or rough edges in speech.
+7. Use libid3tag for batch audio repair in a media workflow.
+8. Use libid3tag with sox, librosa, scipy, or ffmpeg.
+9. Use libid3tag when your project is voice cleanup or sound analysis.
+10. Use libid3tag whenever the audio step is the bottleneck.
+
+libmad
+Workflow focus: audio cleanup
+Purpose: MPEG audio decoding library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libmad to clean, resample, or normalize audio.
+2. Use libmad when a waveform or soundtrack sounds uneven.
+3. Use libmad to convert between lossless and compressed audio formats.
+4. Use libmad to trim silence, fade, or smooth audio clips.
+5. Use libmad when you need better playback or recording support.
+6. Use libmad to reduce noise, echo, or rough edges in speech.
+7. Use libmad for batch audio repair in a media workflow.
+8. Use libmad with sox, librosa, scipy, or ffmpeg.
+9. Use libmad when your project is voice cleanup or sound analysis.
+10. Use libmad whenever the audio step is the bottleneck.
+
+libmp3lame
+Workflow focus: audio cleanup
+Purpose: MP3 encoding library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+
+Termux Media Stack Manual v3
+
+Page 4
+
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libmp3lame to clean, resample, or normalize audio.
+2. Use libmp3lame when a waveform or soundtrack sounds uneven.
+3. Use libmp3lame to convert between lossless and compressed audio formats.
+4. Use libmp3lame to trim silence, fade, or smooth audio clips.
+5. Use libmp3lame when you need better playback or recording support.
+6. Use libmp3lame to reduce noise, echo, or rough edges in speech.
+7. Use libmp3lame for batch audio repair in a media workflow.
+8. Use libmp3lame with sox, librosa, scipy, or ffmpeg.
+9. Use libmp3lame when your project is voice cleanup or sound analysis.
+10. Use libmp3lame whenever the audio step is the bottleneck.
+
+libmpg123
+Workflow focus: audio cleanup
+Purpose: MP3 decoding library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libmpg123 to clean, resample, or normalize audio.
+2. Use libmpg123 when a waveform or soundtrack sounds uneven.
+3. Use libmpg123 to convert between lossless and compressed audio formats.
+4. Use libmpg123 to trim silence, fade, or smooth audio clips.
+5. Use libmpg123 when you need better playback or recording support.
+6. Use libmpg123 to reduce noise, echo, or rough edges in speech.
+7. Use libmpg123 for batch audio repair in a media workflow.
+8. Use libmpg123 with sox, librosa, scipy, or ffmpeg.
+9. Use libmpg123 when your project is voice cleanup or sound analysis.
+10. Use libmpg123 whenever the audio step is the bottleneck.
+
+libogg
+Workflow focus: audio cleanup
+Purpose: Container library for Ogg streams.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libogg to clean, resample, or normalize audio.
+2. Use libogg when a waveform or soundtrack sounds uneven.
+3. Use libogg to convert between lossless and compressed audio formats.
+4. Use libogg to trim silence, fade, or smooth audio clips.
+5. Use libogg when you need better playback or recording support.
+6. Use libogg to reduce noise, echo, or rough edges in speech.
+7. Use libogg for batch audio repair in a media workflow.
+8. Use libogg with sox, librosa, scipy, or ffmpeg.
+9. Use libogg when your project is voice cleanup or sound analysis.
+10. Use libogg whenever the audio step is the bottleneck.
+
+libopencore-amr
+Workflow focus: audio cleanup
+Purpose: AMR speech codec library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libopencore-amr to clean, resample, or normalize audio.
+2. Use libopencore-amr when a waveform or soundtrack sounds uneven.
+3. Use libopencore-amr to convert between lossless and compressed audio formats.
+4. Use libopencore-amr to trim silence, fade, or smooth audio clips.
+5. Use libopencore-amr when you need better playback or recording support.
+6. Use libopencore-amr to reduce noise, echo, or rough edges in speech.
+7. Use libopencore-amr for batch audio repair in a media workflow.
+8. Use libopencore-amr with sox, librosa, scipy, or ffmpeg.
+9. Use libopencore-amr when your project is voice cleanup or sound analysis.
+10. Use libopencore-amr whenever the audio step is the bottleneck.
+
+libopenmpt
+Workflow focus: audio cleanup
+Purpose: Module music playback library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+
+Termux Media Stack Manual v3
+
+Page 5
+
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libopenmpt to clean, resample, or normalize audio.
+2. Use libopenmpt when a waveform or soundtrack sounds uneven.
+3. Use libopenmpt to convert between lossless and compressed audio formats.
+4. Use libopenmpt to trim silence, fade, or smooth audio clips.
+5. Use libopenmpt when you need better playback or recording support.
+6. Use libopenmpt to reduce noise, echo, or rough edges in speech.
+7. Use libopenmpt for batch audio repair in a media workflow.
+8. Use libopenmpt with sox, librosa, scipy, or ffmpeg.
+9. Use libopenmpt when your project is voice cleanup or sound analysis.
+10. Use libopenmpt whenever the audio step is the bottleneck.
+
+libopus
+Workflow focus: audio cleanup
+Purpose: Opus audio codec library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libopus to clean, resample, or normalize audio.
+2. Use libopus when a waveform or soundtrack sounds uneven.
+3. Use libopus to convert between lossless and compressed audio formats.
+4. Use libopus to trim silence, fade, or smooth audio clips.
+5. Use libopus when you need better playback or recording support.
+6. Use libopus to reduce noise, echo, or rough edges in speech.
+7. Use libopus for batch audio repair in a media workflow.
+8. Use libopus with sox, librosa, scipy, or ffmpeg.
+9. Use libopus when your project is voice cleanup or sound analysis.
+10. Use libopus whenever the audio step is the bottleneck.
+
+libsamplerate
+Workflow focus: audio cleanup
+Purpose: Audio sample rate conversion library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libsamplerate to clean, resample, or normalize audio.
+2. Use libsamplerate when a waveform or soundtrack sounds uneven.
+3. Use libsamplerate to convert between lossless and compressed audio formats.
+4. Use libsamplerate to trim silence, fade, or smooth audio clips.
+5. Use libsamplerate when you need better playback or recording support.
+6. Use libsamplerate to reduce noise, echo, or rough edges in speech.
+7. Use libsamplerate for batch audio repair in a media workflow.
+8. Use libsamplerate with sox, librosa, scipy, or ffmpeg.
+9. Use libsamplerate when your project is voice cleanup or sound analysis.
+10. Use libsamplerate whenever the audio step is the bottleneck.
+
+libsndfile
+Workflow focus: audio cleanup
+Purpose: Sound file read and write library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libsndfile to clean, resample, or normalize audio.
+2. Use libsndfile when a waveform or soundtrack sounds uneven.
+3. Use libsndfile to convert between lossless and compressed audio formats.
+4. Use libsndfile to trim silence, fade, or smooth audio clips.
+5. Use libsndfile when you need better playback or recording support.
+6. Use libsndfile to reduce noise, echo, or rough edges in speech.
+7. Use libsndfile for batch audio repair in a media workflow.
+8. Use libsndfile with sox, librosa, scipy, or ffmpeg.
+9. Use libsndfile when your project is voice cleanup or sound analysis.
+10. Use libsndfile whenever the audio step is the bottleneck.
+
+libsoxr
+Workflow focus: audio cleanup
+Purpose: High-quality sample rate conversion library.
+
+Termux Media Stack Manual v3
+
+Page 6
+
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libsoxr to clean, resample, or normalize audio.
+2. Use libsoxr when a waveform or soundtrack sounds uneven.
+3. Use libsoxr to convert between lossless and compressed audio formats.
+4. Use libsoxr to trim silence, fade, or smooth audio clips.
+5. Use libsoxr when you need better playback or recording support.
+6. Use libsoxr to reduce noise, echo, or rough edges in speech.
+7. Use libsoxr for batch audio repair in a media workflow.
+8. Use libsoxr with sox, librosa, scipy, or ffmpeg.
+9. Use libsoxr when your project is voice cleanup or sound analysis.
+10. Use libsoxr whenever the audio step is the bottleneck.
+
+libsrt
+Workflow focus: audio cleanup
+Purpose: Secure Reliable Transport streaming library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libsrt to clean, resample, or normalize audio.
+2. Use libsrt when a waveform or soundtrack sounds uneven.
+3. Use libsrt to convert between lossless and compressed audio formats.
+4. Use libsrt to trim silence, fade, or smooth audio clips.
+5. Use libsrt when you need better playback or recording support.
+6. Use libsrt to reduce noise, echo, or rough edges in speech.
+7. Use libsrt for batch audio repair in a media workflow.
+8. Use libsrt with sox, librosa, scipy, or ffmpeg.
+9. Use libsrt when your project is voice cleanup or sound analysis.
+10. Use libsrt whenever the audio step is the bottleneck.
+
+libtheora
+Workflow focus: audio cleanup
+Purpose: Theora video codec library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libtheora to clean, resample, or normalize audio.
+2. Use libtheora when a waveform or soundtrack sounds uneven.
+3. Use libtheora to convert between lossless and compressed audio formats.
+4. Use libtheora to trim silence, fade, or smooth audio clips.
+5. Use libtheora when you need better playback or recording support.
+6. Use libtheora to reduce noise, echo, or rough edges in speech.
+7. Use libtheora for batch audio repair in a media workflow.
+8. Use libtheora with sox, librosa, scipy, or ffmpeg.
+9. Use libtheora when your project is voice cleanup or sound analysis.
+10. Use libtheora whenever the audio step is the bottleneck.
+
+libvo-amrwbenc
+Workflow focus: audio cleanup
+Purpose: AMR-WB speech encoding library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libvo-amrwbenc to clean, resample, or normalize audio.
+2. Use libvo-amrwbenc when a waveform or soundtrack sounds uneven.
+3. Use libvo-amrwbenc to convert between lossless and compressed audio formats.
+4. Use libvo-amrwbenc to trim silence, fade, or smooth audio clips.
+5. Use libvo-amrwbenc when you need better playback or recording support.
+6. Use libvo-amrwbenc to reduce noise, echo, or rough edges in speech.
+7. Use libvo-amrwbenc for batch audio repair in a media workflow.
+8. Use libvo-amrwbenc with sox, librosa, scipy, or ffmpeg.
+9. Use libvo-amrwbenc when your project is voice cleanup or sound analysis.
+10. Use libvo-amrwbenc whenever the audio step is the bottleneck.
+
+libvorbis
+Workflow focus: audio cleanup
+
+Termux Media Stack Manual v3
+
+Page 7
+
+Purpose: Vorbis audio codec library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libvorbis to clean, resample, or normalize audio.
+2. Use libvorbis when a waveform or soundtrack sounds uneven.
+3. Use libvorbis to convert between lossless and compressed audio formats.
+4. Use libvorbis to trim silence, fade, or smooth audio clips.
+5. Use libvorbis when you need better playback or recording support.
+6. Use libvorbis to reduce noise, echo, or rough edges in speech.
+7. Use libvorbis for batch audio repair in a media workflow.
+8. Use libvorbis with sox, librosa, scipy, or ffmpeg.
+9. Use libvorbis when your project is voice cleanup or sound analysis.
+10. Use libvorbis whenever the audio step is the bottleneck.
+
+libwebrtc-audio-processing
+Workflow focus: audio cleanup
+Purpose: Voice processing library for noise reduction and echo handling.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libwebrtc-audio-processing to clean, resample, or normalize audio.
+2. Use libwebrtc-audio-processing when a waveform or soundtrack sounds uneven.
+3. Use libwebrtc-audio-processing to convert between lossless and compressed audio formats.
+4. Use libwebrtc-audio-processing to trim silence, fade, or smooth audio clips.
+5. Use libwebrtc-audio-processing when you need better playback or recording support.
+6. Use libwebrtc-audio-processing to reduce noise, echo, or rough edges in speech.
+7. Use libwebrtc-audio-processing for batch audio repair in a media workflow.
+8. Use libwebrtc-audio-processing with sox, librosa, scipy, or ffmpeg.
+9. Use libwebrtc-audio-processing when your project is voice cleanup or sound analysis.
+10. Use libwebrtc-audio-processing whenever the audio step is the bottleneck.
+
+opusfile
+Workflow focus: audio cleanup
+Purpose: Opus file handling library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use opusfile to clean, resample, or normalize audio.
+2. Use opusfile when a waveform or soundtrack sounds uneven.
+3. Use opusfile to convert between lossless and compressed audio formats.
+4. Use opusfile to trim silence, fade, or smooth audio clips.
+5. Use opusfile when you need better playback or recording support.
+6. Use opusfile to reduce noise, echo, or rough edges in speech.
+7. Use opusfile for batch audio repair in a media workflow.
+8. Use opusfile with sox, librosa, scipy, or ffmpeg.
+9. Use opusfile when your project is voice cleanup or sound analysis.
+10. Use opusfile whenever the audio step is the bottleneck.
+
+pulseaudio
+Workflow focus: audio cleanup
+Purpose: Audio playback and routing server.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: alsa-lib, jack, jack2, libao
+10 example user instructions:
+1. Use pulseaudio to clean, resample, or normalize audio.
+2. Use pulseaudio when a waveform or soundtrack sounds uneven.
+3. Use pulseaudio to convert between lossless and compressed audio formats.
+4. Use pulseaudio to trim silence, fade, or smooth audio clips.
+5. Use pulseaudio when you need better playback or recording support.
+6. Use pulseaudio to reduce noise, echo, or rough edges in speech.
+7. Use pulseaudio for batch audio repair in a media workflow.
+8. Use pulseaudio with sox, librosa, scipy, or ffmpeg.
+9. Use pulseaudio when your project is voice cleanup or sound analysis.
+10. Use pulseaudio whenever the audio step is the bottleneck.
+
+python-numpy [Termux]
+Termux Media Stack Manual v3
+
+Page 8
+
+Workflow focus: audio cleanup
+Purpose: NumPy array foundation for Termux Python.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually paired with python-scipy, opencv, or audio tools.
+Pairs well with: python-scipy, python-opencv-python, audio scripts
+10 example user instructions:
+1. Use python-numpy to clean, resample, or normalize audio.
+2. Use python-numpy when a waveform or soundtrack sounds uneven.
+3. Use python-numpy to convert between lossless and compressed audio formats.
+4. Use python-numpy to trim silence, fade, or smooth audio clips.
+5. Use python-numpy when you need better playback or recording support.
+6. Use python-numpy to reduce noise, echo, or rough edges in speech.
+7. Use python-numpy for batch audio repair in a media workflow.
+8. Use python-numpy with sox, librosa, scipy, or ffmpeg.
+9. Use python-numpy when your project is voice cleanup or sound analysis.
+10. Use python-numpy whenever the audio step is the bottleneck.
+
+python-scipy [Termux]
+Workflow focus: audio cleanup
+Purpose: Scientific computation and signal processing for Termux Python.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually paired with python-numpy.
+Pairs well with: python-numpy, librosa, signal processing scripts
+10 example user instructions:
+1. Use python-scipy to clean, resample, or normalize audio.
+2. Use python-scipy when a waveform or soundtrack sounds uneven.
+3. Use python-scipy to convert between lossless and compressed audio formats.
+4. Use python-scipy to trim silence, fade, or smooth audio clips.
+5. Use python-scipy when you need better playback or recording support.
+6. Use python-scipy to reduce noise, echo, or rough edges in speech.
+7. Use python-scipy for batch audio repair in a media workflow.
+8. Use python-scipy with sox, librosa, scipy, or ffmpeg.
+9. Use python-scipy when your project is voice cleanup or sound analysis.
+10. Use python-scipy whenever the audio step is the bottleneck.
+
+rubberband
+Workflow focus: audio cleanup
+Purpose: High-quality time-stretching and pitch-shifting library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: sox, librosa, scipy, ffmpeg
+10 example user instructions:
+1. Use rubberband to clean, resample, or normalize audio.
+2. Use rubberband when a waveform or soundtrack sounds uneven.
+3. Use rubberband to convert between lossless and compressed audio formats.
+4. Use rubberband to trim silence, fade, or smooth audio clips.
+5. Use rubberband when you need better playback or recording support.
+6. Use rubberband to reduce noise, echo, or rough edges in speech.
+7. Use rubberband for batch audio repair in a media workflow.
+8. Use rubberband with sox, librosa, scipy, or ffmpeg.
+9. Use rubberband when your project is voice cleanup or sound analysis.
+10. Use rubberband whenever the audio step is the bottleneck.
+
+sox
+Workflow focus: audio cleanup
+Purpose: Swiss-army audio processing tool.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: rubberband, libsamplerate, libsoxr, libsndfile
+10 example user instructions:
+1. Use sox to clean, resample, or normalize audio.
+2. Use sox when a waveform or soundtrack sounds uneven.
+3. Use sox to convert between lossless and compressed audio formats.
+4. Use sox to trim silence, fade, or smooth audio clips.
+5. Use sox when you need better playback or recording support.
+6. Use sox to reduce noise, echo, or rough edges in speech.
+7. Use sox for batch audio repair in a media workflow.
+8. Use sox with sox, librosa, scipy, or ffmpeg.
+9. Use sox when your project is voice cleanup or sound analysis.
+10. Use sox whenever the audio step is the bottleneck.
+
+Termux Media Stack Manual v3
+
+Page 9
+
+speexdsp
+Workflow focus: audio cleanup
+Purpose: Speech-oriented digital signal processing library.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use speexdsp to clean, resample, or normalize audio.
+2. Use speexdsp when a waveform or soundtrack sounds uneven.
+3. Use speexdsp to convert between lossless and compressed audio formats.
+4. Use speexdsp to trim silence, fade, or smooth audio clips.
+5. Use speexdsp when you need better playback or recording support.
+6. Use speexdsp to reduce noise, echo, or rough edges in speech.
+7. Use speexdsp for batch audio repair in a media workflow.
+8. Use speexdsp with sox, librosa, scipy, or ffmpeg.
+9. Use speexdsp when your project is voice cleanup or sound analysis.
+10. Use speexdsp whenever the audio step is the bottleneck.
+
+librosa
+Workflow focus: audio cleanup
+Purpose: Python audio analysis and feature extraction.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Typically used with numpy and scipy, often alongside soundfile-style audio IO.
+Pairs well with: numpy, scipy, sox, rubberband, soundfile-style IO
+10 example user instructions:
+1. Use librosa to clean, resample, or normalize audio.
+2. Use librosa when a waveform or soundtrack sounds uneven.
+3. Use librosa to convert between lossless and compressed audio formats.
+4. Use librosa to trim silence, fade, or smooth audio clips.
+5. Use librosa when you need better playback or recording support.
+6. Use librosa to reduce noise, echo, or rough edges in speech.
+7. Use librosa for batch audio repair in a media workflow.
+8. Use librosa with sox, librosa, scipy, or ffmpeg.
+9. Use librosa when your project is voice cleanup or sound analysis.
+10. Use librosa whenever the audio step is the bottleneck.
+
+numpy [Python]
+Workflow focus: audio cleanup
+Purpose: NumPy array foundation for Python media scripts.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually paired with scipy, Pillow, OpenCV, or audio tools.
+Pairs well with: scipy, OpenCV, Pillow, librosa
+10 example user instructions:
+1. Use numpy to clean, resample, or normalize audio.
+2. Use numpy when a waveform or soundtrack sounds uneven.
+3. Use numpy to convert between lossless and compressed audio formats.
+4. Use numpy to trim silence, fade, or smooth audio clips.
+5. Use numpy when you need better playback or recording support.
+6. Use numpy to reduce noise, echo, or rough edges in speech.
+7. Use numpy for batch audio repair in a media workflow.
+8. Use numpy with sox, librosa, scipy, or ffmpeg.
+9. Use numpy when your project is voice cleanup or sound analysis.
+10. Use numpy whenever the audio step is the bottleneck.
+
+scipy
+Workflow focus: audio cleanup
+Purpose: Scientific computing and signal processing toolkit.
+When to use: Use this when playback, capture, cleanup, routing, or DSP support is needed.
+Depends on: Usually paired with numpy.
+Pairs well with: numpy, librosa, python-scipy
+10 example user instructions:
+1. Use scipy to clean, resample, or normalize audio.
+2. Use scipy when a waveform or soundtrack sounds uneven.
+3. Use scipy to convert between lossless and compressed audio formats.
+4. Use scipy to trim silence, fade, or smooth audio clips.
+5. Use scipy when you need better playback or recording support.
+6. Use scipy to reduce noise, echo, or rough edges in speech.
+7. Use scipy for batch audio repair in a media workflow.
+8. Use scipy with sox, librosa, scipy, or ffmpeg.
+9. Use scipy when your project is voice cleanup or sound analysis.
+10. Use scipy whenever the audio step is the bottleneck.
+
+Termux Media Stack Manual v3
+
+Page 10
+
+Termux Media Stack Manual v3
+
+Page 11
+
+Video editing and automation
+Best for timeline edits, conversion, filter chains, and repeatable export jobs.
+
+ffmpeg
+Workflow focus: video editing
+Purpose: Universal audio-video processing engine.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually pairs with codec libraries, fonts, and subtitle libs; many workflows also need yt-dlp, moviepy, or ffmpeg-python.
+Pairs well with: libass, libx264, libx265, libvpx, libaom, yt-dlp, moviepy, ffmpeg-python
+10 example user instructions:
+1. Use ffmpeg to export a clip in a format your phone can play.
+2. Use ffmpeg when ffmpeg needs this codec or filter in the chain.
+3. Use ffmpeg to convert a source video without changing the workflow.
+4. Use ffmpeg to make a smaller upload for sharing.
+5. Use ffmpeg to test whether a format plays smoothly in Termux.
+6. Use ffmpeg to batch process many clips with the same settings.
+7. Use ffmpeg when you need better compression or quality control.
+8. Use ffmpeg with ffmpeg-python, moviepy, or editly.
+9. Use ffmpeg to keep a media pipeline compatible across apps.
+10. Use ffmpeg when the job is video edit, transcode, or render.
+
+mlt
+Workflow focus: video editing
+Purpose: Multimedia framework for timelines, filters, and playout.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use mlt to export a clip in a format your phone can play.
+2. Use mlt when ffmpeg needs this codec or filter in the chain.
+3. Use mlt to convert a source video without changing the workflow.
+4. Use mlt to make a smaller upload for sharing.
+5. Use mlt to test whether a format plays smoothly in Termux.
+6. Use mlt to batch process many clips with the same settings.
+7. Use mlt when you need better compression or quality control.
+8. Use mlt with ffmpeg-python, moviepy, or editly.
+9. Use mlt to keep a media pipeline compatible across apps.
+10. Use mlt when the job is video edit, transcode, or render.
+
+movit
+Workflow focus: video editing
+Purpose: GPU-accelerated video effects framework.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use movit to export a clip in a format your phone can play.
+2. Use movit when ffmpeg needs this codec or filter in the chain.
+3. Use movit to convert a source video without changing the workflow.
+4. Use movit to make a smaller upload for sharing.
+5. Use movit to test whether a format plays smoothly in Termux.
+6. Use movit to batch process many clips with the same settings.
+7. Use movit when you need better compression or quality control.
+8. Use movit with ffmpeg-python, moviepy, or editly.
+9. Use movit to keep a media pipeline compatible across apps.
+10. Use movit when the job is video edit, transcode, or render.
+
+editly
+Workflow focus: video editing
+Purpose: Node-based video edit automation tool.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually expects ffmpeg and a Node runtime.
+Pairs well with: ffmpeg, moviepy, subtitles, Node-based automation
+10 example user instructions:
+1. Use editly to export a clip in a format your phone can play.
+2. Use editly when ffmpeg needs this codec or filter in the chain.
+3. Use editly to convert a source video without changing the workflow.
+4. Use editly to make a smaller upload for sharing.
+
+Termux Media Stack Manual v3
+
+Page 12
+
+5. Use editly to test whether a format plays smoothly in Termux.
+6. Use editly to batch process many clips with the same settings.
+7. Use editly when you need better compression or quality control.
+8. Use editly with ffmpeg-python, moviepy, or editly.
+9. Use editly to keep a media pipeline compatible across apps.
+10. Use editly when the job is video edit, transcode, or render.
+
+freebuff
+Workflow focus: video editing
+Purpose: Node-based helper package for media automation.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually used with Node-based media workflows, often around ffmpeg.
+Pairs well with: ffmpeg, Node scripts, editly
+10 example user instructions:
+1. Use freebuff to export a clip in a format your phone can play.
+2. Use freebuff when ffmpeg needs this codec or filter in the chain.
+3. Use freebuff to convert a source video without changing the workflow.
+4. Use freebuff to make a smaller upload for sharing.
+5. Use freebuff to test whether a format plays smoothly in Termux.
+6. Use freebuff to batch process many clips with the same settings.
+7. Use freebuff when you need better compression or quality control.
+8. Use freebuff with ffmpeg-python, moviepy, or editly.
+9. Use freebuff to keep a media pipeline compatible across apps.
+10. Use freebuff when the job is video edit, transcode, or render.
+
+Termux Media Stack Manual v3
+
+Page 13
+
+Subtitle and text shaping
+Best for subtitle editing, rendering, and caption conversion.
+
+fontconfig
+Workflow focus: subtitle work
+Purpose: Font discovery and matching system.
+When to use: Use this when subtitles, captions, overlays, or mixed-script text need correct rendering.
+Depends on: Usually paired with freetype and a font set like ttf-dejavu.
+Pairs well with: freetype, harfbuzz, fribidi, pango, libass
+10 example user instructions:
+1. Use fontconfig to render, fix, or convert subtitle files.
+2. Use fontconfig when subtitles need fonts, shaping, or bidi support.
+3. Use fontconfig to burn captions into a video or preview them.
+4. Use fontconfig to clean timing, tags, or line breaks in subtitles.
+5. Use fontconfig when text direction or script shaping matters.
+6. Use fontconfig to prepare subtitles for ffmpeg or a video editor.
+7. Use fontconfig with fontconfig, freetype, fribidi, and harfbuzz.
+8. Use fontconfig to keep subtitles readable across devices.
+9. Use fontconfig when the project is caption conversion or subtitle polishing.
+10. Use fontconfig whenever the video needs clear on-screen text.
+
+freetype
+Workflow focus: subtitle work
+Purpose: Font rasterization library.
+When to use: Use this when subtitles, captions, overlays, or mixed-script text need correct rendering.
+Depends on: Usually paired with fontconfig and renderers like pango or cairo.
+Pairs well with: fontconfig, pango, cairo, libass
+10 example user instructions:
+1. Use freetype to render, fix, or convert subtitle files.
+2. Use freetype when subtitles need fonts, shaping, or bidi support.
+3. Use freetype to burn captions into a video or preview them.
+4. Use freetype to clean timing, tags, or line breaks in subtitles.
+5. Use freetype when text direction or script shaping matters.
+6. Use freetype to prepare subtitles for ffmpeg or a video editor.
+7. Use freetype with fontconfig, freetype, fribidi, and harfbuzz.
+8. Use freetype to keep subtitles readable across devices.
+9. Use freetype when the project is caption conversion or subtitle polishing.
+10. Use freetype whenever the video needs clear on-screen text.
+
+fribidi
+Workflow focus: subtitle work
+Purpose: Bidirectional text processing library.
+When to use: Use this when subtitles, captions, overlays, or mixed-script text need correct rendering.
+Depends on: Often paired with harfbuzz and pango.
+Pairs well with: harfbuzz, pango, libass
+10 example user instructions:
+1. Use fribidi to render, fix, or convert subtitle files.
+2. Use fribidi when subtitles need fonts, shaping, or bidi support.
+3. Use fribidi to burn captions into a video or preview them.
+4. Use fribidi to clean timing, tags, or line breaks in subtitles.
+5. Use fribidi when text direction or script shaping matters.
+6. Use fribidi to prepare subtitles for ffmpeg or a video editor.
+7. Use fribidi with fontconfig, freetype, fribidi, and harfbuzz.
+8. Use fribidi to keep subtitles readable across devices.
+9. Use fribidi when the project is caption conversion or subtitle polishing.
+10. Use fribidi whenever the video needs clear on-screen text.
+
+harfbuzz
+Workflow focus: subtitle work
+Purpose: Text shaping engine for complex scripts.
+When to use: Use this when subtitles, captions, overlays, or mixed-script text need correct rendering.
+Depends on: Usually paired with freetype and fontconfig.
+Pairs well with: fribidi, fontconfig, freetype, pango
+10 example user instructions:
+1. Use harfbuzz to render, fix, or convert subtitle files.
+2. Use harfbuzz when subtitles need fonts, shaping, or bidi support.
+3. Use harfbuzz to burn captions into a video or preview them.
+4. Use harfbuzz to clean timing, tags, or line breaks in subtitles.
+
+Termux Media Stack Manual v3
+
+Page 14
+
+5. Use harfbuzz when text direction or script shaping matters.
+6. Use harfbuzz to prepare subtitles for ffmpeg or a video editor.
+7. Use harfbuzz with fontconfig, freetype, fribidi, and harfbuzz.
+8. Use harfbuzz to keep subtitles readable across devices.
+9. Use harfbuzz when the project is caption conversion or subtitle polishing.
+10. Use harfbuzz whenever the video needs clear on-screen text.
+
+libass
+Workflow focus: subtitle work
+Purpose: Subtitle rendering engine for ASS and SSA.
+When to use: Use this when subtitles, captions, overlays, or mixed-script text need correct rendering.
+Depends on: Requires fonts and text-shaping libs.
+Pairs well with: ffmpeg, fontconfig, freetype, fribidi, harfbuzz, pysubs2
+10 example user instructions:
+1. Use libass to render, fix, or convert subtitle files.
+2. Use libass when subtitles need fonts, shaping, or bidi support.
+3. Use libass to burn captions into a video or preview them.
+4. Use libass to clean timing, tags, or line breaks in subtitles.
+5. Use libass when text direction or script shaping matters.
+6. Use libass to prepare subtitles for ffmpeg or a video editor.
+7. Use libass with fontconfig, freetype, fribidi, and harfbuzz.
+8. Use libass to keep subtitles readable across devices.
+9. Use libass when the project is caption conversion or subtitle polishing.
+10. Use libass whenever the video needs clear on-screen text.
+
+pango
+Workflow focus: subtitle work
+Purpose: Layout engine for text and glyph rendering.
+When to use: Use this when subtitles, captions, overlays, or mixed-script text need correct rendering.
+Depends on: Usually paired with fontconfig, freetype, fribidi, and harfbuzz.
+Pairs well with: fontconfig, freetype, harfbuzz, fribidi
+10 example user instructions:
+1. Use pango to render, fix, or convert subtitle files.
+2. Use pango when subtitles need fonts, shaping, or bidi support.
+3. Use pango to burn captions into a video or preview them.
+4. Use pango to clean timing, tags, or line breaks in subtitles.
+5. Use pango when text direction or script shaping matters.
+6. Use pango to prepare subtitles for ffmpeg or a video editor.
+7. Use pango with fontconfig, freetype, fribidi, and harfbuzz.
+8. Use pango to keep subtitles readable across devices.
+9. Use pango when the project is caption conversion or subtitle polishing.
+10. Use pango whenever the video needs clear on-screen text.
+
+ttf-dejavu
+Workflow focus: subtitle work
+Purpose: Common readable font set.
+When to use: Use this when subtitles, captions, overlays, or mixed-script text need correct rendering.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use ttf-dejavu to render, fix, or convert subtitle files.
+2. Use ttf-dejavu when subtitles need fonts, shaping, or bidi support.
+3. Use ttf-dejavu to burn captions into a video or preview them.
+4. Use ttf-dejavu to clean timing, tags, or line breaks in subtitles.
+5. Use ttf-dejavu when text direction or script shaping matters.
+6. Use ttf-dejavu to prepare subtitles for ffmpeg or a video editor.
+7. Use ttf-dejavu with fontconfig, freetype, fribidi, and harfbuzz.
+8. Use ttf-dejavu to keep subtitles readable across devices.
+9. Use ttf-dejavu when the project is caption conversion or subtitle polishing.
+10. Use ttf-dejavu whenever the video needs clear on-screen text.
+
+pycaption
+Workflow focus: subtitle work
+Purpose: Python captions conversion and manipulation library.
+When to use: Use this when subtitles, captions, overlays, or mixed-script text need correct rendering.
+Depends on: Depends on your caption files and often pairs with ffmpeg and srt.
+Pairs well with: pysubs2, srt, ffmpeg, youtube-transcript-api
+10 example user instructions:
+1. Use pycaption to render, fix, or convert subtitle files.
+
+Termux Media Stack Manual v3
+
+Page 15
+
+2. Use pycaption when subtitles need fonts, shaping, or bidi support.
+3. Use pycaption to burn captions into a video or preview them.
+4. Use pycaption to clean timing, tags, or line breaks in subtitles.
+5. Use pycaption when text direction or script shaping matters.
+6. Use pycaption to prepare subtitles for ffmpeg or a video editor.
+7. Use pycaption with fontconfig, freetype, fribidi, and harfbuzz.
+8. Use pycaption to keep subtitles readable across devices.
+9. Use pycaption when the project is caption conversion or subtitle polishing.
+10. Use pycaption whenever the video needs clear on-screen text.
+
+pysubs2
+Workflow focus: subtitle work
+Purpose: Python library for reading and editing subtitle files.
+When to use: Use this when subtitles, captions, overlays, or mixed-script text need correct rendering.
+Depends on: Usually paired with ffmpeg, libass, and a font stack.
+Pairs well with: libass, ffmpeg, srt, pycaption, ttf-dejavu
+10 example user instructions:
+1. Use pysubs2 to render, fix, or convert subtitle files.
+2. Use pysubs2 when subtitles need fonts, shaping, or bidi support.
+3. Use pysubs2 to burn captions into a video or preview them.
+4. Use pysubs2 to clean timing, tags, or line breaks in subtitles.
+5. Use pysubs2 when text direction or script shaping matters.
+6. Use pysubs2 to prepare subtitles for ffmpeg or a video editor.
+7. Use pysubs2 with fontconfig, freetype, fribidi, and harfbuzz.
+8. Use pysubs2 to keep subtitles readable across devices.
+9. Use pysubs2 when the project is caption conversion or subtitle polishing.
+10. Use pysubs2 whenever the video needs clear on-screen text.
+
+srt
+Workflow focus: subtitle work
+Purpose: Python helper for working with SRT subtitles.
+When to use: Use this when subtitles, captions, overlays, or mixed-script text need correct rendering.
+Depends on: Usually used with subtitle files and transcript pipelines.
+Pairs well with: pycaption, pysubs2, ffmpeg, transcript scripts
+10 example user instructions:
+1. Use srt to render, fix, or convert subtitle files.
+2. Use srt when subtitles need fonts, shaping, or bidi support.
+3. Use srt to burn captions into a video or preview them.
+4. Use srt to clean timing, tags, or line breaks in subtitles.
+5. Use srt when text direction or script shaping matters.
+6. Use srt to prepare subtitles for ffmpeg or a video editor.
+7. Use srt with fontconfig, freetype, fribidi, and harfbuzz.
+8. Use srt to keep subtitles readable across devices.
+9. Use srt when the project is caption conversion or subtitle polishing.
+10. Use srt whenever the video needs clear on-screen text.
+
+Termux Media Stack Manual v3
+
+Page 16
+
+Video codecs and rendering
+Best when a media editor or transcoder needs a specific codec or GPU path.
+
+frei0r-plugins
+Workflow focus: video editing
+Purpose: Video effect plugins for filter chains.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use frei0r-plugins to export a clip in a format your phone can play.
+2. Use frei0r-plugins when ffmpeg needs this codec or filter in the chain.
+3. Use frei0r-plugins to convert a source video without changing the workflow.
+4. Use frei0r-plugins to make a smaller upload for sharing.
+5. Use frei0r-plugins to test whether a format plays smoothly in Termux.
+6. Use frei0r-plugins to batch process many clips with the same settings.
+7. Use frei0r-plugins when you need better compression or quality control.
+8. Use frei0r-plugins with ffmpeg-python, moviepy, or editly.
+9. Use frei0r-plugins to keep a media pipeline compatible across apps.
+10. Use frei0r-plugins when the job is video edit, transcode, or render.
+
+libaom
+Workflow focus: video editing
+Purpose: AV1 codec library.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually consumed by ffmpeg or a codec-aware app.
+Pairs well with: ffmpeg, libdav1d, svt-av1
+10 example user instructions:
+1. Use libaom to export a clip in a format your phone can play.
+2. Use libaom when ffmpeg needs this codec or filter in the chain.
+3. Use libaom to convert a source video without changing the workflow.
+4. Use libaom to make a smaller upload for sharing.
+5. Use libaom to test whether a format plays smoothly in Termux.
+6. Use libaom to batch process many clips with the same settings.
+7. Use libaom when you need better compression or quality control.
+8. Use libaom with ffmpeg-python, moviepy, or editly.
+9. Use libaom to keep a media pipeline compatible across apps.
+10. Use libaom when the job is video edit, transcode, or render.
+
+libbluray
+Workflow focus: video editing
+Purpose: Blu-ray disc access library.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libbluray to export a clip in a format your phone can play.
+2. Use libbluray when ffmpeg needs this codec or filter in the chain.
+3. Use libbluray to convert a source video without changing the workflow.
+4. Use libbluray to make a smaller upload for sharing.
+5. Use libbluray to test whether a format plays smoothly in Termux.
+6. Use libbluray to batch process many clips with the same settings.
+7. Use libbluray when you need better compression or quality control.
+8. Use libbluray with ffmpeg-python, moviepy, or editly.
+9. Use libbluray to keep a media pipeline compatible across apps.
+10. Use libbluray when the job is video edit, transcode, or render.
+
+libdav1d
+Workflow focus: video editing
+Purpose: AV1 decoder library.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually consumed by ffmpeg or a decoder-aware app.
+Pairs well with: ffmpeg, libaom, AV1 workflows
+10 example user instructions:
+1. Use libdav1d to export a clip in a format your phone can play.
+2. Use libdav1d when ffmpeg needs this codec or filter in the chain.
+3. Use libdav1d to convert a source video without changing the workflow.
+4. Use libdav1d to make a smaller upload for sharing.
+
+Termux Media Stack Manual v3
+
+Page 17
+
+5. Use libdav1d to test whether a format plays smoothly in Termux.
+6. Use libdav1d to batch process many clips with the same settings.
+7. Use libdav1d when you need better compression or quality control.
+8. Use libdav1d with ffmpeg-python, moviepy, or editly.
+9. Use libdav1d to keep a media pipeline compatible across apps.
+10. Use libdav1d when the job is video edit, transcode, or render.
+
+libde265
+Workflow focus: video editing
+Purpose: HEVC decoder library.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually consumed by ffmpeg or a HEVC-aware app.
+Pairs well with: ffmpeg, libx265, HEVC workflows
+10 example user instructions:
+1. Use libde265 to export a clip in a format your phone can play.
+2. Use libde265 when ffmpeg needs this codec or filter in the chain.
+3. Use libde265 to convert a source video without changing the workflow.
+4. Use libde265 to make a smaller upload for sharing.
+5. Use libde265 to test whether a format plays smoothly in Termux.
+6. Use libde265 to batch process many clips with the same settings.
+7. Use libde265 when you need better compression or quality control.
+8. Use libde265 with ffmpeg-python, moviepy, or editly.
+9. Use libde265 to keep a media pipeline compatible across apps.
+10. Use libde265 when the job is video edit, transcode, or render.
+
+libplacebo
+Workflow focus: video editing
+Purpose: Video rendering and color management library.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libplacebo to export a clip in a format your phone can play.
+2. Use libplacebo when ffmpeg needs this codec or filter in the chain.
+3. Use libplacebo to convert a source video without changing the workflow.
+4. Use libplacebo to make a smaller upload for sharing.
+5. Use libplacebo to test whether a format plays smoothly in Termux.
+6. Use libplacebo to batch process many clips with the same settings.
+7. Use libplacebo when you need better compression or quality control.
+8. Use libplacebo with ffmpeg-python, moviepy, or editly.
+9. Use libplacebo to keep a media pipeline compatible across apps.
+10. Use libplacebo when the job is video edit, transcode, or render.
+
+librav1e
+Workflow focus: video editing
+Purpose: Rust-based AV1 encoder library.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually consumed by ffmpeg or other AV1 front ends.
+Pairs well with: ffmpeg, libaom, svt-av1
+10 example user instructions:
+1. Use librav1e to export a clip in a format your phone can play.
+2. Use librav1e when ffmpeg needs this codec or filter in the chain.
+3. Use librav1e to convert a source video without changing the workflow.
+4. Use librav1e to make a smaller upload for sharing.
+5. Use librav1e to test whether a format plays smoothly in Termux.
+6. Use librav1e to batch process many clips with the same settings.
+7. Use librav1e when you need better compression or quality control.
+8. Use librav1e with ffmpeg-python, moviepy, or editly.
+9. Use librav1e to keep a media pipeline compatible across apps.
+10. Use librav1e when the job is video edit, transcode, or render.
+
+libv4l
+Workflow focus: video editing
+Purpose: Video4Linux capture helper library.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libv4l to export a clip in a format your phone can play.
+
+Termux Media Stack Manual v3
+
+Page 18
+
+2. Use libv4l when ffmpeg needs this codec or filter in the chain.
+3. Use libv4l to convert a source video without changing the workflow.
+4. Use libv4l to make a smaller upload for sharing.
+5. Use libv4l to test whether a format plays smoothly in Termux.
+6. Use libv4l to batch process many clips with the same settings.
+7. Use libv4l when you need better compression or quality control.
+8. Use libv4l with ffmpeg-python, moviepy, or editly.
+9. Use libv4l to keep a media pipeline compatible across apps.
+10. Use libv4l when the job is video edit, transcode, or render.
+
+libvidstab
+Workflow focus: video editing
+Purpose: Video stabilization library.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libvidstab to export a clip in a format your phone can play.
+2. Use libvidstab when ffmpeg needs this codec or filter in the chain.
+3. Use libvidstab to convert a source video without changing the workflow.
+4. Use libvidstab to make a smaller upload for sharing.
+5. Use libvidstab to test whether a format plays smoothly in Termux.
+6. Use libvidstab to batch process many clips with the same settings.
+7. Use libvidstab when you need better compression or quality control.
+8. Use libvidstab with ffmpeg-python, moviepy, or editly.
+9. Use libvidstab to keep a media pipeline compatible across apps.
+10. Use libvidstab when the job is video edit, transcode, or render.
+
+libvmaf
+Workflow focus: video editing
+Purpose: Video quality metric library.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libvmaf to export a clip in a format your phone can play.
+2. Use libvmaf when ffmpeg needs this codec or filter in the chain.
+3. Use libvmaf to convert a source video without changing the workflow.
+4. Use libvmaf to make a smaller upload for sharing.
+5. Use libvmaf to test whether a format plays smoothly in Termux.
+6. Use libvmaf to batch process many clips with the same settings.
+7. Use libvmaf when you need better compression or quality control.
+8. Use libvmaf with ffmpeg-python, moviepy, or editly.
+9. Use libvmaf to keep a media pipeline compatible across apps.
+10. Use libvmaf when the job is video edit, transcode, or render.
+
+libvpx
+Workflow focus: video editing
+Purpose: VP8 and VP9 codec library.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libvpx to export a clip in a format your phone can play.
+2. Use libvpx when ffmpeg needs this codec or filter in the chain.
+3. Use libvpx to convert a source video without changing the workflow.
+4. Use libvpx to make a smaller upload for sharing.
+5. Use libvpx to test whether a format plays smoothly in Termux.
+6. Use libvpx to batch process many clips with the same settings.
+7. Use libvpx when you need better compression or quality control.
+8. Use libvpx with ffmpeg-python, moviepy, or editly.
+9. Use libvpx to keep a media pipeline compatible across apps.
+10. Use libvpx when the job is video edit, transcode, or render.
+
+libx264
+Workflow focus: video editing
+Purpose: H.264 encoding library.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Depends on ffmpeg or another encoder front end.
+
+Termux Media Stack Manual v3
+
+Page 19
+
+Pairs well with: ffmpeg, moviepy, editly
+10 example user instructions:
+1. Use libx264 to export a clip in a format your phone can play.
+2. Use libx264 when ffmpeg needs this codec or filter in the chain.
+3. Use libx264 to convert a source video without changing the workflow.
+4. Use libx264 to make a smaller upload for sharing.
+5. Use libx264 to test whether a format plays smoothly in Termux.
+6. Use libx264 to batch process many clips with the same settings.
+7. Use libx264 when you need better compression or quality control.
+8. Use libx264 with ffmpeg-python, moviepy, or editly.
+9. Use libx264 to keep a media pipeline compatible across apps.
+10. Use libx264 when the job is video edit, transcode, or render.
+
+libx265
+Workflow focus: video editing
+Purpose: HEVC encoding library.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Depends on ffmpeg or another encoder front end.
+Pairs well with: ffmpeg, moviepy, editly
+10 example user instructions:
+1. Use libx265 to export a clip in a format your phone can play.
+2. Use libx265 when ffmpeg needs this codec or filter in the chain.
+3. Use libx265 to convert a source video without changing the workflow.
+4. Use libx265 to make a smaller upload for sharing.
+5. Use libx265 to test whether a format plays smoothly in Termux.
+6. Use libx265 to batch process many clips with the same settings.
+7. Use libx265 when you need better compression or quality control.
+8. Use libx265 with ffmpeg-python, moviepy, or editly.
+9. Use libx265 to keep a media pipeline compatible across apps.
+10. Use libx265 when the job is video edit, transcode, or render.
+
+libzimg
+Workflow focus: video editing
+Purpose: Image scaling and color conversion library.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libzimg to export a clip in a format your phone can play.
+2. Use libzimg when ffmpeg needs this codec or filter in the chain.
+3. Use libzimg to convert a source video without changing the workflow.
+4. Use libzimg to make a smaller upload for sharing.
+5. Use libzimg to test whether a format plays smoothly in Termux.
+6. Use libzimg to batch process many clips with the same settings.
+7. Use libzimg when you need better compression or quality control.
+8. Use libzimg with ffmpeg-python, moviepy, or editly.
+9. Use libzimg to keep a media pipeline compatible across apps.
+10. Use libzimg when the job is video edit, transcode, or render.
+
+mesa
+Workflow focus: video editing
+Purpose: OpenGL and graphics driver stack.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use mesa to export a clip in a format your phone can play.
+2. Use mesa when ffmpeg needs this codec or filter in the chain.
+3. Use mesa to convert a source video without changing the workflow.
+4. Use mesa to make a smaller upload for sharing.
+5. Use mesa to test whether a format plays smoothly in Termux.
+6. Use mesa to batch process many clips with the same settings.
+7. Use mesa when you need better compression or quality control.
+8. Use mesa with ffmpeg-python, moviepy, or editly.
+9. Use mesa to keep a media pipeline compatible across apps.
+10. Use mesa when the job is video edit, transcode, or render.
+
+mesa-vulkan-icd-swrast
+Workflow focus: video editing
+Purpose: Software Vulkan driver stack.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+
+Termux Media Stack Manual v3
+
+Page 20
+
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use mesa-vulkan-icd-swrast to export a clip in a format your phone can play.
+2. Use mesa-vulkan-icd-swrast when ffmpeg needs this codec or filter in the chain.
+3. Use mesa-vulkan-icd-swrast to convert a source video without changing the workflow.
+4. Use mesa-vulkan-icd-swrast to make a smaller upload for sharing.
+5. Use mesa-vulkan-icd-swrast to test whether a format plays smoothly in Termux.
+6. Use mesa-vulkan-icd-swrast to batch process many clips with the same settings.
+7. Use mesa-vulkan-icd-swrast when you need better compression or quality control.
+8. Use mesa-vulkan-icd-swrast with ffmpeg-python, moviepy, or editly.
+9. Use mesa-vulkan-icd-swrast to keep a media pipeline compatible across apps.
+10. Use mesa-vulkan-icd-swrast when the job is video edit, transcode, or render.
+
+opengl
+Workflow focus: video editing
+Purpose: OpenGL graphics interface package.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use opengl to export a clip in a format your phone can play.
+2. Use opengl when ffmpeg needs this codec or filter in the chain.
+3. Use opengl to convert a source video without changing the workflow.
+4. Use opengl to make a smaller upload for sharing.
+5. Use opengl to test whether a format plays smoothly in Termux.
+6. Use opengl to batch process many clips with the same settings.
+7. Use opengl when you need better compression or quality control.
+8. Use opengl with ffmpeg-python, moviepy, or editly.
+9. Use opengl to keep a media pipeline compatible across apps.
+10. Use opengl when the job is video edit, transcode, or render.
+
+sdl
+Workflow focus: video editing
+Purpose: Simple DirectMedia Layer for multimedia apps.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: opengl, mesa, ffmpeg, viewer apps
+10 example user instructions:
+1. Use sdl to export a clip in a format your phone can play.
+2. Use sdl when ffmpeg needs this codec or filter in the chain.
+3. Use sdl to convert a source video without changing the workflow.
+4. Use sdl to make a smaller upload for sharing.
+5. Use sdl to test whether a format plays smoothly in Termux.
+6. Use sdl to batch process many clips with the same settings.
+7. Use sdl when you need better compression or quality control.
+8. Use sdl with ffmpeg-python, moviepy, or editly.
+9. Use sdl to keep a media pipeline compatible across apps.
+10. Use sdl when the job is video edit, transcode, or render.
+
+sdl2
+Workflow focus: video editing
+Purpose: Modern SDL2 multimedia framework.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: opengl, mesa, ffmpeg, game or viewer apps
+10 example user instructions:
+1. Use sdl2 to export a clip in a format your phone can play.
+2. Use sdl2 when ffmpeg needs this codec or filter in the chain.
+3. Use sdl2 to convert a source video without changing the workflow.
+4. Use sdl2 to make a smaller upload for sharing.
+5. Use sdl2 to test whether a format plays smoothly in Termux.
+6. Use sdl2 to batch process many clips with the same settings.
+7. Use sdl2 when you need better compression or quality control.
+8. Use sdl2 with ffmpeg-python, moviepy, or editly.
+9. Use sdl2 to keep a media pipeline compatible across apps.
+10. Use sdl2 when the job is video edit, transcode, or render.
+
+svt-av1
+Workflow focus: video editing
+Purpose: AV1 encoder library.
+
+Termux Media Stack Manual v3
+
+Page 21
+
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually consumed by ffmpeg or other AV1 front ends.
+Pairs well with: ffmpeg, libaom, librav1e
+10 example user instructions:
+1. Use svt-av1 to export a clip in a format your phone can play.
+2. Use svt-av1 when ffmpeg needs this codec or filter in the chain.
+3. Use svt-av1 to convert a source video without changing the workflow.
+4. Use svt-av1 to make a smaller upload for sharing.
+5. Use svt-av1 to test whether a format plays smoothly in Termux.
+6. Use svt-av1 to batch process many clips with the same settings.
+7. Use svt-av1 when you need better compression or quality control.
+8. Use svt-av1 with ffmpeg-python, moviepy, or editly.
+9. Use svt-av1 to keep a media pipeline compatible across apps.
+10. Use svt-av1 when the job is video edit, transcode, or render.
+
+vulkan-icd
+Workflow focus: video editing
+Purpose: Vulkan implementation package.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use vulkan-icd to export a clip in a format your phone can play.
+2. Use vulkan-icd when ffmpeg needs this codec or filter in the chain.
+3. Use vulkan-icd to convert a source video without changing the workflow.
+4. Use vulkan-icd to make a smaller upload for sharing.
+5. Use vulkan-icd to test whether a format plays smoothly in Termux.
+6. Use vulkan-icd to batch process many clips with the same settings.
+7. Use vulkan-icd when you need better compression or quality control.
+8. Use vulkan-icd with ffmpeg-python, moviepy, or editly.
+9. Use vulkan-icd to keep a media pipeline compatible across apps.
+10. Use vulkan-icd when the job is video edit, transcode, or render.
+
+vulkan-loader
+Workflow focus: video editing
+Purpose: Core Vulkan loader library.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use vulkan-loader to export a clip in a format your phone can play.
+2. Use vulkan-loader when ffmpeg needs this codec or filter in the chain.
+3. Use vulkan-loader to convert a source video without changing the workflow.
+4. Use vulkan-loader to make a smaller upload for sharing.
+5. Use vulkan-loader to test whether a format plays smoothly in Termux.
+6. Use vulkan-loader to batch process many clips with the same settings.
+7. Use vulkan-loader when you need better compression or quality control.
+8. Use vulkan-loader with ffmpeg-python, moviepy, or editly.
+9. Use vulkan-loader to keep a media pipeline compatible across apps.
+10. Use vulkan-loader when the job is video edit, transcode, or render.
+
+vulkan-loader-generic
+Workflow focus: video editing
+Purpose: Generic Vulkan loader package.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use vulkan-loader-generic to export a clip in a format your phone can play.
+2. Use vulkan-loader-generic when ffmpeg needs this codec or filter in the chain.
+3. Use vulkan-loader-generic to convert a source video without changing the workflow.
+4. Use vulkan-loader-generic to make a smaller upload for sharing.
+5. Use vulkan-loader-generic to test whether a format plays smoothly in Termux.
+6. Use vulkan-loader-generic to batch process many clips with the same settings.
+7. Use vulkan-loader-generic when you need better compression or quality control.
+8. Use vulkan-loader-generic with ffmpeg-python, moviepy, or editly.
+9. Use vulkan-loader-generic to keep a media pipeline compatible across apps.
+10. Use vulkan-loader-generic when the job is video edit, transcode, or render.
+
+vulkan-tools
+Workflow focus: video editing
+
+Termux Media Stack Manual v3
+
+Page 22
+
+Purpose: Utilities for Vulkan diagnostics and testing.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: vulkan-loader, mesa, opengl, sdl2
+10 example user instructions:
+1. Use vulkan-tools to export a clip in a format your phone can play.
+2. Use vulkan-tools when ffmpeg needs this codec or filter in the chain.
+3. Use vulkan-tools to convert a source video without changing the workflow.
+4. Use vulkan-tools to make a smaller upload for sharing.
+5. Use vulkan-tools to test whether a format plays smoothly in Termux.
+6. Use vulkan-tools to batch process many clips with the same settings.
+7. Use vulkan-tools when you need better compression or quality control.
+8. Use vulkan-tools with ffmpeg-python, moviepy, or editly.
+9. Use vulkan-tools to keep a media pipeline compatible across apps.
+10. Use vulkan-tools when the job is video edit, transcode, or render.
+
+xvidcore
+Workflow focus: video editing
+Purpose: Xvid MPEG-4 codec library.
+When to use: Use this when a timeline, encoder, decoder, or rendering path needs this package.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use xvidcore to export a clip in a format your phone can play.
+2. Use xvidcore when ffmpeg needs this codec or filter in the chain.
+3. Use xvidcore to convert a source video without changing the workflow.
+4. Use xvidcore to make a smaller upload for sharing.
+5. Use xvidcore to test whether a format plays smoothly in Termux.
+6. Use xvidcore to batch process many clips with the same settings.
+7. Use xvidcore when you need better compression or quality control.
+8. Use xvidcore with ffmpeg-python, moviepy, or editly.
+9. Use xvidcore to keep a media pipeline compatible across apps.
+10. Use xvidcore when the job is video edit, transcode, or render.
+
+Termux Media Stack Manual v3
+
+Page 23
+
+Image processing and rendering
+Best for thumbnails, still images, screenshots, and frame extraction.
+
+gdk-pixbuf
+Workflow focus: video editing / OCR / automation
+Purpose: Image loading and thumbnail support library.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Often paired with desktop or terminal image tools.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use gdk-pixbuf to resize, convert, or inspect images.
+2. Use gdk-pixbuf when a media pipeline needs image decoding or encoding.
+3. Use gdk-pixbuf to build thumbnails, previews, or contact sheets.
+4. Use gdk-pixbuf for screenshot cleanup before OCR.
+5. Use gdk-pixbuf to transform graphics for a video or post.
+6. Use gdk-pixbuf when the app needs fast image rendering.
+7. Use gdk-pixbuf with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use gdk-pixbuf to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use gdk-pixbuf when terminal or GUI image display is part of the job.
+10. Use gdk-pixbuf whenever the pipeline touches still images.
+
+giflib
+Workflow focus: video editing / OCR / automation
+Purpose: GIF image encoding and decoding support.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use giflib to resize, convert, or inspect images.
+2. Use giflib when a media pipeline needs image decoding or encoding.
+3. Use giflib to build thumbnails, previews, or contact sheets.
+4. Use giflib for screenshot cleanup before OCR.
+5. Use giflib to transform graphics for a video or post.
+6. Use giflib when the app needs fast image rendering.
+7. Use giflib with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use giflib to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use giflib when terminal or GUI image display is part of the job.
+10. Use giflib whenever the pipeline touches still images.
+
+graphicsmagick
+Workflow focus: video editing / OCR / automation
+Purpose: Command-line image conversion and batch processing.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Usually paired with fonts, image codecs, and batch scripts.
+Pairs well with: libpng, libjpeg-turbo, libwebp, pillow
+10 example user instructions:
+1. Use graphicsmagick to resize, convert, or inspect images.
+2. Use graphicsmagick when a media pipeline needs image decoding or encoding.
+3. Use graphicsmagick to build thumbnails, previews, or contact sheets.
+4. Use graphicsmagick for screenshot cleanup before OCR.
+5. Use graphicsmagick to transform graphics for a video or post.
+6. Use graphicsmagick when the app needs fast image rendering.
+7. Use graphicsmagick with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use graphicsmagick to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use graphicsmagick when terminal or GUI image display is part of the job.
+10. Use graphicsmagick whenever the pipeline touches still images.
+
+libavif
+Workflow focus: video editing / OCR / automation
+Purpose: AVIF image codec library.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Usually used through ffmpeg, graphics tools, or image libraries.
+Pairs well with: graphicsmagick, pillow, libwebp, libjxl
+10 example user instructions:
+1. Use libavif to resize, convert, or inspect images.
+2. Use libavif when a media pipeline needs image decoding or encoding.
+3. Use libavif to build thumbnails, previews, or contact sheets.
+4. Use libavif for screenshot cleanup before OCR.
+
+Termux Media Stack Manual v3
+
+Page 24
+
+5. Use libavif to transform graphics for a video or post.
+6. Use libavif when the app needs fast image rendering.
+7. Use libavif with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use libavif to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use libavif when terminal or GUI image display is part of the job.
+10. Use libavif whenever the pipeline touches still images.
+
+libcairo
+Workflow focus: video editing / OCR / automation
+Purpose: 2D graphics rendering library.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libcairo to resize, convert, or inspect images.
+2. Use libcairo when a media pipeline needs image decoding or encoding.
+3. Use libcairo to build thumbnails, previews, or contact sheets.
+4. Use libcairo for screenshot cleanup before OCR.
+5. Use libcairo to transform graphics for a video or post.
+6. Use libcairo when the app needs fast image rendering.
+7. Use libcairo with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use libcairo to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use libcairo when terminal or GUI image display is part of the job.
+10. Use libcairo whenever the pipeline touches still images.
+
+libexif
+Workflow focus: video editing / OCR / automation
+Purpose: EXIF metadata reading library.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libexif to resize, convert, or inspect images.
+2. Use libexif when a media pipeline needs image decoding or encoding.
+3. Use libexif to build thumbnails, previews, or contact sheets.
+4. Use libexif for screenshot cleanup before OCR.
+5. Use libexif to transform graphics for a video or post.
+6. Use libexif when the app needs fast image rendering.
+7. Use libexif with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use libexif to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use libexif when terminal or GUI image display is part of the job.
+10. Use libexif whenever the pipeline touches still images.
+
+libgd
+Workflow focus: video editing / OCR / automation
+Purpose: 2D graphics drawing and image processing library.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libgd to resize, convert, or inspect images.
+2. Use libgd when a media pipeline needs image decoding or encoding.
+3. Use libgd to build thumbnails, previews, or contact sheets.
+4. Use libgd for screenshot cleanup before OCR.
+5. Use libgd to transform graphics for a video or post.
+6. Use libgd when the app needs fast image rendering.
+7. Use libgd with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use libgd to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use libgd when terminal or GUI image display is part of the job.
+10. Use libgd whenever the pipeline touches still images.
+
+libheif
+Workflow focus: video editing / OCR / automation
+Purpose: HEIF and HEIC image codec library.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libheif to resize, convert, or inspect images.
+
+Termux Media Stack Manual v3
+
+Page 25
+
+2. Use libheif when a media pipeline needs image decoding or encoding.
+3. Use libheif to build thumbnails, previews, or contact sheets.
+4. Use libheif for screenshot cleanup before OCR.
+5. Use libheif to transform graphics for a video or post.
+6. Use libheif when the app needs fast image rendering.
+7. Use libheif with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use libheif to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use libheif when terminal or GUI image display is part of the job.
+10. Use libheif whenever the pipeline touches still images.
+
+libjasper
+Workflow focus: video editing / OCR / automation
+Purpose: JPEG-2000 related image support library.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libjasper to resize, convert, or inspect images.
+2. Use libjasper when a media pipeline needs image decoding or encoding.
+3. Use libjasper to build thumbnails, previews, or contact sheets.
+4. Use libjasper for screenshot cleanup before OCR.
+5. Use libjasper to transform graphics for a video or post.
+6. Use libjasper when the app needs fast image rendering.
+7. Use libjasper with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use libjasper to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use libjasper when terminal or GUI image display is part of the job.
+10. Use libjasper whenever the pipeline touches still images.
+
+libjpeg-turbo
+Workflow focus: video editing / OCR / automation
+Purpose: Fast JPEG codec library.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libjpeg-turbo to resize, convert, or inspect images.
+2. Use libjpeg-turbo when a media pipeline needs image decoding or encoding.
+3. Use libjpeg-turbo to build thumbnails, previews, or contact sheets.
+4. Use libjpeg-turbo for screenshot cleanup before OCR.
+5. Use libjpeg-turbo to transform graphics for a video or post.
+6. Use libjpeg-turbo when the app needs fast image rendering.
+7. Use libjpeg-turbo with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use libjpeg-turbo to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use libjpeg-turbo when terminal or GUI image display is part of the job.
+10. Use libjpeg-turbo whenever the pipeline touches still images.
+
+libjxl
+Workflow focus: video editing / OCR / automation
+Purpose: JPEG XL image codec library.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Usually used through image conversion tools.
+Pairs well with: graphicsmagick, pillow, libavif, libpng
+10 example user instructions:
+1. Use libjxl to resize, convert, or inspect images.
+2. Use libjxl when a media pipeline needs image decoding or encoding.
+3. Use libjxl to build thumbnails, previews, or contact sheets.
+4. Use libjxl for screenshot cleanup before OCR.
+5. Use libjxl to transform graphics for a video or post.
+6. Use libjxl when the app needs fast image rendering.
+7. Use libjxl with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use libjxl to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use libjxl when terminal or GUI image display is part of the job.
+10. Use libjxl whenever the pipeline touches still images.
+
+libpng
+Workflow focus: video editing / OCR / automation
+Purpose: PNG image codec library.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+
+Termux Media Stack Manual v3
+
+Page 26
+
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libpng to resize, convert, or inspect images.
+2. Use libpng when a media pipeline needs image decoding or encoding.
+3. Use libpng to build thumbnails, previews, or contact sheets.
+4. Use libpng for screenshot cleanup before OCR.
+5. Use libpng to transform graphics for a video or post.
+6. Use libpng when the app needs fast image rendering.
+7. Use libpng with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use libpng to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use libpng when terminal or GUI image display is part of the job.
+10. Use libpng whenever the pipeline touches still images.
+
+librsvg
+Workflow focus: video editing / OCR / automation
+Purpose: SVG rendering library.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use librsvg to resize, convert, or inspect images.
+2. Use librsvg when a media pipeline needs image decoding or encoding.
+3. Use librsvg to build thumbnails, previews, or contact sheets.
+4. Use librsvg for screenshot cleanup before OCR.
+5. Use librsvg to transform graphics for a video or post.
+6. Use librsvg when the app needs fast image rendering.
+7. Use librsvg with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use librsvg to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use librsvg when terminal or GUI image display is part of the job.
+10. Use librsvg whenever the pipeline touches still images.
+
+libsixel
+Workflow focus: video editing / OCR / automation
+Purpose: Sixel image output library.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libsixel to resize, convert, or inspect images.
+2. Use libsixel when a media pipeline needs image decoding or encoding.
+3. Use libsixel to build thumbnails, previews, or contact sheets.
+4. Use libsixel for screenshot cleanup before OCR.
+5. Use libsixel to transform graphics for a video or post.
+6. Use libsixel when the app needs fast image rendering.
+7. Use libsixel with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use libsixel to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use libsixel when terminal or GUI image display is part of the job.
+10. Use libsixel whenever the pipeline touches still images.
+
+libtiff
+Workflow focus: video editing / OCR / automation
+Purpose: TIFF image codec library.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libtiff to resize, convert, or inspect images.
+2. Use libtiff when a media pipeline needs image decoding or encoding.
+3. Use libtiff to build thumbnails, previews, or contact sheets.
+4. Use libtiff for screenshot cleanup before OCR.
+5. Use libtiff to transform graphics for a video or post.
+6. Use libtiff when the app needs fast image rendering.
+7. Use libtiff with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use libtiff to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use libtiff when terminal or GUI image display is part of the job.
+10. Use libtiff whenever the pipeline touches still images.
+
+libwebp
+Workflow focus: video editing / OCR / automation
+Purpose: WebP image and animation codec library.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+
+Termux Media Stack Manual v3
+
+Page 27
+
+Depends on: Usually consumed by image converters and web tools.
+Pairs well with: graphicsmagick, pillow, ffmpeg, termimage
+10 example user instructions:
+1. Use libwebp to resize, convert, or inspect images.
+2. Use libwebp when a media pipeline needs image decoding or encoding.
+3. Use libwebp to build thumbnails, previews, or contact sheets.
+4. Use libwebp for screenshot cleanup before OCR.
+5. Use libwebp to transform graphics for a video or post.
+6. Use libwebp when the app needs fast image rendering.
+7. Use libwebp with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use libwebp to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use libwebp when terminal or GUI image display is part of the job.
+10. Use libwebp whenever the pipeline touches still images.
+
+opencv
+Workflow focus: video editing / OCR / automation
+Purpose: Computer vision and image processing library.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Often paired with ffmpeg, numpy, and image libraries.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use opencv to resize, convert, or inspect images.
+2. Use opencv when a media pipeline needs image decoding or encoding.
+3. Use opencv to build thumbnails, previews, or contact sheets.
+4. Use opencv for screenshot cleanup before OCR.
+5. Use opencv to transform graphics for a video or post.
+6. Use opencv when the app needs fast image rendering.
+7. Use opencv with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use opencv to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use opencv when terminal or GUI image display is part of the job.
+10. Use opencv whenever the pipeline touches still images.
+
+openjpeg
+Workflow focus: video editing / OCR / automation
+Purpose: JPEG 2000 codec library.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use openjpeg to resize, convert, or inspect images.
+2. Use openjpeg when a media pipeline needs image decoding or encoding.
+3. Use openjpeg to build thumbnails, previews, or contact sheets.
+4. Use openjpeg for screenshot cleanup before OCR.
+5. Use openjpeg to transform graphics for a video or post.
+6. Use openjpeg when the app needs fast image rendering.
+7. Use openjpeg with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use openjpeg to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use openjpeg when terminal or GUI image display is part of the job.
+10. Use openjpeg whenever the pipeline touches still images.
+
+openjpeg-tools
+Workflow focus: video editing / OCR / automation
+Purpose: Command-line tools for JPEG 2000.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Depends on openjpeg.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use openjpeg-tools to resize, convert, or inspect images.
+2. Use openjpeg-tools when a media pipeline needs image decoding or encoding.
+3. Use openjpeg-tools to build thumbnails, previews, or contact sheets.
+4. Use openjpeg-tools for screenshot cleanup before OCR.
+5. Use openjpeg-tools to transform graphics for a video or post.
+6. Use openjpeg-tools when the app needs fast image rendering.
+7. Use openjpeg-tools with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use openjpeg-tools to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use openjpeg-tools when terminal or GUI image display is part of the job.
+10. Use openjpeg-tools whenever the pipeline touches still images.
+
+qt6-qtsvg
+Workflow focus: video editing / OCR / automation
+Purpose: Qt SVG rendering module.
+
+Termux Media Stack Manual v3
+
+Page 28
+
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use qt6-qtsvg to resize, convert, or inspect images.
+2. Use qt6-qtsvg when a media pipeline needs image decoding or encoding.
+3. Use qt6-qtsvg to build thumbnails, previews, or contact sheets.
+4. Use qt6-qtsvg for screenshot cleanup before OCR.
+5. Use qt6-qtsvg to transform graphics for a video or post.
+6. Use qt6-qtsvg when the app needs fast image rendering.
+7. Use qt6-qtsvg with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use qt6-qtsvg to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use qt6-qtsvg when terminal or GUI image display is part of the job.
+10. Use qt6-qtsvg whenever the pipeline touches still images.
+
+termimage
+Workflow focus: video editing / OCR / automation
+Purpose: Terminal image rendering tool.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: timg, sdl, opengl, graphicsmagick
+10 example user instructions:
+1. Use termimage to resize, convert, or inspect images.
+2. Use termimage when a media pipeline needs image decoding or encoding.
+3. Use termimage to build thumbnails, previews, or contact sheets.
+4. Use termimage for screenshot cleanup before OCR.
+5. Use termimage to transform graphics for a video or post.
+6. Use termimage when the app needs fast image rendering.
+7. Use termimage with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use termimage to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use termimage when terminal or GUI image display is part of the job.
+10. Use termimage whenever the pipeline touches still images.
+
+timg
+Workflow focus: video editing / OCR / automation
+Purpose: Terminal image viewer.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: termimage, libpng, libjpeg-turbo, libwebp
+10 example user instructions:
+1. Use timg to resize, convert, or inspect images.
+2. Use timg when a media pipeline needs image decoding or encoding.
+3. Use timg to build thumbnails, previews, or contact sheets.
+4. Use timg for screenshot cleanup before OCR.
+5. Use timg to transform graphics for a video or post.
+6. Use timg when the app needs fast image rendering.
+7. Use timg with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use timg to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use timg when terminal or GUI image display is part of the job.
+10. Use timg whenever the pipeline touches still images.
+
+xcb-util-image
+Workflow focus: video editing / OCR / automation
+Purpose: XCB image helper library.
+When to use: Use this when images must be decoded, converted, inspected, or composited.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use xcb-util-image to resize, convert, or inspect images.
+2. Use xcb-util-image when a media pipeline needs image decoding or encoding.
+3. Use xcb-util-image to build thumbnails, previews, or contact sheets.
+4. Use xcb-util-image for screenshot cleanup before OCR.
+5. Use xcb-util-image to transform graphics for a video or post.
+6. Use xcb-util-image when the app needs fast image rendering.
+7. Use xcb-util-image with Pillow, OpenCV, or ffmpeg-based tooling.
+8. Use xcb-util-image to support image formats like PNG, WebP, AVIF, or TIFF.
+9. Use xcb-util-image when terminal or GUI image display is part of the job.
+10. Use xcb-util-image whenever the pipeline touches still images.
+
+Termux Media Stack Manual v3
+
+Page 29
+
+OCR and document capture
+Best when an image must become text.
+
+leptonica
+Workflow focus: OCR
+Purpose: Image processing foundation often used with OCR.
+When to use: Use this when screenshots, scans, or frame grabs need to become text.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use leptonica to extract text from screenshots or scans.
+2. Use leptonica when you need searchable text from an image.
+3. Use leptonica after cropping and sharpening a page image.
+4. Use leptonica to read receipts, notes, posters, or subtitles in frames.
+5. Use leptonica with Pillow or OpenCV before OCR.
+6. Use leptonica when the task is form reading or document capture.
+7. Use leptonica to batch-read many images in one pass.
+8. Use leptonica when typed text is unavailable and image text remains.
+9. Use leptonica to power a mobile OCR pipeline in Termux.
+10. Use leptonica when the workflow needs image-to-text conversion.
+
+tesseract
+Workflow focus: OCR
+Purpose: OCR engine for printed and scanned text.
+When to use: Use this when screenshots, scans, or frame grabs need to become text.
+Depends on: Depends on leptonica plus language data for usable OCR output.
+Pairs well with: leptonica, pytesseract, Pillow, OpenCV, rapidocr
+10 example user instructions:
+1. Use tesseract to extract text from screenshots or scans.
+2. Use tesseract when you need searchable text from an image.
+3. Use tesseract after cropping and sharpening a page image.
+4. Use tesseract to read receipts, notes, posters, or subtitles in frames.
+5. Use tesseract with Pillow or OpenCV before OCR.
+6. Use tesseract when the task is form reading or document capture.
+7. Use tesseract to batch-read many images in one pass.
+8. Use tesseract when typed text is unavailable and image text remains.
+9. Use tesseract to power a mobile OCR pipeline in Termux.
+10. Use tesseract when the workflow needs image-to-text conversion.
+
+pytesseract
+Workflow focus: OCR
+Purpose: Python bridge to the Tesseract OCR engine.
+When to use: Use this when screenshots, scans, or frame grabs need to become text.
+Depends on: Depends on tesseract plus image-prep tools like Pillow or OpenCV.
+Pairs well with: tesseract, leptonica, Pillow, OpenCV
+10 example user instructions:
+1. Use pytesseract to extract text from screenshots or scans.
+2. Use pytesseract when you need searchable text from an image.
+3. Use pytesseract after cropping and sharpening a page image.
+4. Use pytesseract to read receipts, notes, posters, or subtitles in frames.
+5. Use pytesseract with Pillow or OpenCV before OCR.
+6. Use pytesseract when the task is form reading or document capture.
+7. Use pytesseract to batch-read many images in one pass.
+8. Use pytesseract when typed text is unavailable and image text remains.
+9. Use pytesseract to power a mobile OCR pipeline in Termux.
+10. Use pytesseract when the workflow needs image-to-text conversion.
+
+rapidocr
+Workflow focus: OCR
+Purpose: Python OCR package for quick text extraction.
+When to use: Use this when screenshots, scans, or frame grabs need to become text.
+Depends on: Works best with Pillow or OpenCV for image prep.
+Pairs well with: Pillow, OpenCV, tesseract, pytesseract
+10 example user instructions:
+1. Use rapidocr to extract text from screenshots or scans.
+2. Use rapidocr when you need searchable text from an image.
+3. Use rapidocr after cropping and sharpening a page image.
+4. Use rapidocr to read receipts, notes, posters, or subtitles in frames.
+
+Termux Media Stack Manual v3
+
+Page 30
+
+5. Use rapidocr with Pillow or OpenCV before OCR.
+6. Use rapidocr when the task is form reading or document capture.
+7. Use rapidocr to batch-read many images in one pass.
+8. Use rapidocr when typed text is unavailable and image text remains.
+9. Use rapidocr to power a mobile OCR pipeline in Termux.
+10. Use rapidocr when the workflow needs image-to-text conversion.
+
+Termux Media Stack Manual v3
+
+Page 31
+
+Media metadata and auxiliary formats
+Best for metadata, sidecar formats, and support layers.
+
+libudfread
+Workflow focus: video editing / OCR / automation
+Purpose: UDF filesystem reading support.
+When to use: Use this when a format helper or metadata reader sits behind the main tool.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use libudfread when the media stack needs this support layer.
+2. Use libudfread to keep the workflow compatible and predictable.
+3. Use libudfread when another tool depends on it.
+4. Use libudfread to fill a missing format, codec, or rendering gap.
+5. Use libudfread during install or troubleshooting of media apps.
+6. Use libudfread when the pipeline crosses image, audio, or video boundaries.
+7. Use libudfread with ffmpeg, Python wrappers, or subtitle tools.
+8. Use libudfread to reduce friction in a Termux media setup.
+9. Use libudfread when a related tool errors out on missing support.
+10. Use libudfread whenever the job needs the package's support capability.
+
+Termux Media Stack Manual v3
+
+Page 32
+
+Python media automation
+Best when you want a Python script to drive the media pipeline.
+
+opencv-python [Termux]
+Workflow focus: AI media automation
+Purpose: Termux package exposing Python OpenCV bindings.
+When to use: Use this when Python should drive the media workflow end to end.
+Depends on: Often paired with numpy and Pillow.
+Pairs well with: numpy, Pillow, ffmpeg, pytesseract
+10 example user instructions:
+1. Use opencv-python to script repeatable media tasks in Python.
+2. Use opencv-python when you want code instead of manual editing.
+3. Use opencv-python to automate cuts, joins, conversions, or uploads.
+4. Use opencv-python to analyze frames, clips, or transcripts.
+5. Use opencv-python when a pipeline needs Python-friendly media access.
+6. Use opencv-python for batch processing of videos, images, or audio.
+7. Use opencv-python with numpy, Pillow, OpenCV, and ffmpeg.
+8. Use opencv-python when you need a smart assistant for media workflows.
+9. Use opencv-python to glue downloader, OCR, subtitle, and editor steps.
+10. Use opencv-python whenever the job should run from a Python script.
+
+python-opencv-python [Termux]
+Workflow focus: AI media automation
+Purpose: Termux package for Python OpenCV bindings.
+When to use: Use this when Python should drive the media workflow end to end.
+Depends on: Often paired with python-numpy.
+Pairs well with: python-numpy, timg, termimage
+10 example user instructions:
+1. Use python-opencv-python to script repeatable media tasks in Python.
+2. Use python-opencv-python when you want code instead of manual editing.
+3. Use python-opencv-python to automate cuts, joins, conversions, or uploads.
+4. Use python-opencv-python to analyze frames, clips, or transcripts.
+5. Use python-opencv-python when a pipeline needs Python-friendly media access.
+6. Use python-opencv-python for batch processing of videos, images, or audio.
+7. Use python-opencv-python with numpy, Pillow, OpenCV, and ffmpeg.
+8. Use python-opencv-python when you need a smart assistant for media workflows.
+9. Use python-opencv-python to glue downloader, OCR, subtitle, and editor steps.
+10. Use python-opencv-python whenever the job should run from a Python script.
+
+ffmpeg-python
+Workflow focus: AI media automation
+Purpose: Pythonic wrapper around ffmpeg command graphs.
+When to use: Use this when Python should drive the media workflow end to end.
+Depends on: Depends on a working ffmpeg binary in PATH.
+Pairs well with: ffmpeg, yt-dlp, moviepy, ImageIO
+10 example user instructions:
+1. Use ffmpeg-python to script repeatable media tasks in Python.
+2. Use ffmpeg-python when you want code instead of manual editing.
+3. Use ffmpeg-python to automate cuts, joins, conversions, or uploads.
+4. Use ffmpeg-python to analyze frames, clips, or transcripts.
+5. Use ffmpeg-python when a pipeline needs Python-friendly media access.
+6. Use ffmpeg-python for batch processing of videos, images, or audio.
+7. Use ffmpeg-python with numpy, Pillow, OpenCV, and ffmpeg.
+8. Use ffmpeg-python when you need a smart assistant for media workflows.
+9. Use ffmpeg-python to glue downloader, OCR, subtitle, and editor steps.
+10. Use ffmpeg-python whenever the job should run from a Python script.
+
+ImageIO [Python]
+Workflow focus: AI media automation
+Purpose: Python image and video I/O abstraction library.
+When to use: Use this when Python should drive the media workflow end to end.
+Depends on: Often needs imageio-ffmpeg or another backend for video.
+Pairs well with: imageio-ffmpeg, Pillow, numpy
+10 example user instructions:
+1. Use ImageIO to script repeatable media tasks in Python.
+2. Use ImageIO when you want code instead of manual editing.
+3. Use ImageIO to automate cuts, joins, conversions, or uploads.
+4. Use ImageIO to analyze frames, clips, or transcripts.
+
+Termux Media Stack Manual v3
+
+Page 33
+
+5. Use ImageIO when a pipeline needs Python-friendly media access.
+6. Use ImageIO for batch processing of videos, images, or audio.
+7. Use ImageIO with numpy, Pillow, OpenCV, and ffmpeg.
+8. Use ImageIO when you need a smart assistant for media workflows.
+9. Use ImageIO to glue downloader, OCR, subtitle, and editor steps.
+10. Use ImageIO whenever the job should run from a Python script.
+
+imageio-ffmpeg
+Workflow focus: AI media automation
+Purpose: FFmpeg backend for ImageIO video workflows.
+When to use: Use this when Python should drive the media workflow end to end.
+Depends on: Depends on ImageIO and a usable ffmpeg binary.
+Pairs well with: ImageIO, ffmpeg, moviepy
+10 example user instructions:
+1. Use imageio-ffmpeg to script repeatable media tasks in Python.
+2. Use imageio-ffmpeg when you want code instead of manual editing.
+3. Use imageio-ffmpeg to automate cuts, joins, conversions, or uploads.
+4. Use imageio-ffmpeg to analyze frames, clips, or transcripts.
+5. Use imageio-ffmpeg when a pipeline needs Python-friendly media access.
+6. Use imageio-ffmpeg for batch processing of videos, images, or audio.
+7. Use imageio-ffmpeg with numpy, Pillow, OpenCV, and ffmpeg.
+8. Use imageio-ffmpeg when you need a smart assistant for media workflows.
+9. Use imageio-ffmpeg to glue downloader, OCR, subtitle, and editor steps.
+10. Use imageio-ffmpeg whenever the job should run from a Python script.
+
+moviepy
+Workflow focus: AI media automation
+Purpose: Python video editing toolkit for clip-based edits.
+When to use: Use this when Python should drive the media workflow end to end.
+Depends on: Usually needs ffmpeg, numpy, and Pillow.
+Pairs well with: ffmpeg, numpy, Pillow, ffmpeg-python
+10 example user instructions:
+1. Use moviepy to script repeatable media tasks in Python.
+2. Use moviepy when you want code instead of manual editing.
+3. Use moviepy to automate cuts, joins, conversions, or uploads.
+4. Use moviepy to analyze frames, clips, or transcripts.
+5. Use moviepy when a pipeline needs Python-friendly media access.
+6. Use moviepy for batch processing of videos, images, or audio.
+7. Use moviepy with numpy, Pillow, OpenCV, and ffmpeg.
+8. Use moviepy when you need a smart assistant for media workflows.
+9. Use moviepy to glue downloader, OCR, subtitle, and editor steps.
+10. Use moviepy whenever the job should run from a Python script.
+
+opencv-contrib-python
+Workflow focus: AI media automation
+Purpose: OpenCV Python build with extra modules.
+When to use: Use this when Python should drive the media workflow end to end.
+Depends on: Often paired with numpy and Pillow.
+Pairs well with: numpy, Pillow, ffmpeg, pytesseract
+10 example user instructions:
+1. Use opencv-contrib-python to script repeatable media tasks in Python.
+2. Use opencv-contrib-python when you want code instead of manual editing.
+3. Use opencv-contrib-python to automate cuts, joins, conversions, or uploads.
+4. Use opencv-contrib-python to analyze frames, clips, or transcripts.
+5. Use opencv-contrib-python when a pipeline needs Python-friendly media access.
+6. Use opencv-contrib-python for batch processing of videos, images, or audio.
+7. Use opencv-contrib-python with numpy, Pillow, OpenCV, and ffmpeg.
+8. Use opencv-contrib-python when you need a smart assistant for media workflows.
+9. Use opencv-contrib-python to glue downloader, OCR, subtitle, and editor steps.
+10. Use opencv-contrib-python whenever the job should run from a Python script.
+
+opencv-python [Python]
+Workflow focus: AI media automation
+Purpose: Python bindings for OpenCV.
+When to use: Use this when Python should drive the media workflow end to end.
+Depends on: Often paired with numpy and Pillow.
+Pairs well with: numpy, Pillow, ffmpeg, pytesseract
+10 example user instructions:
+1. Use opencv-python to script repeatable media tasks in Python.
+
+Termux Media Stack Manual v3
+
+Page 34
+
+2. Use opencv-python when you want code instead of manual editing.
+3. Use opencv-python to automate cuts, joins, conversions, or uploads.
+4. Use opencv-python to analyze frames, clips, or transcripts.
+5. Use opencv-python when a pipeline needs Python-friendly media access.
+6. Use opencv-python for batch processing of videos, images, or audio.
+7. Use opencv-python with numpy, Pillow, OpenCV, and ffmpeg.
+8. Use opencv-python when you need a smart assistant for media workflows.
+9. Use opencv-python to glue downloader, OCR, subtitle, and editor steps.
+10. Use opencv-python whenever the job should run from a Python script.
+
+pillow
+Workflow focus: AI media automation
+Purpose: Python imaging library for editing pictures and frames.
+When to use: Use this when Python should drive the media workflow end to end.
+Depends on: Usually paired with numpy, OpenCV, or OCR tools.
+Pairs well with: numpy, OpenCV, pytesseract, graphicsmagick
+10 example user instructions:
+1. Use pillow to script repeatable media tasks in Python.
+2. Use pillow when you want code instead of manual editing.
+3. Use pillow to automate cuts, joins, conversions, or uploads.
+4. Use pillow to analyze frames, clips, or transcripts.
+5. Use pillow when a pipeline needs Python-friendly media access.
+6. Use pillow for batch processing of videos, images, or audio.
+7. Use pillow with numpy, Pillow, OpenCV, and ffmpeg.
+8. Use pillow when you need a smart assistant for media workflows.
+9. Use pillow to glue downloader, OCR, subtitle, and editor steps.
+10. Use pillow whenever the job should run from a Python script.
+
+scikit-video
+Workflow focus: AI media automation
+Purpose: Python video quality and analysis helpers.
+When to use: Use this when Python should drive the media workflow end to end.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use scikit-video to script repeatable media tasks in Python.
+2. Use scikit-video when you want code instead of manual editing.
+3. Use scikit-video to automate cuts, joins, conversions, or uploads.
+4. Use scikit-video to analyze frames, clips, or transcripts.
+5. Use scikit-video when a pipeline needs Python-friendly media access.
+6. Use scikit-video for batch processing of videos, images, or audio.
+7. Use scikit-video with numpy, Pillow, OpenCV, and ffmpeg.
+8. Use scikit-video when you need a smart assistant for media workflows.
+9. Use scikit-video to glue downloader, OCR, subtitle, and editor steps.
+10. Use scikit-video whenever the job should run from a Python script.
+
+vidgear
+Workflow focus: AI media automation
+Purpose: Python video capture, stream, and automation tools.
+When to use: Use this when Python should drive the media workflow end to end.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use vidgear to script repeatable media tasks in Python.
+2. Use vidgear when you want code instead of manual editing.
+3. Use vidgear to automate cuts, joins, conversions, or uploads.
+4. Use vidgear to analyze frames, clips, or transcripts.
+5. Use vidgear when a pipeline needs Python-friendly media access.
+6. Use vidgear for batch processing of videos, images, or audio.
+7. Use vidgear with numpy, Pillow, OpenCV, and ffmpeg.
+8. Use vidgear when you need a smart assistant for media workflows.
+9. Use vidgear to glue downloader, OCR, subtitle, and editor steps.
+10. Use vidgear whenever the job should run from a Python script.
+
+youtube-transcript-api
+Workflow focus: AI media automation
+Purpose: Fetch YouTube transcripts for automation.
+When to use: Use this when Python should drive the media workflow end to end.
+Depends on: Usually paired with subtitle or transcript scripts.
+
+Termux Media Stack Manual v3
+
+Page 35
+
+Pairs well with: srt, pycaption, pysubs2
+10 example user instructions:
+1. Use youtube-transcript-api to script repeatable media tasks in Python.
+2. Use youtube-transcript-api when you want code instead of manual editing.
+3. Use youtube-transcript-api to automate cuts, joins, conversions, or uploads.
+4. Use youtube-transcript-api to analyze frames, clips, or transcripts.
+5. Use youtube-transcript-api when a pipeline needs Python-friendly media access.
+6. Use youtube-transcript-api for batch processing of videos, images, or audio.
+7. Use youtube-transcript-api with numpy, Pillow, OpenCV, and ffmpeg.
+8. Use youtube-transcript-api when you need a smart assistant for media workflows.
+9. Use youtube-transcript-api to glue downloader, OCR, subtitle, and editor steps.
+10. Use youtube-transcript-api whenever the job should run from a Python script.
+
+yt-dlp
+Workflow focus: AI media automation
+Purpose: Video and audio downloader with format control.
+When to use: Use this when Python should drive the media workflow end to end.
+Depends on: Usually paired with ffmpeg for remuxing and post-processing.
+Pairs well with: ffmpeg, ffmpeg-python, moviepy
+10 example user instructions:
+1. Use yt-dlp to script repeatable media tasks in Python.
+2. Use yt-dlp when you want code instead of manual editing.
+3. Use yt-dlp to automate cuts, joins, conversions, or uploads.
+4. Use yt-dlp to analyze frames, clips, or transcripts.
+5. Use yt-dlp when a pipeline needs Python-friendly media access.
+6. Use yt-dlp for batch processing of videos, images, or audio.
+7. Use yt-dlp with numpy, Pillow, OpenCV, and ffmpeg.
+8. Use yt-dlp when you need a smart assistant for media workflows.
+9. Use yt-dlp to glue downloader, OCR, subtitle, and editor steps.
+10. Use yt-dlp whenever the job should run from a Python script.
+
+Termux Media Stack Manual v3
+
+Page 36
+
+Fonts, shaping, and typography
+Best when subtitles, captions, or overlays need correct glyph shaping.
+
+fonttools
+Workflow focus: subtitle work / OCR
+Purpose: Font inspection, editing, and conversion tools.
+When to use: Use this when subtitles, captions, overlays, or mixed-script text need correct rendering.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use fonttools when text must look correct on screen or in subtitles.
+2. Use fonttools to make sure fonts are found and rendered properly.
+3. Use fonttools when mixed scripts or special glyphs appear broken.
+4. Use fonttools before OCR or subtitle rendering if text quality matters.
+5. Use fonttools to support clean caption and title rendering.
+6. Use fonttools with pango, libass, or graphics tools.
+7. Use fonttools when the workflow needs readable typography.
+8. Use fonttools to fix missing font or shaping problems.
+9. Use fonttools when video overlays must display polished text.
+10. Use fonttools whenever script layout or glyph choice matters.
+
+Termux Media Stack Manual v3
+
+Page 37
+
+Geometry and masking
+Best for region selection, masking, and coordinate logic.
+
+pyclipper
+Workflow focus: video editing / OCR / automation
+Purpose: Python polygon clipping library.
+When to use: Use this when masks, regions, or coordinate math need to be exact.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use pyclipper to clip masks, shapes, or regions in automation scripts.
+2. Use pyclipper when a video or image job needs polygon logic.
+3. Use pyclipper to outline, cut, or refine frame regions.
+4. Use pyclipper for cropping logic in OCR or graphics workflows.
+5. Use pyclipper when a script must calculate shape overlaps cleanly.
+6. Use pyclipper with OpenCV or Pillow based preprocessing.
+7. Use pyclipper when you need exact geometry operations in Python.
+8. Use pyclipper for smart masking or region detection steps.
+9. Use pyclipper whenever the workflow needs coordinate math.
+10. Use pyclipper to support advanced selection or trimming logic.
+
+shapely
+Workflow focus: video editing / OCR / automation
+Purpose: Python geometry library.
+When to use: Use this when masks, regions, or coordinate math need to be exact.
+Depends on: Usually depends on the surrounding media toolchain and a compatible front end.
+Pairs well with: The rest of the media toolchain for end-to-end workflows.
+10 example user instructions:
+1. Use shapely to clip masks, shapes, or regions in automation scripts.
+2. Use shapely when a video or image job needs polygon logic.
+3. Use shapely to outline, cut, or refine frame regions.
+4. Use shapely for cropping logic in OCR or graphics workflows.
+5. Use shapely when a script must calculate shape overlaps cleanly.
+6. Use shapely with OpenCV or Pillow based preprocessing.
+7. Use shapely when you need exact geometry operations in Python.
+8. Use shapely for smart masking or region detection steps.
+9. Use shapely whenever the workflow needs coordinate math.
+10. Use shapely to support advanced selection or trimming logic.
+
+Termux Media Stack Manual v3
+
+Page 38
+
+

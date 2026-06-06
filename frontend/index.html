@@ -1,0 +1,1359 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Linguist Video</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400..600,0..1,0" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            background: '#0b1326',
+            surface: '#0b1326',
+            'surface-dim': '#0b1326',
+            'surface-container-lowest': '#060e20',
+            'surface-container-low': '#131b2e',
+            'surface-container': '#171f33',
+            'surface-container-high': '#222a3d',
+            'surface-container-highest': '#2d3449',
+            'surface-bright': '#31394d',
+            primary: '#d0bcff',
+            'primary-container': '#a078ff',
+            'on-primary': '#3c0091',
+            'on-primary-container': '#ffffff',
+            'inverse-primary': '#6d3bd7',
+            secondary: '#4cd7f6',
+            'secondary-container': '#03b5d3',
+            'on-secondary': '#003640',
+            'on-secondary-container': '#003640',
+            tertiary: '#4edea3',
+            'on-background': '#dae2fd',
+            'on-surface': '#dae2fd',
+            'on-surface-variant': '#cbc3d7',
+            outline: '#958ea0',
+            'outline-variant': '#494454',
+            error: '#ffb4ab',
+            'error-container': '#93000a'
+          },
+          fontFamily: {
+            headline: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          fontSize: {
+            'headline-xl': ['40px', { lineHeight: '48px', fontWeight: '700', letterSpacing: '0' }],
+            'headline-lg': ['30px', { lineHeight: '38px', fontWeight: '600', letterSpacing: '0' }],
+            'headline-md': ['24px', { lineHeight: '32px', fontWeight: '600', letterSpacing: '0' }],
+            'body-lg': ['18px', { lineHeight: '28px', fontWeight: '400', letterSpacing: '0' }],
+            'body-md': ['16px', { lineHeight: '24px', fontWeight: '400', letterSpacing: '0' }],
+            'body-sm': ['14px', { lineHeight: '20px', fontWeight: '400', letterSpacing: '0' }],
+            'label-md': ['13px', { lineHeight: '16px', fontWeight: '500', letterSpacing: '0.02em' }],
+            'label-sm': ['11px', { lineHeight: '14px', fontWeight: '500', letterSpacing: '0.03em' }]
+          },
+          spacing: {
+            'sidebar-width': '280px',
+            'timeline-height': '320px',
+            'margin-desktop': '32px'
+          },
+          boxShadow: {
+            'primary-soft': '0 24px 80px rgba(208,188,255,0.16)',
+            'secondary-soft': '0 24px 80px rgba(76,215,246,0.14)'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #0b1326;
+      color: #dae2fd;
+      font-family: Inter, sans-serif;
+    }
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 22px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-flex;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+      font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+    .symbol-filled { font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24; }
+    .bg-grid-pattern {
+      background-image:
+        linear-gradient(to right, rgba(149,142,160,0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(149,142,160,0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .checkerboard {
+      background-color: #060e20;
+      background-image:
+        linear-gradient(45deg, #0b1326 25%, transparent 25%),
+        linear-gradient(-45deg, #0b1326 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #0b1326 75%),
+        linear-gradient(-45deg, transparent 75%, #0b1326 75%);
+      background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+      background-size: 20px 20px;
+    }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #171f33; }
+    ::-webkit-scrollbar-thumb { background: #494454; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #958ea0; }
+    @keyframes pulse-glow {
+      0%,100% { box-shadow: 0 0 20px rgba(208,188,255,0.05); border-color: rgba(73,68,84,1); }
+      50% { box-shadow: 0 0 40px rgba(208,188,255,0.15); border-color: rgba(208,188,255,0.3); }
+    }
+    @keyframes shimmer {
+      0% { background-position: -180px 0; }
+      100% { background-position: 180px 0; }
+    }
+    @keyframes check-glow {
+      0%,100% { box-shadow: 0 0 20px rgba(78,222,163,0.2); }
+      50% { box-shadow: 0 0 50px rgba(78,222,163,0.5); }
+    }
+    .animate-pulse-glow { animation: pulse-glow 3s infinite; }
+    .animate-check-glow { animation: check-glow 2s infinite; }
+    .shimmer-fill {
+      background-size: 180px 100%, 100% 100%;
+      background-image:
+        linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%),
+        linear-gradient(90deg, #d0bcff 0%, #4cd7f6 100%);
+      animation: shimmer 1.6s infinite linear;
+    }
+    .screen { min-height: 100vh; }
+    .icon-button, .timeline-icon-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition-property: color, background-color, border-color, opacity, transform;
+      transition-duration: 200ms;
+    }
+    .icon-button:hover, .timeline-icon-button:hover {
+      color: #4cd7f6;
+      background-color: rgba(76,215,246,0.08);
+    }
+    .nav-link { transition: color 200ms ease; }
+    .nav-link:hover { color: #d0bcff; }
+  </style>
+</head>
+<body class="bg-background text-on-background antialiased">
+  <div id="app" class="min-h-screen">
+    <div id="screen-landing" class="screen hidden bg-background">
+      <nav class="fixed left-0 right-0 top-0 z-50 h-16 border-b border-outline-variant bg-surface-container-low/95 backdrop-blur-xl">
+        <div class="mx-auto flex h-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          <button type="button" class="font-headline text-lg font-bold text-primary transition duration-200 hover:text-secondary" data-nav="landing">Linguist Video</button>
+          <div class="hidden items-center gap-8 text-body-sm text-on-surface-variant md:flex">
+            <a href="#features" class="nav-link">Features</a>
+            <button type="button" class="nav-link" data-nav="workspace">Workspace</button>
+          </div>
+          <div class="flex items-center gap-2">
+            <button type="button" class="hidden rounded-lg bg-primary px-5 py-2 text-body-sm font-semibold text-on-primary transition duration-200 hover:bg-secondary hover:text-on-secondary focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-surface-container-low sm:inline-flex" data-nav="workspace">Start Editing</button>
+            <button type="button" class="icon-button h-10 w-10 rounded-lg border border-outline-variant text-on-surface md:hidden" aria-label="Open menu" data-mobile-toggle="landing-menu">
+              <span class="material-symbols-outlined">menu</span>
+            </button>
+          </div>
+        </div>
+        <div id="landing-menu" class="hidden border-t border-outline-variant bg-surface-container-low px-4 py-3 md:hidden">
+          <div class="grid gap-2 text-body-sm text-on-surface-variant">
+            <a href="#features" class="rounded-lg px-3 py-2 transition duration-200 hover:bg-surface-container-high hover:text-primary">Features</a>
+            <button type="button" class="rounded-lg px-3 py-2 text-left transition duration-200 hover:bg-surface-container-high hover:text-primary" data-nav="workspace">Workspace</button>
+            <button type="button" class="mt-2 rounded-lg bg-primary px-5 py-2 text-left text-body-sm font-semibold text-on-primary transition duration-200 hover:bg-secondary hover:text-on-secondary" data-nav="workspace">Start Editing</button>
+          </div>
+        </div>
+      </nav>
+
+      <main class="relative overflow-hidden bg-grid-pattern">
+        <div class="pointer-events-none absolute left-1/2 top-56 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-primary/10 blur-[90px]"></div>
+        <div class="pointer-events-none absolute left-[12%] top-48 h-[320px] w-[320px] rounded-full bg-secondary/10 blur-[80px]"></div>
+        <section class="relative mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-center px-4 pb-20 pt-32 text-center sm:px-6 lg:px-8">
+          <div class="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-surface-container-low/80 px-4 py-2 font-mono text-label-sm uppercase text-on-surface-variant shadow-primary-soft backdrop-blur-xl">
+            <span id="landing-health-dot" class="h-2 w-2 animate-pulse rounded-full bg-outline"></span>
+            <span id="landing-health-label">Checking backend</span>
+          </div>
+          <h1 class="mt-8 font-headline text-[44px] font-bold leading-[52px] text-on-background sm:text-[64px] sm:leading-[72px] lg:text-[84px] lg:leading-[92px]">
+            The End of<br>
+            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Manual Video Editing</span>
+          </h1>
+          <p class="mt-6 max-w-2xl text-body-lg text-on-surface-variant">
+            Transform raw footage into polished edits with natural language commands, timeline-aware automation, and a production interface built for fast creative iteration.
+          </p>
+          <div class="mt-10 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
+            <button type="button" class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-8 py-3 text-body-md font-semibold text-on-primary transition duration-200 hover:bg-secondary hover:text-on-secondary focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-background sm:w-auto" data-nav="workspace">
+              <span class="material-symbols-outlined symbol-filled">play_arrow</span>
+              Start Creating
+            </button>
+          </div>
+          <button type="button" onclick="showScreen('why')" class="mt-2 flex items-center gap-2 font-mono text-label-md text-secondary underline-offset-4 transition-all duration-200 hover:underline">
+            <span class="material-symbols-outlined text-[16px]">help_outline</span>
+            Why should I choose Linguist Video?
+          </button>
+
+        </section>
+
+        <section id="features" class="border-t border-outline-variant bg-surface-dim py-24">
+          <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-2xl text-center">
+              <h2 class="font-headline text-headline-xl text-on-background">A Frictionless Workflow</h2>
+              <p class="mt-4 text-body-md text-on-surface-variant">Move from footage to finished sequence through ingestion, language-driven decisions, and export-ready timeline control.</p>
+            </div>
+            <div class="mt-16 grid gap-5 md:grid-cols-3">
+              <div class="rounded-xl border border-outline-variant bg-surface-container p-8 transition duration-200 hover:-translate-y-1 hover:border-primary/50">
+                <div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-secondary/10 text-secondary"><span class="material-symbols-outlined">cloud_upload</span></div>
+                <div class="font-mono text-label-md text-secondary">01. Ingest</div>
+                <h3 class="mt-3 font-headline text-headline-md text-on-surface">Upload the raw stack</h3>
+                <p class="mt-3 text-body-sm text-on-surface-variant">Linguist maps clips, transcripts, beats, scene quality, and silence into an editable project graph.</p>
+              </div>
+              <div class="rounded-xl border border-primary/30 bg-surface-container p-8 transition duration-200 hover:-translate-y-1 hover:border-primary/50 md:-translate-y-4">
+                <div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20 text-primary"><span class="material-symbols-outlined">terminal</span></div>
+                <div class="font-mono text-label-md text-primary">02. Command</div>
+                <h3 class="mt-3 font-headline text-headline-md text-on-surface">Tell the edit what to do</h3>
+                <p class="mt-3 text-body-sm text-on-surface-variant">Describe timing, pacing, look, audio, captions, and revisions without leaving the workspace.</p>
+              </div>
+              <div class="rounded-xl border border-outline-variant bg-surface-container p-8 transition duration-200 hover:-translate-y-1 hover:border-primary/50">
+                <div class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-tertiary/10 text-tertiary"><span class="material-symbols-outlined">bolt</span></div>
+                <div class="font-mono text-label-md text-tertiary">03. Export</div>
+                <h3 class="mt-3 font-headline text-headline-md text-on-surface">Ship the final cut</h3>
+                <p class="mt-3 text-body-sm text-on-surface-variant">Review timeline changes, preserve control, and export the finished sequence in one focused flow.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="screen-why" class="screen hidden min-h-screen bg-background">
+      <div class="min-h-screen bg-background pt-16">
+        <nav class="fixed left-0 right-0 top-0 z-50 h-16 border-b border-outline-variant bg-surface-container-low/95 backdrop-blur-xl">
+          <div class="mx-auto flex h-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-3">
+              <button type="button" class="icon-button h-10 w-10 rounded-lg border border-outline-variant text-on-surface-variant" aria-label="Back to landing" data-nav="landing">
+                <span class="material-symbols-outlined">arrow_back</span>
+              </button>
+              <button type="button" class="font-headline text-lg font-bold text-primary transition duration-200 hover:text-secondary" data-nav="landing">Linguist Video</button>
+            </div>
+            <button type="button" class="rounded-lg bg-primary px-5 py-2 text-body-sm font-semibold text-on-primary transition duration-200 hover:bg-secondary hover:text-on-secondary focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-surface-container-low" data-nav="workspace">Start Editing</button>
+          </div>
+        </nav>
+
+        <main class="overflow-y-auto">
+          <section class="bg-grid-pattern relative flex min-h-[60vh] items-center justify-center overflow-hidden px-4 py-24 text-center sm:px-6 lg:px-8">
+            <div class="pointer-events-none absolute left-1/2 top-1/2 h-[460px] w-[460px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[110px]"></div>
+            <div class="relative mx-auto max-w-5xl">
+              <h1 class="mx-auto max-w-3xl font-headline text-headline-xl text-on-background sm:text-[56px] sm:leading-[66px]">
+                Other editors have AI.<br>
+                <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Linguist IS the AI.</span>
+              </h1>
+              <p class="mx-auto mt-6 max-w-2xl whitespace-pre-line text-body-lg text-on-surface-variant">Every other tool built AI on top of an existing editor.
+Buttons still exist. Menus still exist. The AI just automates what was already there.
+
+Linguist was built the other way around.
+The AI is the editor. There are no buttons behind it.</p>
+            </div>
+          </section>
+
+          <section class="px-4 py-24 sm:px-margin-desktop">
+            <div class="mx-auto max-w-5xl">
+              <div class="mb-4 font-mono text-label-sm uppercase tracking-widest text-secondary">The Problem With Every Other Tool</div>
+              <h2 class="mb-6 font-headline text-headline-lg text-on-background">They gave their AI a menu. We didn't.</h2>
+              <p class="mb-16 max-w-3xl whitespace-pre-line text-body-md text-on-surface-variant">CapCut's AI does beat sync. One kind.
+Descript's AI edits transcripts. Only transcripts.
+Adobe's AI suggests edits. From a predefined list.
+
+These are not intelligent editors.
+They are menus you talk to.
+
+Linguist has no menu. It has knowledge - full knowledge of every video filter, every audio effect, every technique that exists in professional video production. You describe what you want. It reasons how to build it.</p>
+
+              <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+                <article class="rounded-2xl border border-error/20 bg-surface-container p-8">
+                  <div class="flex items-start gap-3">
+                    <span class="material-symbols-outlined mt-1 shrink-0 text-error">close</span>
+                    <div>
+                      <h3 class="font-headline text-headline-md text-error">Every Other Editor</h3>
+                      <p class="mt-2 font-mono text-label-sm uppercase text-on-surface-variant">Fixed operations. Finite menu.</p>
+                    </div>
+                  </div>
+                  <div class="mt-6 flex flex-col gap-4">
+                    <div class="flex gap-3 text-body-sm text-on-surface-variant"><span class="material-symbols-outlined shrink-0 text-[18px] text-error/60">close</span><span>"Remove silences" - yes, but only silence. Nothing creative.</span></div>
+                    <div class="flex gap-3 text-body-sm text-on-surface-variant"><span class="material-symbols-outlined shrink-0 text-[18px] text-error/60">close</span><span>"Beat sync cuts" - yes, but only the one cut style they built.</span></div>
+                    <div class="flex gap-3 text-body-sm text-on-surface-variant"><span class="material-symbols-outlined shrink-0 text-[18px] text-error/60">close</span><span>"Auto captions" - yes, same style, same position, same font.</span></div>
+                    <div class="flex gap-3 text-body-sm text-on-surface-variant"><span class="material-symbols-outlined shrink-0 text-[18px] text-error/60">close</span><span>"Color grading" - yes, from a dropdown of 12 presets.</span></div>
+                    <div class="flex gap-3 text-body-sm text-on-surface-variant"><span class="material-symbols-outlined shrink-0 text-[18px] text-error/60">close</span><span>"Make it look underwater" - no. Not in the menu.</span></div>
+                    <div class="flex gap-3 text-body-sm text-on-surface-variant"><span class="material-symbols-outlined shrink-0 text-[18px] text-error/60">close</span><span>"Shake violently only on the bass hits" - no. Not in the menu.</span></div>
+                    <div class="flex gap-3 text-body-sm text-on-surface-variant"><span class="material-symbols-outlined shrink-0 text-[18px] text-error/60">close</span><span>"Lofi aesthetic with warm grain and vinyl audio" - no.</span></div>
+                    <div class="flex gap-3 text-body-sm text-on-surface-variant"><span class="material-symbols-outlined shrink-0 text-[18px] text-error/60">close</span><span>"Aggressive feel: high contrast, desaturated, heavy bass" - no.</span></div>
+                    <div class="flex gap-3 text-body-sm text-on-surface-variant"><span class="material-symbols-outlined shrink-0 text-[18px] text-error/60">close</span><span>"Glitch harder as the music gets louder" - no.</span></div>
+                    <div class="flex gap-3 text-body-sm text-on-surface-variant"><span class="material-symbols-outlined shrink-0 text-[18px] text-error/60">close</span><span>"Make it feel like a memory fading" - no.</span></div>
+                  </div>
+                </article>
+
+                <article class="relative overflow-hidden rounded-2xl border border-primary/30 bg-surface-container p-8">
+                  <div class="pointer-events-none absolute left-0 right-0 top-0 h-28 bg-primary/10 blur-[60px]"></div>
+                  <div class="relative flex items-start gap-3">
+                    <span class="material-symbols-outlined mt-1 shrink-0 text-tertiary">check</span>
+                    <div>
+                      <h3 class="font-headline text-headline-md text-primary">Linguist Video</h3>
+                      <p class="mt-2 font-mono text-label-sm uppercase text-on-surface-variant">No menu. Pure reasoning.</p>
+                    </div>
+                  </div>
+                  <div class="relative mt-6 flex flex-col gap-4">
+                    <div class="flex gap-3 text-body-sm text-on-surface"><span class="material-symbols-outlined shrink-0 text-[18px] text-tertiary">check</span><span>"Remove silences" - yes, and it understands context.</span></div>
+                    <div class="flex gap-3 text-body-sm text-on-surface"><span class="material-symbols-outlined shrink-0 text-[18px] text-tertiary">check</span><span>"Beat sync cuts" - yes, your way. Every n beats. Any decay.</span></div>
+                    <div class="flex gap-3 text-body-sm text-on-surface"><span class="material-symbols-outlined shrink-0 text-[18px] text-tertiary">check</span><span>"Auto captions" - yes, any style you describe.</span></div>
+                    <div class="flex gap-3 text-body-sm text-on-surface"><span class="material-symbols-outlined shrink-0 text-[18px] text-tertiary">check</span><span>"Color grading" - yes, or describe a mood and it builds the grade.</span></div>
+                    <div class="flex gap-3 text-body-sm text-on-surface"><span class="material-symbols-outlined shrink-0 text-[18px] text-tertiary">check</span><span>"Make it look underwater" - yes. Blue-green grade + wave distort + blur + muffled audio.</span></div>
+                    <div class="flex gap-3 text-body-sm text-on-surface"><span class="material-symbols-outlined shrink-0 text-[18px] text-tertiary">check</span><span>"Shake violently only on the bass hits" - yes. Amplitude, axis, decay: your call.</span></div>
+                    <div class="flex gap-3 text-body-sm text-on-surface"><span class="material-symbols-outlined shrink-0 text-[18px] text-tertiary">check</span><span>"Lofi aesthetic with warm grain and vinyl audio" - yes. Full filter chain from scratch.</span></div>
+                    <div class="flex gap-3 text-body-sm text-on-surface"><span class="material-symbols-outlined shrink-0 text-[18px] text-tertiary">check</span><span>"Aggressive feel: high contrast, desaturated, heavy bass" - yes.</span></div>
+                    <div class="flex gap-3 text-body-sm text-on-surface"><span class="material-symbols-outlined shrink-0 text-[18px] text-tertiary">check</span><span>"Glitch harder as the music gets louder" - yes. Energy-mapped intensity.</span></div>
+                    <div class="flex gap-3 text-body-sm text-on-surface"><span class="material-symbols-outlined shrink-0 text-[18px] text-tertiary">check</span><span>"Make it feel like a memory fading" - yes. Warmth, blur, slow motion, reverb.</span></div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section class="border-t border-outline-variant/30 bg-surface-dim py-24">
+            <div class="mx-auto max-w-5xl px-4 sm:px-margin-desktop">
+              <div class="mb-4 font-mono text-label-sm uppercase tracking-widest text-secondary">What You Can Actually Say</div>
+              <h2 class="mb-4 font-headline text-headline-lg text-on-background">Real commands. Real results.</h2>
+              <p class="mb-16 max-w-3xl text-body-md text-on-surface-variant">These are actual natural language inputs Linguist understands and executes. None of them exist as buttons anywhere else.</p>
+              <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <article class="rounded-xl border border-outline-variant bg-surface-container p-6 transition-colors duration-300 hover:border-primary/40">
+                  <span class="material-symbols-outlined mb-4 text-secondary">graphic_eq</span>
+                  <p class="mb-3 font-mono text-label-md italic text-primary">"Shake the frame violently on every beat, white flash on the drop"</p>
+                  <p class="text-body-sm text-on-surface-variant">Beat detection to amplitude-50 shake with xy axis to flash overlay triggered at peak beats. Zero manual keyframes.</p>
+                </article>
+                <article class="rounded-xl border border-outline-variant bg-surface-container p-6 transition-colors duration-300 hover:border-primary/40">
+                  <span class="material-symbols-outlined mb-4 text-secondary">water</span>
+                  <p class="mb-3 font-mono text-label-md italic text-primary">"Make it look like the footage was shot underwater"</p>
+                  <p class="text-body-sm text-on-surface-variant">Blue-green colorbalance + wave distortion + gaussian blur + low-pass audio filter. Reasoned from scratch.</p>
+                </article>
+                <article class="rounded-xl border border-outline-variant bg-surface-container p-6 transition-colors duration-300 hover:border-primary/40">
+                  <span class="material-symbols-outlined mb-4 text-secondary">movie_filter</span>
+                  <p class="mb-3 font-mono text-label-md italic text-primary">"Lofi aesthetic. Warm tones, vinyl crackle feel, faded film"</p>
+                  <p class="text-body-sm text-on-surface-variant">Warm colorbalance + reduced saturation + film grain + soft blur + vignette + high-frequency audio rolloff.</p>
+                </article>
+                <article class="rounded-xl border border-outline-variant bg-surface-container p-6 transition-colors duration-300 hover:border-primary/40">
+                  <span class="material-symbols-outlined mb-4 text-secondary">bolt</span>
+                  <p class="mb-3 font-mono text-label-md italic text-primary">"Make it feel aggressive. High contrast, desaturated, heavy bass"</p>
+                  <p class="text-body-sm text-on-surface-variant">eq contrast 1.6 + hue saturation 0.4 + hard vignette + glitch on beats + 10dB bass boost at 60Hz.</p>
+                </article>
+                <article class="rounded-xl border border-outline-variant bg-surface-container p-6 transition-colors duration-300 hover:border-primary/40">
+                  <span class="material-symbols-outlined mb-4 text-secondary">auto_awesome</span>
+                  <p class="mb-3 font-mono text-label-md italic text-primary">"Cinematic. Teal shadows, orange highlights, letterbox"</p>
+                  <p class="text-body-sm text-on-surface-variant">colorbalance teal/orange grade + crop to 2.39:1 + subtle grain + vignette. Classic blockbuster look.</p>
+                </article>
+                <article class="rounded-xl border border-outline-variant bg-surface-container p-6 transition-colors duration-300 hover:border-primary/40">
+                  <span class="material-symbols-outlined mb-4 text-secondary">psychology</span>
+                  <p class="mb-3 font-mono text-label-md italic text-primary">"Make it feel like a memory. Fading, warm, dreamlike, slow"</p>
+                  <p class="text-body-sm text-on-surface-variant">Warm grade + gblur glow + setpts slow motion + aecho reverb + slight overexposure. No presets. Pure reasoning.</p>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section class="relative flex flex-col items-center justify-center overflow-hidden border-t border-outline-variant/30 bg-surface-dim px-4 py-32 text-center sm:px-6 lg:px-8">
+            <div class="pointer-events-none absolute left-1/2 top-1/2 h-[460px] w-[460px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[150px]"></div>
+            <div class="relative">
+              <h2 class="mx-auto max-w-3xl font-headline text-headline-xl text-on-background sm:text-[56px] sm:leading-[66px]">
+                "If you can describe it in English,"<br>
+                <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Linguist can do it.</span>
+              </h2>
+              <p class="mx-auto mt-6 max-w-xl whitespace-pre-line text-body-lg text-on-surface-variant">Not because we trained it on every effect.
+Because we gave it the knowledge to reason any effect from scratch.</p>
+              <button type="button" class="mt-10 rounded-xl bg-primary px-10 py-4 font-headline text-headline-md text-on-primary transition duration-200 hover:bg-secondary hover:text-on-secondary focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-surface-dim" data-nav="workspace">Start Editing Free</button>
+              <p class="mt-4 font-mono text-label-sm text-on-surface-variant">No timeline. No keyframes. No manual anything.</p>
+            </div>
+          </section>
+
+          <footer class="border-t border-outline-variant/30 px-4 py-12 sm:px-margin-desktop">
+            <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4">
+              <div class="font-mono text-label-md text-primary">Linguist Video</div>
+              <nav class="flex flex-wrap items-center gap-6 font-mono text-label-sm text-on-surface-variant">
+                <button type="button" class="transition duration-200 hover:text-primary" data-nav="landing">Product</button>
+                <button type="button" class="transition duration-200 hover:text-primary" data-nav="landing">Features</button>
+                <button type="button" class="transition duration-200 hover:text-primary" data-nav="landing">Showcase</button>
+                <button type="button" class="transition duration-200 hover:text-primary" data-nav="landing">Pricing</button>
+              </nav>
+              <div class="font-mono text-label-sm text-on-surface-variant">&copy; 2025 Linguist Video</div>
+            </div>
+          </footer>
+        </main>
+      </div>
+    </div>
+
+    <div id="screen-workspace" class="screen hidden h-screen overflow-hidden bg-background">
+      <div class="relative flex h-screen flex-col overflow-hidden pt-16">
+        <nav class="fixed left-0 right-0 top-0 z-40 h-16 shrink-0 border-b border-outline-variant bg-surface-container-low">
+          <div class="flex h-full items-center justify-between px-3 sm:px-4">
+            <div class="flex min-w-0 items-center gap-4 sm:gap-6">
+              <button type="button" class="shrink-0 font-headline text-base font-bold text-primary transition duration-200 hover:text-secondary sm:text-lg" data-nav="landing">Linguist Video</button>
+              <div class="hidden items-center gap-6 text-body-sm text-on-surface-variant lg:flex">
+                <button type="button" class="nav-link">File</button>
+                <button type="button" class="nav-link">Edit</button>
+                <button type="button" class="nav-link">View</button>
+                <button type="button" class="nav-link">Export</button>
+              </div>
+              <button type="button" class="icon-button h-10 w-10 rounded-lg border border-outline-variant text-on-surface lg:hidden" aria-label="Open menu" data-mobile-toggle="workspace-menu"><span class="material-symbols-outlined">menu</span></button>
+            </div>
+            <div class="hidden items-center gap-3 font-mono text-label-md text-on-surface-variant sm:flex">
+              <span class="project-title">No project loaded</span>
+              <span id="job-id-label" class="text-label-sm text-outline"></span>
+            </div>
+            <button type="button" class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-body-sm font-semibold text-on-primary transition duration-200 hover:bg-secondary hover:text-on-secondary focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-surface-container-low">
+              <span class="material-symbols-outlined text-[20px]">account_circle</span>
+              <span class="hidden sm:inline">Export</span>
+            </button>
+          </div>
+          <div id="workspace-menu" class="hidden border-t border-outline-variant bg-surface-container-low px-4 py-3 lg:hidden">
+            <div class="grid grid-cols-4 gap-2 text-center text-body-sm text-on-surface-variant">
+              <button type="button" class="rounded-lg py-2 transition duration-200 hover:bg-surface-container-high hover:text-primary">File</button>
+              <button type="button" class="rounded-lg py-2 transition duration-200 hover:bg-surface-container-high hover:text-primary">Edit</button>
+              <button type="button" class="rounded-lg py-2 transition duration-200 hover:bg-surface-container-high hover:text-primary">View</button>
+              <button type="button" class="rounded-lg py-2 transition duration-200 hover:bg-surface-container-high hover:text-primary">Export</button>
+            </div>
+          </div>
+        </nav>
+
+        <div class="flex flex-1 items-center justify-center overflow-y-auto px-4 py-10">
+          <aside class="!hidden w-sidebar-width shrink-0 flex-col border-r border-outline-variant bg-surface-container px-2 py-4">
+            <div class="border-b border-outline-variant px-4 pb-4">
+              <h2 class="font-headline text-headline-md text-on-surface">Assets</h2>
+              <p class="mt-1 text-body-sm text-on-surface-variant">AI Manager</p>
+            </div>
+            <nav class="mt-4 grid gap-1">
+              <button type="button" class="flex items-center gap-3 rounded-lg bg-secondary-container px-4 py-3 text-left text-body-sm font-semibold text-on-secondary-container transition duration-200 hover:brightness-110"><span class="material-symbols-outlined">video_library</span>Media</button>
+              <button type="button" class="flex items-center gap-3 rounded-lg px-4 py-3 text-left text-body-sm text-on-surface-variant transition duration-200 hover:bg-surface-container-high hover:text-on-surface"><span class="material-symbols-outlined">music_note</span>Audio</button>
+              <button type="button" class="flex items-center gap-3 rounded-lg px-4 py-3 text-left text-body-sm text-on-surface-variant transition duration-200 hover:bg-surface-container-high hover:text-on-surface"><span class="material-symbols-outlined">title</span>Text</button>
+              <button type="button" class="flex items-center gap-3 rounded-lg px-4 py-3 text-left text-body-sm text-on-surface-variant transition duration-200 hover:bg-surface-container-high hover:text-on-surface"><span class="material-symbols-outlined">auto_fix_high</span>Effects</button>
+              <button type="button" class="flex items-center gap-3 rounded-lg px-4 py-3 text-left text-body-sm text-on-surface-variant transition duration-200 hover:bg-surface-container-high hover:text-on-surface"><span class="material-symbols-outlined">movie_edit</span>Transitions</button>
+            </nav>
+            <div class="mt-auto rounded-xl border border-outline-variant bg-surface-container-low p-4">
+              <div class="mb-2 flex items-center justify-between font-mono text-label-sm text-on-surface-variant"><span>Backend</span><span id="backend-health-label">checking</span></div>
+              <div class="h-1.5 overflow-hidden rounded-full bg-surface-container-highest"><div id="backend-health-bar" class="h-full w-0 rounded-full bg-secondary transition-all duration-200"></div></div>
+            </div>
+          </aside>
+
+          <main class="flex w-full max-w-3xl flex-col gap-6">
+            <section class="overflow-hidden rounded-2xl border border-outline-variant bg-surface-container">
+              <input id="video-upload-input" class="hidden" type="file" accept="video/*">
+              <input id="audio-upload-input" class="hidden" type="file" accept="audio/*">
+              <div class="checkerboard relative flex min-h-[360px] items-center justify-center overflow-hidden">
+                <div class="absolute inset-[10%] border border-dashed border-outline-variant/30"></div>
+                <button id="video-upload-zone" type="button" class="relative flex max-w-[90%] flex-col items-center gap-4 rounded-2xl border border-outline-variant bg-surface-container-low/80 px-8 py-7 text-outline shadow-primary-soft transition duration-200 hover:border-secondary/60 hover:bg-surface-container-high hover:text-secondary focus:outline-none focus:ring-2 focus:ring-secondary/40">
+                  <span id="preview-spinner" class="hidden h-10 w-10 animate-spin rounded-full border-2 border-outline-variant border-t-secondary"></span>
+                  <span id="preview-icon" class="material-symbols-outlined text-[48px]">upload_file</span>
+                  <span class="font-headline text-headline-md text-on-surface">Upload Media</span>
+                  <span id="preview-filename" class="max-w-full truncate font-mono text-label-md uppercase tracking-[0.02em]">No media uploaded</span>
+                  <span id="preview-status" class="font-mono text-label-sm text-on-surface-variant">Select a video file from this device</span>
+                </button>
+              </div>
+              <div class="border-t border-outline-variant bg-surface-container-low p-4">
+                <button id="audio-upload-button" type="button" class="flex w-full items-center justify-between gap-4 rounded-xl border border-outline-variant bg-surface-container px-4 py-3 text-left transition duration-200 hover:border-secondary hover:bg-surface-container-high focus:outline-none focus:ring-2 focus:ring-secondary/40">
+                  <span class="flex min-w-0 items-center gap-3">
+                    <span class="material-symbols-outlined text-secondary">library_music</span>
+                    <span class="min-w-0">
+                      <span class="block font-headline text-body-md font-semibold text-on-surface">Upload Audio</span>
+                      <span id="audio-upload-label" class="block truncate font-mono text-label-sm text-on-surface-variant">Optional background music or replacement audio</span>
+                    </span>
+                  </span>
+                  <span class="material-symbols-outlined text-on-surface-variant">add</span>
+                </button>
+              </div>
+              <div class="hidden h-12 shrink-0 items-center justify-between border-t border-outline-variant bg-surface-container-low px-3 sm:px-4">
+                <div class="flex min-w-0 items-center gap-2 sm:gap-3">
+                  <button type="button" class="icon-button h-9 w-9 rounded-lg text-on-surface-variant" aria-label="Previous"><span class="material-symbols-outlined">skip_previous</span></button>
+                  <button type="button" class="icon-button h-9 w-9 rounded-lg text-primary" aria-label="Play"><span class="material-symbols-outlined symbol-filled">play_arrow</span></button>
+                  <button type="button" class="icon-button h-9 w-9 rounded-lg text-on-surface-variant" aria-label="Next"><span class="material-symbols-outlined">skip_next</span></button>
+                  <span class="hidden truncate font-mono text-label-sm text-on-surface-variant sm:inline">00:00:00:00 / 00:00:00:00</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button type="button" class="icon-button h-9 w-9 rounded-lg text-on-surface-variant" aria-label="Volume"><span class="material-symbols-outlined">volume_up</span></button>
+                  <div class="hidden h-1 w-24 overflow-hidden rounded-full bg-surface-container-highest sm:block"><div class="h-full w-3/4 rounded-full bg-secondary"></div></div>
+                  <button type="button" class="icon-button h-9 w-9 rounded-lg text-on-surface-variant" aria-label="Fullscreen"><span class="material-symbols-outlined">fullscreen</span></button>
+                </div>
+              </div>
+            </section>
+
+            <section class="shrink-0">
+              <div class="mx-auto flex w-full gap-2">
+                <label class="relative min-w-0 flex-1">
+                  <span class="material-symbols-outlined pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-secondary">temp_preferences_custom</span>
+                  <input id="nl-command-input" type="text" class="w-full rounded-full border border-outline-variant bg-surface-container-high py-3 pl-12 pr-4 text-body-sm text-on-surface outline-none transition duration-200 placeholder:text-on-surface-variant/70 focus:border-secondary focus:ring-2 focus:ring-secondary/30 sm:text-body-md" placeholder="Type an edit command for the uploaded video">
+                </label>
+                <button type="button" id="execute-command" disabled class="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-primary-container px-5 py-3 text-body-sm font-semibold text-on-primary-container transition duration-200 hover:bg-primary hover:text-on-primary focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-background disabled:cursor-not-allowed disabled:bg-surface-bright disabled:text-outline disabled:hover:bg-surface-bright disabled:hover:text-outline sm:px-6 sm:text-body-md">
+                  <span class="hidden sm:inline">Execute</span>
+                  <span class="material-symbols-outlined">arrow_forward</span>
+                </button>
+              </div>
+            </section>
+
+            <section class="hidden h-timeline-height shrink-0 flex-col border-t border-outline-variant bg-surface-container">
+              <div class="flex h-10 shrink-0 items-center justify-between border-b border-outline-variant bg-surface-container-low px-3 sm:px-4">
+                <div class="flex items-center gap-1 text-on-surface-variant">
+                  <button type="button" class="timeline-icon-button h-8 w-8 rounded-md" aria-label="Cut"><span class="material-symbols-outlined text-[20px]">content_cut</span></button>
+                  <button type="button" class="timeline-icon-button h-8 w-8 rounded-md" aria-label="Copy"><span class="material-symbols-outlined text-[20px]">content_copy</span></button>
+                  <button type="button" class="timeline-icon-button h-8 w-8 rounded-md" aria-label="Paste"><span class="material-symbols-outlined text-[20px]">content_paste</span></button>
+                  <div class="mx-2 h-5 w-px bg-outline-variant"></div>
+                  <button type="button" class="timeline-icon-button h-8 w-8 rounded-md" aria-label="Undo"><span class="material-symbols-outlined text-[20px]">undo</span></button>
+                  <button type="button" class="timeline-icon-button h-8 w-8 rounded-md" aria-label="Redo"><span class="material-symbols-outlined text-[20px]">redo</span></button>
+                </div>
+                <div class="flex items-center gap-2 text-on-surface-variant">
+                  <button type="button" class="timeline-icon-button h-8 w-8 rounded-md" aria-label="Zoom out"><span class="material-symbols-outlined text-[20px]">zoom_out</span></button>
+                  <div class="hidden h-1 w-32 overflow-hidden rounded-full bg-surface-container-highest sm:block"><div class="h-full w-1/2 rounded-full bg-secondary"></div></div>
+                  <button type="button" class="timeline-icon-button h-8 w-8 rounded-md" aria-label="Zoom in"><span class="material-symbols-outlined text-[20px]">zoom_in</span></button>
+                </div>
+              </div>
+              <div class="flex flex-1 overflow-x-auto">
+                <div class="sticky left-0 z-10 w-32 shrink-0 border-r border-outline-variant bg-surface-container">
+                  <div class="h-6 border-b border-outline-variant bg-surface-container-low"></div>
+                  <div class="flex h-20 items-center justify-between border-b border-outline-variant px-3 text-on-surface-variant">
+                    <div class="flex items-center gap-2 font-mono text-label-md"><span class="material-symbols-outlined text-[18px]">videocam</span>V1</div>
+                    <div class="flex gap-1"><span class="material-symbols-outlined text-[17px]">visibility</span><span class="material-symbols-outlined text-[17px]">lock_open</span></div>
+                  </div>
+                  <div class="flex h-20 items-center justify-between border-b border-outline-variant px-3 text-on-surface-variant">
+                    <div class="flex items-center gap-2 font-mono text-label-md"><span class="material-symbols-outlined text-[18px]">graphic_eq</span>A1</div>
+                    <div class="flex items-center gap-1">
+                      <button type="button" class="icon-button h-7 w-7 rounded-md border border-outline-variant text-secondary" aria-label="Add audio"><span class="material-symbols-outlined text-[17px]">add</span></button>
+                      <span class="material-symbols-outlined text-[17px]">volume_off</span>
+                      <span class="material-symbols-outlined text-[17px]">lock_open</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="relative flex min-w-[1000px] flex-1 flex-col">
+                  <div class="absolute bottom-0 left-[200px] top-0 z-20 w-px bg-secondary"><div class="absolute left-1/2 top-0 h-0 w-0 -translate-x-1/2 border-l-[6px] border-r-[6px] border-t-[8px] border-l-transparent border-r-transparent border-t-secondary"></div></div>
+                  <div class="grid h-6 grid-cols-5 border-b border-outline-variant bg-surface-container-low font-mono text-label-sm text-on-surface-variant">
+                    <span class="px-3 py-1">00:00</span><span class="px-3 py-1">00:05</span><span class="px-3 py-1">00:10</span><span class="px-3 py-1">00:15</span><span class="px-3 py-1">00:20</span>
+                  </div>
+                  <div class="relative h-20 border-b border-outline-variant">
+                    <div id="timeline-video-clip" class="hidden absolute left-[50px] top-2 h-16 w-[300px] rounded border border-primary/50 bg-primary-container/20 p-2"><div id="timeline-video-label" class="truncate font-mono text-label-sm text-primary"></div></div>
+                  </div>
+                  <div class="relative h-20 border-b border-outline-variant">
+                    <div id="timeline-audio-clip" class="hidden absolute left-[50px] top-2 h-16 w-[300px] overflow-hidden rounded border border-secondary/30 bg-secondary-container/10">
+                      <div id="timeline-audio-label" class="absolute left-2 top-2 z-10 max-w-[280px] truncate font-mono text-label-sm text-secondary"></div>
+                      <svg class="h-full w-full" viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true"><path d="M0,10 Q5,0 10,10 T20,10 T30,5 T40,15 T50,10 T60,5 T70,18 T80,10 T90,2 T100,10" fill="none" stroke="#4cd7f6" stroke-width="1.5" opacity="0.4"></path></svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+
+    <div id="screen-processing" class="screen hidden h-screen overflow-hidden bg-background">
+      <div class="relative flex h-screen flex-col overflow-hidden pt-16">
+        <nav class="fixed left-0 right-0 top-0 z-40 h-16 shrink-0 border-b border-outline-variant bg-surface-container-low opacity-50 pointer-events-none">
+          <div class="flex h-full items-center justify-between px-3 sm:px-4">
+            <div class="flex min-w-0 items-center gap-4 sm:gap-6">
+              <button type="button" class="shrink-0 font-headline text-base font-bold text-primary sm:text-lg">Linguist Video</button>
+              <div class="hidden items-center gap-6 text-body-sm text-on-surface-variant lg:flex"><span>File</span><span>Edit</span><span>View</span><span>Export</span></div>
+            </div>
+            <div class="hidden font-mono text-label-md text-on-surface-variant sm:block"><span class="project-title">No project loaded</span></div>
+            <button type="button" class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-body-sm font-semibold text-on-primary"><span class="material-symbols-outlined text-[20px]">account_circle</span><span class="hidden sm:inline">Export</span></button>
+          </div>
+        </nav>
+
+        <div class="flex flex-1 overflow-hidden">
+          <aside class="hidden w-sidebar-width shrink-0 flex-col border-r border-outline-variant bg-surface-container px-2 py-4 opacity-50 pointer-events-none md:flex">
+            <div class="border-b border-outline-variant px-4 pb-4"><h2 class="font-headline text-headline-md text-on-surface">Assets</h2><p class="mt-1 text-body-sm text-on-surface-variant">AI Manager</p></div>
+            <nav class="mt-4 grid gap-1">
+              <div class="flex items-center gap-3 rounded-lg bg-secondary-container px-4 py-3 text-body-sm font-semibold text-on-secondary-container"><span class="material-symbols-outlined">video_library</span>Media</div>
+              <div class="flex items-center gap-3 rounded-lg px-4 py-3 text-body-sm text-on-surface-variant"><span class="material-symbols-outlined">music_note</span>Audio</div>
+              <div class="flex items-center gap-3 rounded-lg px-4 py-3 text-body-sm text-on-surface-variant"><span class="material-symbols-outlined">title</span>Text</div>
+              <div class="flex items-center gap-3 rounded-lg px-4 py-3 text-body-sm text-on-surface-variant"><span class="material-symbols-outlined">auto_fix_high</span>Effects</div>
+              <div class="flex items-center gap-3 rounded-lg px-4 py-3 text-body-sm text-on-surface-variant"><span class="material-symbols-outlined">movie_edit</span>Transitions</div>
+            </nav>
+            <div class="mt-auto rounded-xl border border-outline-variant bg-surface-container-low p-4"><div class="mb-2 flex items-center justify-between font-mono text-label-sm text-on-surface-variant"><span>Backend</span><span>processing</span></div><div class="h-1.5 overflow-hidden rounded-full bg-surface-container-highest"><div class="shimmer-fill h-full w-full rounded-full"></div></div></div>
+          </aside>
+
+          <main class="flex min-w-0 flex-1 flex-col overflow-hidden opacity-30">
+            <section class="flex min-h-0 flex-1 flex-col border-b border-outline-variant bg-surface-container-lowest">
+              <div class="checkerboard relative flex min-h-[280px] flex-1 items-center justify-center overflow-hidden"><div class="absolute inset-[10%] border border-dashed border-outline-variant/30"></div><div class="relative flex flex-col items-center gap-3 text-outline"><span class="material-symbols-outlined text-[48px]">play_circle</span><span id="processing-preview-label" class="font-mono text-label-md uppercase tracking-[0.02em]">No backend video</span></div></div>
+              <div class="flex h-12 shrink-0 items-center justify-between border-t border-outline-variant bg-surface-container-low px-4"><div class="flex items-center gap-3"><span class="material-symbols-outlined">skip_previous</span><span class="material-symbols-outlined symbol-filled text-primary">play_arrow</span><span class="material-symbols-outlined">skip_next</span><span class="hidden font-mono text-label-sm text-on-surface-variant sm:inline">00:00:00:00 / 00:00:00:00</span></div><div class="flex items-center gap-2"><span class="material-symbols-outlined">volume_up</span><div class="hidden h-1 w-24 rounded-full bg-secondary sm:block"></div><span class="material-symbols-outlined">fullscreen</span></div></div>
+            </section>
+            <section class="shrink-0 bg-background px-4 py-3"><div class="mx-auto flex w-full max-w-3xl gap-2"><div id="processing-backdrop-command" class="relative min-w-0 flex-1 rounded-full border border-outline-variant bg-surface-container-high py-3 pl-12 pr-4 text-body-md text-on-surface-variant"><span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-secondary">temp_preferences_custom</span>No command submitted</div><div class="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-primary-container px-6 py-3 text-body-md font-semibold text-on-primary-container">Execute<span class="material-symbols-outlined">arrow_forward</span></div></div></section>
+            <section class="flex h-timeline-height shrink-0 flex-col border-t border-outline-variant bg-surface-container">
+              <div class="flex h-10 shrink-0 items-center justify-between border-b border-outline-variant bg-surface-container-low px-4"><div class="flex items-center gap-3 text-on-surface-variant"><span class="material-symbols-outlined text-[20px]">content_cut</span><span class="material-symbols-outlined text-[20px]">content_copy</span><span class="material-symbols-outlined text-[20px]">content_paste</span><div class="h-5 w-px bg-outline-variant"></div><span class="material-symbols-outlined text-[20px]">undo</span><span class="material-symbols-outlined text-[20px]">redo</span></div><div class="flex items-center gap-2 text-on-surface-variant"><span class="material-symbols-outlined text-[20px]">zoom_out</span><div class="hidden h-1 w-32 rounded-full bg-secondary sm:block"></div><span class="material-symbols-outlined text-[20px]">zoom_in</span></div></div>
+              <div class="flex flex-1 overflow-x-auto"><div class="sticky left-0 z-10 w-32 shrink-0 border-r border-outline-variant bg-surface-container"><div class="h-6 border-b border-outline-variant bg-surface-container-low"></div><div class="flex h-20 items-center justify-between border-b border-outline-variant px-3 text-on-surface-variant"><div class="flex items-center gap-2 font-mono text-label-md"><span class="material-symbols-outlined text-[18px]">videocam</span>V1</div><div class="flex gap-1"><span class="material-symbols-outlined text-[17px]">visibility</span><span class="material-symbols-outlined text-[17px]">lock_open</span></div></div><div class="flex h-20 items-center justify-between border-b border-outline-variant px-3 text-on-surface-variant"><div class="flex items-center gap-2 font-mono text-label-md"><span class="material-symbols-outlined text-[18px]">graphic_eq</span>A1</div><div class="flex gap-1"><span class="material-symbols-outlined text-[17px]">volume_off</span><span class="material-symbols-outlined text-[17px]">lock_open</span></div></div></div><div class="relative flex min-w-[1000px] flex-1 flex-col"><div class="absolute bottom-0 left-[200px] top-0 z-20 w-px bg-secondary"><div class="absolute left-1/2 top-0 h-0 w-0 -translate-x-1/2 border-l-[6px] border-r-[6px] border-t-[8px] border-l-transparent border-r-transparent border-t-secondary"></div></div><div class="grid h-6 grid-cols-5 border-b border-outline-variant bg-surface-container-low font-mono text-label-sm text-on-surface-variant"><span class="px-3 py-1">00:00</span><span class="px-3 py-1">00:05</span><span class="px-3 py-1">00:10</span><span class="px-3 py-1">00:15</span><span class="px-3 py-1">00:20</span></div><div class="relative h-20 border-b border-outline-variant"><div class="absolute left-[50px] top-2 h-16 w-[300px] rounded border border-primary/50 bg-primary-container/20 p-2"><div id="processing-video-label" class="truncate font-mono text-label-sm text-primary">No backend video</div></div></div><div class="relative h-20 border-b border-outline-variant"><div class="absolute left-[50px] top-2 h-16 w-[300px] overflow-hidden rounded border border-secondary/30 bg-secondary-container/10"><div id="processing-audio-label" class="absolute left-2 top-2 z-10 font-mono text-label-sm text-secondary">No backend audio</div><svg class="h-full w-full" viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true"><path d="M0,10 Q5,0 10,10 T20,10 T30,5 T40,15 T50,10 T60,5 T70,18 T80,10 T90,2 T100,10" fill="none" stroke="#4cd7f6" stroke-width="1.5" opacity="0.4"></path></svg></div></div></div></div>
+            </section>
+          </main>
+        </div>
+
+        <div class="absolute inset-0 z-50 flex items-center justify-center bg-background/70 px-4 backdrop-blur-md">
+          <div class="animate-pulse-glow relative w-full max-w-2xl overflow-hidden rounded-2xl border border-outline-variant bg-surface-container/90 p-6 backdrop-blur-xl sm:p-8">
+            <div class="pointer-events-none absolute left-1/2 top-0 h-32 w-[120%] -translate-x-1/2 bg-primary/10 blur-[60px]"></div>
+            <div class="relative">
+              <div class="flex items-start gap-4">
+                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-primary"><span class="material-symbols-outlined animate-spin text-[28px] [animation-duration:3s]">model_training</span></div>
+                <div><h2 class="font-headline text-headline-md text-on-surface">AI Copilot is processing</h2><p id="processing-intent" class="mt-1 font-mono text-label-md text-on-surface-variant">Waiting for backend job status</p></div>
+              </div>
+              <div class="mt-7 rounded-xl border border-outline/30 bg-surface-container-lowest p-5">
+                <div class="mb-4 font-mono text-label-sm uppercase tracking-widest text-secondary">Executed Command</div>
+                <div class="flex items-start gap-3 text-primary"><span class="material-symbols-outlined mt-1 text-[22px]">prompt_suggestion</span><p id="processing-command" class="text-body-lg italic text-on-surface">Command will appear here after execution starts</p></div>
+              </div>
+              <div id="processing-task-list" class="mt-7 grid gap-4">
+                <div class="flex items-center gap-4"><div class="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-primary/50 bg-primary/20 text-primary"><span class="absolute inline-flex h-full w-full animate-ping rounded-full border border-primary/40"></span><span class="material-symbols-outlined animate-spin text-[20px]">sync</span></div><div class="min-w-0 flex-1 text-body-sm text-primary">Requesting NIM command plan</div><div class="animate-pulse font-mono text-label-sm text-primary">Processing</div></div>
+              </div>
+              <div class="mt-7"><div class="mb-2 flex items-center justify-between font-mono text-label-sm text-secondary"><span>Backend Status</span><span id="processing-status-label">planning</span></div><div class="h-1.5 w-full overflow-hidden rounded-full bg-surface-container-highest"><div id="processing-status-bar" class="shimmer-fill h-full w-full rounded-full"></div></div></div>
+              <div id="processing-warning-box" class="mt-4 hidden rounded-xl border border-primary/20 bg-primary/10 p-4"></div>
+              <button type="button" id="cancel-processing" class="mt-6 w-full rounded-xl border border-outline-variant py-3 text-body-md font-semibold text-on-surface-variant transition duration-200 hover:border-error hover:text-error focus:outline-none focus:ring-2 focus:ring-error/40">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="screen-export" class="screen hidden min-h-screen bg-background">
+      <div class="flex min-h-screen flex-col pt-16">
+        <nav class="fixed left-0 right-0 top-0 z-40 h-16 shrink-0 border-b border-outline-variant bg-surface-container-low">
+          <div class="flex h-full items-center justify-between px-3 sm:px-4">
+            <div class="flex min-w-0 items-center gap-4 sm:gap-6">
+              <button type="button" class="shrink-0 font-headline text-base font-bold text-primary transition duration-200 hover:text-secondary sm:text-lg" data-nav="landing">Linguist Video</button>
+              <div class="hidden items-center gap-6 text-body-sm text-on-surface-variant lg:flex"><button type="button" class="nav-link">File</button><button type="button" class="nav-link">Edit</button><button type="button" class="nav-link">View</button><button type="button" class="nav-link">Export</button></div>
+              <button type="button" class="icon-button h-10 w-10 rounded-lg border border-outline-variant text-on-surface lg:hidden" aria-label="Open menu" data-mobile-toggle="export-menu"><span class="material-symbols-outlined">menu</span></button>
+            </div>
+            <div class="hidden font-mono text-label-md text-on-surface-variant sm:block"><span class="project-title">No project loaded</span></div>
+            <button type="button" class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-body-sm font-semibold text-on-primary transition duration-200 hover:bg-secondary hover:text-on-secondary focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-surface-container-low"><span class="material-symbols-outlined text-[20px]">account_circle</span><span class="hidden sm:inline">Export</span></button>
+          </div>
+          <div id="export-menu" class="hidden border-t border-outline-variant bg-surface-container-low px-4 py-3 lg:hidden">
+            <div class="grid grid-cols-4 gap-2 text-center text-body-sm text-on-surface-variant"><button type="button" class="rounded-lg py-2 transition duration-200 hover:bg-surface-container-high hover:text-primary">File</button><button type="button" class="rounded-lg py-2 transition duration-200 hover:bg-surface-container-high hover:text-primary">Edit</button><button type="button" class="rounded-lg py-2 transition duration-200 hover:bg-surface-container-high hover:text-primary">View</button><button type="button" class="rounded-lg py-2 transition duration-200 hover:bg-surface-container-high hover:text-primary">Export</button></div>
+          </div>
+        </nav>
+
+        <main class="flex flex-1 flex-col items-center overflow-y-auto px-4 py-12 sm:px-margin-desktop sm:py-16">
+          <div class="mx-auto w-full max-w-2xl">
+            <header class="mb-10 text-center">
+              <div class="animate-check-glow mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border-2 border-tertiary/30 bg-tertiary/10"><span class="material-symbols-outlined symbol-filled text-[48px] text-tertiary">check_circle</span></div>
+              <h1 class="font-headline text-headline-lg text-on-background">Export Complete</h1>
+              <p id="export-subtitle" class="mt-2 text-body-md text-on-surface-variant">Your video is ready to download</p>
+            </header>
+
+            <section class="mb-6 overflow-hidden rounded-xl border border-outline-variant bg-surface-container">
+              <div class="checkerboard aspect-video relative flex items-center justify-center">
+                <video id="export-video-preview" class="hidden h-full w-full bg-black object-contain" controls></video>
+                <span id="export-video-fallback" class="material-symbols-outlined text-[48px] text-outline">play_circle</span>
+              </div>
+              <div class="flex items-center justify-between border-t border-outline-variant bg-surface-container-low p-3"><span id="export-output-name" class="font-mono text-label-md text-on-surface">Waiting for output</span><span id="export-output-meta" class="font-mono text-label-sm text-on-surface-variant">Backend job</span></div>
+            </section>
+
+            <section class="mb-6 rounded-xl border border-outline-variant bg-surface-container p-6">
+              <div class="mb-5 flex items-center justify-between"><h2 class="font-mono text-label-md uppercase text-on-surface">Export Settings</h2><span class="material-symbols-outlined text-on-surface-variant">settings</span></div>
+              <div class="grid gap-4 sm:grid-cols-2">
+                <label class="grid gap-2"><span class="font-mono text-label-sm uppercase text-on-surface-variant">Format</span><button id="export-format" type="button" class="flex items-center justify-between rounded-lg border border-outline-variant bg-surface-container-high px-4 py-2 font-mono text-label-md text-on-surface transition duration-200 hover:border-primary">Waiting<span class="material-symbols-outlined text-[18px] text-on-surface-variant">expand_more</span></button></label>
+                <label class="grid gap-2"><span class="font-mono text-label-sm uppercase text-on-surface-variant">Quality</span><button id="export-quality" type="button" class="flex items-center justify-between rounded-lg border border-outline-variant bg-surface-container-high px-4 py-2 font-mono text-label-md text-on-surface transition duration-200 hover:border-primary">Waiting<span class="material-symbols-outlined text-[18px] text-on-surface-variant">expand_more</span></button></label>
+                <label class="grid gap-2"><span class="font-mono text-label-sm uppercase text-on-surface-variant">Preset</span><button id="export-preset" type="button" class="flex items-center justify-between rounded-lg border border-outline-variant bg-surface-container-high px-4 py-2 font-mono text-label-md text-on-surface transition duration-200 hover:border-primary">Waiting<span class="material-symbols-outlined text-[18px] text-on-surface-variant">expand_more</span></button></label>
+                <label class="grid gap-2"><span class="font-mono text-label-sm uppercase text-on-surface-variant">Audio</span><button id="export-audio" type="button" class="flex items-center justify-between rounded-lg border border-outline-variant bg-surface-container-high px-4 py-2 font-mono text-label-md text-on-surface transition duration-200 hover:border-primary">Waiting<span class="material-symbols-outlined text-[18px] text-on-surface-variant">expand_more</span></button></label>
+              </div>
+            </section>
+            <section id="export-warning-box" class="mb-6 hidden rounded-xl border border-primary/20 bg-primary/10 p-4"></section>
+
+            <section class="flex flex-col gap-3">
+              <a id="download-video" href="#" class="inline-flex w-full items-center justify-center gap-3 rounded-xl bg-primary py-4 text-center font-headline text-headline-md text-on-primary transition duration-200 hover:bg-secondary hover:text-on-secondary focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-background"><span class="material-symbols-outlined">download</span>Download Video</a>
+              <button type="button" class="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-outline-variant py-3 text-body-md font-semibold text-on-surface transition duration-200 hover:border-primary hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/40" data-nav="workspace"><span class="material-symbols-outlined">edit</span>Edit Again</button>
+              <button type="button" class="w-full py-3 text-center text-body-md font-semibold text-on-surface-variant transition duration-200 hover:text-primary" data-nav="landing">New Project</button>
+            </section>
+
+            <section class="mt-6 grid grid-cols-3 gap-4 border-t border-outline-variant pt-6 text-center">
+              <div><div class="font-mono text-label-sm uppercase text-on-surface-variant">Operations Applied</div><div id="export-operations" class="mt-2 font-headline text-headline-md text-on-background">0</div></div>
+              <div><div class="font-mono text-label-sm uppercase text-on-surface-variant">Processing Time</div><div id="export-processing-time" class="mt-2 font-headline text-headline-md text-on-background">0s</div></div>
+              <div><div class="font-mono text-label-sm uppercase text-on-surface-variant">File Size</div><div id="export-file-size" class="mt-2 font-headline text-headline-md text-on-background">0 B</div></div>
+            </section>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const screens = ['landing', 'why', 'workspace', 'processing', 'export'];
+    let jobPollTimer = null;
+    let selectedVideoFile = null;
+    let selectedAudioFile = null;
+    let currentJobId = null;
+    let currentPlan = null;
+    let latestJob = null;
+    const uploadEndpoint = 'http://127.0.0.1:5000/upload';
+    const commandEndpoint = 'http://127.0.0.1:5000/command';
+
+    function jobEndpoint(jobId) {
+      return `http://127.0.0.1:5000/job/${jobId}`;
+    }
+
+    function downloadEndpoint(jobId) {
+      return `http://127.0.0.1:5000/download/${jobId}`;
+    }
+
+    function hideMobileMenus() {
+      document.querySelectorAll('[id$="-menu"]').forEach((menu) => {
+        menu.classList.add('hidden');
+      });
+    }
+
+    function showScreen(name) {
+      screens.forEach((screenName) => {
+        const screen = document.getElementById(`screen-${screenName}`);
+        if (screen) {
+          screen.style.display = screenName === name ? 'block' : 'none';
+        }
+      });
+
+      if (jobPollTimer && name !== 'processing') {
+        clearInterval(jobPollTimer);
+        jobPollTimer = null;
+      }
+
+      hideMobileMenus();
+      window.scrollTo(0, 0);
+
+      if (name === 'landing') {
+        resetWorkspaceUpload();
+      }
+      if (name === 'workspace') {
+        setExecuteReady(Boolean(currentJobId));
+      }
+    }
+
+    function getCommandText() {
+      const input = document.getElementById('nl-command-input');
+      const value = input ? input.value.trim() : '';
+      return value;
+    }
+
+    function setExecuteReady(isReady) {
+      const executeButton = document.getElementById('execute-command');
+      if (executeButton) {
+        executeButton.disabled = !isReady;
+      }
+    }
+
+    function setJobLabel(jobId) {
+      const label = document.getElementById('job-id-label');
+      if (label) {
+        label.textContent = jobId ? `job ${jobId}` : '';
+      }
+    }
+
+    function setProjectTitle(title) {
+      document.querySelectorAll('.project-title').forEach((element) => {
+        element.textContent = title || 'No project loaded';
+      });
+    }
+
+    function resetWorkspaceUpload() {
+      selectedVideoFile = null;
+      selectedAudioFile = null;
+      currentJobId = null;
+      currentPlan = null;
+      latestJob = null;
+
+      const videoInput = document.getElementById('video-upload-input');
+      const audioInput = document.getElementById('audio-upload-input');
+      if (videoInput) {
+        videoInput.value = '';
+      }
+      if (audioInput) {
+        audioInput.value = '';
+      }
+
+      setJobLabel('');
+      setProjectTitle('');
+      setExecuteReady(false);
+      markAudioSelected(null);
+      setPreviewState('idle', 'No media uploaded', 'Select a video file from this device');
+      updateTimelineFromUpload({});
+      updateProcessingBackdrop({});
+    }
+
+    function setPreviewState(state, filename, message) {
+      const spinner = document.getElementById('preview-spinner');
+      const icon = document.getElementById('preview-icon');
+      const name = document.getElementById('preview-filename');
+      const status = document.getElementById('preview-status');
+
+      if (!spinner || !icon || !name || !status) {
+        return;
+      }
+
+      spinner.classList.toggle('hidden', state !== 'loading');
+      icon.classList.toggle('hidden', state === 'loading');
+      icon.classList.remove('text-tertiary', 'text-error', 'text-outline');
+      status.classList.remove('text-tertiary', 'text-error', 'text-on-surface-variant');
+
+      if (state === 'ready') {
+        icon.textContent = 'check_circle';
+        icon.classList.add('text-tertiary');
+        status.classList.add('text-tertiary');
+      } else if (state === 'error') {
+        icon.textContent = 'error';
+        icon.classList.add('text-error');
+        status.classList.add('text-error');
+      } else {
+        icon.textContent = 'upload_file';
+        icon.classList.add('text-outline');
+        status.classList.add('text-on-surface-variant');
+      }
+
+      name.textContent = filename || 'No media uploaded';
+      status.textContent = message || 'Select a video file from this device';
+    }
+
+    function markAudioSelected(file) {
+      const button = document.getElementById('audio-upload-button');
+      const label = document.getElementById('audio-upload-label');
+      if (button) {
+        button.title = file ? `Audio selected: ${file.name}` : 'Add audio';
+        button.classList.toggle('border-tertiary', Boolean(file));
+        button.classList.toggle('text-tertiary', Boolean(file));
+      }
+      if (label) {
+        label.textContent = file ? file.name : 'Optional background music or replacement audio';
+      }
+    }
+
+    function updateTimelineFromUpload(job) {
+      const videoClip = document.getElementById('timeline-video-clip');
+      const videoLabel = document.getElementById('timeline-video-label');
+      const audioClip = document.getElementById('timeline-audio-clip');
+      const audioLabel = document.getElementById('timeline-audio-label');
+
+      if (videoClip && videoLabel) {
+        videoClip.classList.toggle('hidden', !job.video_name);
+        videoLabel.textContent = job.video_name || '';
+      }
+
+      if (audioClip && audioLabel) {
+        audioClip.classList.toggle('hidden', !job.audio_name);
+        audioLabel.textContent = job.audio_name || '';
+      }
+    }
+
+    function updateProcessingBackdrop(job, commandText = '') {
+      const preview = document.getElementById('processing-preview-label');
+      const video = document.getElementById('processing-video-label');
+      const audio = document.getElementById('processing-audio-label');
+      const command = document.getElementById('processing-backdrop-command');
+
+      if (preview) {
+        preview.textContent = job.video_name || 'No backend video';
+      }
+      if (video) {
+        video.textContent = job.video_name || 'No backend video';
+      }
+      if (audio) {
+        audio.textContent = job.audio_name || 'No backend audio';
+      }
+      if (command) {
+        command.innerHTML = '<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-secondary">temp_preferences_custom</span>';
+        command.append(document.createTextNode(commandText || 'No command submitted'));
+      }
+    }
+
+    async function refreshBackendHealth() {
+      const label = document.getElementById('backend-health-label');
+      const bar = document.getElementById('backend-health-bar');
+      const landingLabel = document.getElementById('landing-health-label');
+      const landingDot = document.getElementById('landing-health-dot');
+      try {
+        const response = await fetch('http://127.0.0.1:5000/health');
+        const payload = await response.json();
+        if (!response.ok) {
+          throw new Error(payload.error || 'offline');
+        }
+        if (label) {
+          label.textContent = `${payload.jobs_in_memory} jobs`;
+        }
+        if (bar) {
+          bar.classList.remove('bg-error');
+          bar.classList.add('bg-secondary');
+          bar.style.width = '100%';
+        }
+        if (landingLabel) {
+          landingLabel.textContent = `Backend online · ${payload.jobs_in_memory} jobs`;
+        }
+        if (landingDot) {
+          landingDot.classList.remove('bg-outline', 'bg-error');
+          landingDot.classList.add('bg-tertiary');
+        }
+      } catch (error) {
+        if (label) {
+          label.textContent = 'offline';
+        }
+        if (bar) {
+          bar.classList.remove('bg-secondary');
+          bar.classList.add('bg-error');
+          bar.style.width = '100%';
+        }
+        if (landingLabel) {
+          landingLabel.textContent = 'Backend offline';
+        }
+        if (landingDot) {
+          landingDot.classList.remove('bg-outline', 'bg-tertiary');
+          landingDot.classList.add('bg-error');
+        }
+      }
+    }
+
+    async function uploadSelectedFiles() {
+      if (!selectedVideoFile) {
+        setPreviewState('error', 'No video selected', 'video file required');
+        return;
+      }
+
+      currentJobId = null;
+      setJobLabel('');
+      setExecuteReady(false);
+      setPreviewState('loading', selectedVideoFile.name, 'Uploading to Linguist Backend...');
+
+      const formData = new FormData();
+      formData.append('video', selectedVideoFile);
+      if (selectedAudioFile) {
+        formData.append('audio', selectedAudioFile);
+      }
+
+      try {
+        const response = await fetch(uploadEndpoint, {
+          method: 'POST',
+          body: formData,
+        });
+        const payload = await response.json();
+
+        if (!response.ok) {
+          throw new Error(payload.error || 'Upload failed');
+        }
+
+        currentJobId = payload.job_id;
+        latestJob = payload;
+        setJobLabel(currentJobId);
+        setProjectTitle(payload.video_name);
+        setPreviewState('ready', payload.video_name, 'Ready to edit');
+        updateTimelineFromUpload(payload);
+        updateProcessingBackdrop(payload);
+        setExecuteReady(true);
+        refreshBackendHealth();
+      } catch (error) {
+        setPreviewState('error', selectedVideoFile.name, error.message);
+        setExecuteReady(false);
+      }
+    }
+
+    function taskDescription(item, kind) {
+      if (kind === 'special') {
+        const type = item.type || 'special';
+        return `${type.replaceAll('_', ' ')} operation`;
+      }
+      return item.description || item.filter || 'Processing step';
+    }
+
+    function renderTaskRow(description, state) {
+      const row = document.createElement('div');
+      row.className = state === 'waiting' ? 'flex items-center gap-4 opacity-40' : 'flex items-center gap-4';
+
+      const iconWrap = document.createElement('div');
+      if (state === 'done') {
+        iconWrap.className = 'flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-tertiary/30 bg-tertiary/20 text-tertiary';
+      } else if (state === 'error') {
+        iconWrap.className = 'flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-error/30 bg-error/20 text-error';
+      } else if (state === 'active') {
+        iconWrap.className = 'relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-primary/50 bg-primary/20 text-primary';
+      } else {
+        iconWrap.className = 'flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-outline-variant text-on-surface-variant';
+      }
+
+      if (state === 'active') {
+        const ping = document.createElement('span');
+        ping.className = 'absolute inline-flex h-full w-full animate-ping rounded-full border border-primary/40';
+        iconWrap.appendChild(ping);
+      }
+
+      const icon = document.createElement('span');
+      icon.className = state === 'active' ? 'material-symbols-outlined animate-spin text-[20px]' : 'material-symbols-outlined text-[20px]';
+      icon.textContent = state === 'done' ? 'check' : state === 'error' ? 'error' : state === 'active' ? 'sync' : 'hourglass_empty';
+      iconWrap.appendChild(icon);
+
+      const text = document.createElement('div');
+      text.className = state === 'active' ? 'min-w-0 flex-1 text-body-sm text-primary' : state === 'error' ? 'min-w-0 flex-1 text-body-sm text-error' : 'min-w-0 flex-1 text-body-sm text-on-surface';
+      text.textContent = description;
+
+      const status = document.createElement('div');
+      status.className = state === 'active'
+        ? 'animate-pulse font-mono text-label-sm text-primary'
+        : state === 'done'
+          ? 'font-mono text-label-sm text-tertiary'
+          : state === 'error'
+            ? 'font-mono text-label-sm text-error'
+            : 'font-mono text-label-sm text-on-surface-variant';
+      status.textContent = state === 'done' ? 'Done' : state === 'error' ? 'Error' : state === 'active' ? 'Processing' : 'Waiting';
+
+      row.appendChild(iconWrap);
+      row.appendChild(text);
+      row.appendChild(status);
+      return row;
+    }
+
+    function renderProcessingPlan(plan, mode = 'processing') {
+      const intent = document.getElementById('processing-intent');
+      if (intent) {
+        intent.classList.remove('text-error');
+        intent.textContent = plan.intent || 'Backend plan received';
+      }
+
+      const tasks = [
+        ...(plan.video_filters || []).map((item) => taskDescription(item, 'video')),
+        ...(plan.audio_filters || []).map((item) => taskDescription(item, 'audio')),
+        ...(plan.special || []).map((item) => taskDescription(item, 'special')),
+      ];
+
+      const taskList = document.getElementById('processing-task-list');
+      if (!taskList) {
+        return;
+      }
+
+      taskList.textContent = '';
+      const finalEncode = plan.final_encode || {};
+      const visibleTasks = tasks.length ? tasks : [`Final encode: ${finalEncode.vcodec || 'configured codec'}`];
+      visibleTasks.forEach((description, index) => {
+        const state = mode === 'done' ? 'done' : mode === 'error' ? 'error' : index === 0 ? 'active' : 'waiting';
+        taskList.appendChild(renderTaskRow(description, state));
+      });
+    }
+
+    function formatBytes(bytes) {
+      if (!Number.isFinite(bytes) || bytes <= 0) {
+        return '0 B';
+      }
+      const units = ['B', 'KB', 'MB', 'GB'];
+      let value = bytes;
+      let unitIndex = 0;
+      while (value >= 1024 && unitIndex < units.length - 1) {
+        value /= 1024;
+        unitIndex += 1;
+      }
+      return `${value.toFixed(value >= 10 || unitIndex === 0 ? 0 : 1)} ${units[unitIndex]}`;
+    }
+
+    function setProcessingStatus(status) {
+      const label = document.getElementById('processing-status-label');
+      const bar = document.getElementById('processing-status-bar');
+      if (label) {
+        label.textContent = status;
+      }
+      if (bar) {
+        bar.classList.toggle('shimmer-fill', status === 'processing' || status === 'planning');
+        bar.style.width = status === 'complete' ? '100%' : status === 'error' ? '100%' : '100%';
+        bar.classList.toggle('bg-error', status === 'error');
+        bar.classList.toggle('bg-tertiary', status === 'complete');
+      }
+    }
+
+    function renderJobWarnings(job, targetId) {
+      const box = document.getElementById(targetId);
+      if (!box) {
+        return;
+      }
+
+      const warnings = Array.isArray(job?.warnings) ? job.warnings.filter(Boolean) : [];
+      if (!warnings.length) {
+        box.classList.add('hidden');
+        box.textContent = '';
+        return;
+      }
+
+      box.classList.remove('hidden');
+      box.textContent = '';
+
+      const header = document.createElement('div');
+      header.className = 'mb-2 flex items-center gap-2 font-mono text-label-sm uppercase tracking-widest text-primary';
+      const icon = document.createElement('span');
+      icon.className = 'material-symbols-outlined text-[18px]';
+      icon.textContent = 'info';
+      const title = document.createElement('span');
+      title.textContent = 'Backend Notes';
+      header.appendChild(icon);
+      header.appendChild(title);
+      box.appendChild(header);
+
+      const list = document.createElement('div');
+      list.className = 'grid gap-2 text-body-sm text-on-surface-variant';
+      warnings.slice(-3).forEach((warning) => {
+        const item = document.createElement('div');
+        item.className = 'flex gap-2';
+        const bullet = document.createElement('span');
+        bullet.className = 'mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary';
+        const text = document.createElement('span');
+        text.textContent = warning;
+        item.appendChild(bullet);
+        item.appendChild(text);
+        list.appendChild(item);
+      });
+      box.appendChild(list);
+    }
+
+    function updateExportScreen(job) {
+      const plan = job.plan || currentPlan || {};
+      const finalEncode = plan.final_encode || {};
+      const outputName = job.output_name || (job.output_path ? job.output_path.split('/').pop() : 'output unavailable');
+      const downloadUrl = downloadEndpoint(job.job_id);
+
+      const subtitle = document.getElementById('export-subtitle');
+      const outputNameEl = document.getElementById('export-output-name');
+      const outputMeta = document.getElementById('export-output-meta');
+      const video = document.getElementById('export-video-preview');
+      const fallback = document.getElementById('export-video-fallback');
+      const download = document.getElementById('download-video');
+
+      if (subtitle) {
+        subtitle.textContent = job.status === 'complete' ? 'Your rendered video is ready to download' : job.error || 'Output unavailable';
+      }
+      if (outputNameEl) {
+        outputNameEl.textContent = outputName;
+      }
+      if (outputMeta) {
+        outputMeta.textContent = `job ${job.job_id}`;
+      }
+      if (video && fallback && job.status === 'complete') {
+        video.src = downloadUrl;
+        video.classList.remove('hidden');
+        fallback.classList.add('hidden');
+      }
+      if (download && job.status === 'complete') {
+        download.href = downloadUrl;
+        download.classList.remove('pointer-events-none', 'opacity-50');
+      }
+
+      const format = document.getElementById('export-format');
+      const quality = document.getElementById('export-quality');
+      const preset = document.getElementById('export-preset');
+      const audio = document.getElementById('export-audio');
+      if (format) {
+        format.firstChild.textContent = finalEncode.vcodec || 'not set';
+      }
+      if (quality) {
+        quality.firstChild.textContent = finalEncode.crf ? `CRF ${finalEncode.crf}` : 'not set';
+      }
+      if (preset) {
+        preset.firstChild.textContent = finalEncode.preset || 'not set';
+      }
+      if (audio) {
+        audio.firstChild.textContent = `${finalEncode.acodec || 'audio'} ${finalEncode.audio_bitrate || ''}`.trim();
+      }
+
+      const operations = document.getElementById('export-operations');
+      const processingTime = document.getElementById('export-processing-time');
+      const fileSize = document.getElementById('export-file-size');
+      if (operations) {
+        operations.textContent = String(job.operations_count || 0);
+      }
+      if (processingTime) {
+        processingTime.textContent = `${job.processing_seconds || 0}s`;
+      }
+      if (fileSize) {
+        fileSize.textContent = formatBytes(job.output_size_bytes || 0);
+      }
+      renderJobWarnings(job, 'export-warning-box');
+    }
+
+    async function pollCurrentJob() {
+      if (!currentJobId) {
+        return;
+      }
+
+      try {
+        const response = await fetch(jobEndpoint(currentJobId));
+        const job = await response.json();
+        if (!response.ok) {
+          throw new Error(job.error || 'Job lookup failed');
+        }
+
+        latestJob = job;
+        setProjectTitle(job.video_name);
+        updateProcessingBackdrop(job, job.command || getCommandText());
+        setProcessingStatus(job.status);
+        renderJobWarnings(job, 'processing-warning-box');
+
+        if (job.status === 'complete') {
+          clearInterval(jobPollTimer);
+          jobPollTimer = null;
+          renderProcessingPlan(job.plan || currentPlan || {}, 'done');
+          updateExportScreen(job);
+          showScreen('export');
+        } else if (job.status === 'error') {
+          clearInterval(jobPollTimer);
+          jobPollTimer = null;
+          renderProcessingPlan(job.plan || currentPlan || {}, 'error');
+          setProcessingStatus('error');
+          const intent = document.getElementById('processing-intent');
+          if (intent) {
+            intent.textContent = job.error || 'Backend processing failed';
+            intent.classList.add('text-error');
+          }
+          setExecuteReady(Boolean(currentJobId));
+        }
+      } catch (error) {
+        clearInterval(jobPollTimer);
+        jobPollTimer = null;
+        setProcessingStatus('error');
+        setPreviewState('error', selectedVideoFile ? selectedVideoFile.name : 'Job failed', error.message);
+        showScreen('workspace');
+        setExecuteReady(Boolean(currentJobId));
+      }
+    }
+
+    function startJobPolling() {
+      if (jobPollTimer) {
+        clearInterval(jobPollTimer);
+      }
+      pollCurrentJob();
+      jobPollTimer = setInterval(pollCurrentJob, 1500);
+    }
+
+    async function startProcessing() {
+      if (!currentJobId) {
+        return;
+      }
+
+      const commandText = getCommandText();
+      if (!commandText) {
+        setPreviewState('error', selectedVideoFile ? selectedVideoFile.name : 'Command required', 'Enter an edit command before executing');
+        return;
+      }
+
+      const commandDisplay = document.getElementById('processing-command');
+      if (commandDisplay) {
+        commandDisplay.textContent = commandText;
+      }
+
+      setExecuteReady(false);
+      currentPlan = null;
+      setProcessingStatus('planning');
+      renderJobWarnings({}, 'processing-warning-box');
+      renderProcessingPlan({ intent: 'Requesting NIM command plan', final_encode: {} });
+      updateProcessingBackdrop(latestJob || {}, commandText);
+      showScreen('processing');
+
+      try {
+        const response = await fetch(commandEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            job_id: currentJobId,
+            command: commandText,
+          }),
+        });
+        const payload = await response.json();
+
+        if (!response.ok) {
+          throw new Error(payload.error || 'Command failed');
+        }
+
+        currentPlan = payload;
+        renderProcessingPlan(payload, 'processing');
+        setProcessingStatus('processing');
+        startJobPolling();
+      } catch (error) {
+        setPreviewState('error', selectedVideoFile ? selectedVideoFile.name : 'Command failed', error.message);
+        showScreen('workspace');
+        setExecuteReady(Boolean(currentJobId));
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('[data-nav]').forEach((element) => {
+        element.addEventListener('click', () => {
+          showScreen(element.dataset.nav);
+        });
+      });
+
+      document.querySelectorAll('[data-mobile-toggle]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const target = document.getElementById(button.dataset.mobileToggle);
+          if (target) {
+            target.classList.toggle('hidden');
+          }
+        });
+      });
+
+      const executeButton = document.getElementById('execute-command');
+      if (executeButton) {
+        executeButton.addEventListener('click', startProcessing);
+      }
+
+      const videoUploadZone = document.getElementById('video-upload-zone');
+      const videoUploadInput = document.getElementById('video-upload-input');
+      if (videoUploadZone && videoUploadInput) {
+        videoUploadZone.addEventListener('click', () => {
+          videoUploadInput.click();
+        });
+
+        videoUploadInput.addEventListener('change', () => {
+          const file = videoUploadInput.files && videoUploadInput.files[0];
+          if (file) {
+            selectedVideoFile = file;
+            uploadSelectedFiles();
+          }
+        });
+      }
+
+      const audioUploadButton = document.getElementById('audio-upload-button');
+      const audioUploadInput = document.getElementById('audio-upload-input');
+      if (audioUploadButton && audioUploadInput) {
+        audioUploadButton.addEventListener('click', () => {
+          audioUploadInput.click();
+        });
+
+        audioUploadInput.addEventListener('change', () => {
+          const file = audioUploadInput.files && audioUploadInput.files[0];
+          if (file) {
+            selectedAudioFile = file;
+            markAudioSelected(file);
+            if (!selectedVideoFile) {
+              setPreviewState('idle', file.name, 'Audio selected. Choose a video to upload both files.');
+            } else {
+              uploadSelectedFiles();
+            }
+          }
+        });
+      }
+
+      const commandInput = document.getElementById('nl-command-input');
+      if (commandInput) {
+        commandInput.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter') {
+            startProcessing();
+          }
+        });
+      }
+
+      const cancelButton = document.getElementById('cancel-processing');
+      if (cancelButton) {
+        cancelButton.addEventListener('click', () => {
+          showScreen('workspace');
+        });
+      }
+
+      showScreen('landing');
+      setExecuteReady(false);
+      refreshBackendHealth();
+    });
+  </script>
+</body>
+</html>

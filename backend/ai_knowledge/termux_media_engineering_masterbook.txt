@@ -1,0 +1,395 @@
+Termux Media Engineering Masterbook
+The missing layer: editing logic, workflow design, dependency thinking, and recipe maps
+Built for video editing, audio cleanup, OCR, subtitle work, and AI media automation.
+
+How to use this book: read the workflow chapters first, then jump to the package map and the recipe
+appendix. This book is meant to teach decision-making, not just memorizing package names.
+Scope note: package availability and exact build behavior can vary across Termux repositories and device
+hardware. Treat this as a practical field guide, then verify on your own device with small test clips.
+
+1. The editing mindset
+Every media task has the same skeleton:
+ Ingest - bring media into the pipeline.
+ Normalize - resize, reformat, resample, rename, or convert into a clean working format.
+ Process - edit, analyze, enhance, annotate, transcribe, or transform.
+ Validate - inspect output visually and audibly before trusting it.
+ Export - write the final file in a format that matches the target platform.
+The big mistake is to start with tools instead of outcomes. First decide the job: cut a video, clean a noisy
+track, read text from frames, make subtitles, or automate a batch workflow. Then choose the smallest
+package chain that can do the job reliably.
+In practice, most powerful workflows in Termux are built from a few anchors: ffmpeg for media I/O and
+filtering, Python for glue, OpenCV for visual analysis, and one specialist package for the job’s final step.
+
+2. Workflow map
+Video editing: Use ffmpeg or ffmpeg-python for trims, transcodes, filters, overlays, speed changes, muxing,
+and delivery exports. Add moviepy or editly for scriptable timeline-style edits. Use OpenCV for frame
+analysis, detection, and preprocessing.
+Audio cleanup: Use ffmpeg, sox, rubberband, librosa, scipy, sndfile, and soundfile-style tooling for denoise,
+loudness, resampling, tempo shifts, and segment extraction.
+OCR: Use tesseract, leptonica, pytesseract, rapidocr, OpenCV, Pillow, and image conversion tools to extract
+text from stills, screenshots, and video frames.
+Subtitle work: Use pysubs2, pycaption, srt, font packages, and ffmpeg/libass for create, convert, sync, burn,
+style, and embed subtitle flows.
+AI media automation: Use Python with numpy, opencv, moviepy, yt-dlp, ffmpeg-python, vidgear, and
+transcript tools to automate batch media pipelines.
+
+3. Video editing workflow
+Best-fit package chain:
+ ffmpeg - the core engine for trim, crop, scale, concat, transcode, mux, demux, overlay, subtitles, and
+filters.
+ ffmpeg-python - helpful when you want Python code to generate complex ffmpeg commands safely.
+ moviepy - useful for quick scripted edits, compositing, and timeline-style automation.
+ editly - useful for structured sequence-based video creation and templated edits.
+ opencv-python - useful for scene analysis, tracking, face detection, keyframe logic, and frame-by-frame
+processing.
+ libass, fontconfig, freetype, fribidi, harfbuzz - important for subtitle rendering and correct text shaping.
+When to use this stack:
+ Use ffmpeg when the job touches codecs, containers, filters, audio streams, subtitles, or delivery
+exports.
+ Use OpenCV when the job depends on what is inside the frames, not just the file wrapper.
+ Use moviepy when the edit is small, scripted, and easier to express in Python than in raw ffmpeg syntax.
+ Use editly when you want reusable clip templates, titles, and simple narrative assembly.
+Common editing moves:
+ Trim dead sections and export a clean cut.
+ Crop or scale for social formats like 9:16, 1:1, or 16:9.
+ Add text, logos, subtitles, or picture-in-picture overlays.
+ Normalize audio and make dialogue readable.
+ Blend clips with transitions or cuts.
+ Burn subtitles for platforms that do not accept sidecar files.
+
+Video cautions
+
+
+
+
+
+If an output looks wrong, inspect the codec, frame rate, sample rate, and pixel format before changing
+the edit logic.
+Do not trust a render until you watch a short sample segment.
+Subtitle shaping can break for complex scripts if font and shaping libraries are missing.
+Very large filters can chew RAM on phones, so split the job into stages.
+
+4. Audio cleanup workflow
+Best-fit package chain:
+ ffmpeg - trim, resample, normalize, convert formats, and extract audio.
+ sox - surgical audio editing, fades, trims, channel ops, and DSP-style processing.
+ rubberband - time-stretch and pitch-shift with decent quality.
+ librosa - analysis, beat detection, onset detection, tempo, chroma, and feature extraction.
+ scipy - filters and signal processing helpers.
+ sndfile / libsndfile - read and write audio accurately.
+ pulseaudio or jack - for live routing or capture in advanced setups.
+When to use this stack:
+ Use ffmpeg for most format conversion and simple cleanup.
+ Use sox when you need precise edits, fades, and repeatable command-line audio surgery.
+ Use librosa when your task is analytical, like finding beats, silence, or speech segments.
+ Use rubberband when the user wants time-stretching or pitch changes without making the audio sound
+like a melted cassette.
+Typical audio tasks:
+ Remove silence, hum, or clipping trouble.
+ Normalize volume across an entire project.
+ Cut a podcast into clips.
+ Extract audio from a video for separate cleanup.
+ Match audio duration to edited video.
+
+Audio cautions
+
+
+
+
+Always compare before and after at the same loudness.
+Tempo changes can create artifacts if pushed too far.
+For speech, noise reduction should protect consonants, not just lower the noise floor.
+
+5. OCR workflow
+Best-fit package chain:
+ tesseract - the main OCR engine.
+ leptonica - image preprocessing support for OCR.
+ pytesseract - Python bridge to tesseract.
+ rapidocr - an alternative OCR route when you want fast automated extraction.
+ opencv-python - deskewing, thresholding, cropping, and region detection.
+ Pillow / imageio / graphicsmagick / openjpeg tools - image conversion and cleanup helpers.
+When to use this stack:
+ Use OCR when the content exists as pixels, not as text metadata.
+ Use OpenCV before OCR if the image is noisy, skewed, low contrast, or needs cropping.
+ Use rapidocr or tesseract depending on language, quality, and speed needs.
+ Use ffmpeg to sample frames from video before OCR.
+OCR workflow recipe:
+1. Extract frames from video or capture screenshots.
+2. Crop the text region.
+3. Deskew and increase contrast.
+4. Run OCR.
+5. Clean the text output with scripts or regex.
+6. Verify the result against the original image.
+
+OCR cautions
+
+
+
+
+Small text needs good preprocessing more than brute force OCR.
+Language packs matter.
+If the source is a video, choose keyframes wisely or you will OCR the same visual noise again and
+again.
+
+6. Subtitle workflow
+Best-fit package chain:
+ pysubs2 - read, edit, retime, and write subtitle files.
+ srt - lightweight subtitle parsing and creation.
+ pycaption - format conversion and caption handling.
+ youtube-transcript-api - transcript retrieval when the source supports it.
+ ffmpeg - mux, burn, or extract subtitle streams.
+ libass, fontconfig, freetype, fribidi, harfbuzz - rendering and text shaping support.
+When to use this stack:
+ Use pysubs2 for direct subtitle file editing and syncing.
+ Use srt when you want a simple Python workflow and minimal overhead.
+ Use pycaption when the job is about converting between caption formats.
+ Use ffmpeg + libass when subtitles must be burned into the picture.
+Useful subtitle tasks:
+ Shift timing after an edit.
+ Convert between SRT, ASS, VTT, and related formats.
+ Add styling, speaker colors, or karaoke-like effects.
+ Embed subtitles as soft subtitles in a video container.
+ Burn them permanently when platform rules require it.
+
+Subtitle cautions
+
+
+
+
+Font choice can change the final look a lot.
+Right-to-left and complex-script rendering depends on shaping libraries.
+Subtitle timing should be checked against the final cut, not the rough draft.
+
+7. AI media automation workflow
+Best-fit package chain:
+ python + numpy + scipy - glue and numeric work.
+ opencv-python - frame analysis, detection, and batch visual preprocessing.
+ ffmpeg-python - command generation from Python.
+ moviepy - quick scripted edits and clip assembly.
+ yt-dlp - download media for lawful offline processing when appropriate.
+ vidgear - video capture and streaming helpers.
+ imageio-ffmpeg - bridges image pipelines and FFmpeg execution.
+When to use this stack:
+ Use this when the user wants a repeated pipeline, not a one-off edit.
+ Use automation for batch file conversion, highlight detection, clip generation, OCR on many frames, or
+subtitle generation.
+ Use Python when conditional logic matters more than a single shell command.
+Example automation jobs:
+ Scan a folder of clips and produce vertical shorts.
+ Detect scenes and cut highlights into separate files.
+ Extract audio, clean it, and reattach it.
+ Pull text from screenshots in bulk and save structured output.
+ Generate subtitles, then burn or mux them depending on target.
+
+8. Package pairing and dependency notes
+Think in pairs, not singles. Many packages are tools in a chain, and the chain matters more than any one
+shiny wrench.
+
+ffmpeg family
+
+
+
+
+
+Core: ffmpeg
+Helpful wrappers: ffmpeg-python, moviepy, editly
+Common companions: libass, fontconfig, freetype, harfbuzz, fribidi
+Watch-out: codec support can differ across builds and device architectures
+
+audio chain
+
+
+
+
+
+Core: ffmpeg, sox
+Analysis: librosa, scipy, numpy
+Resampling / stretch: rubberband
+Watch-out: output quality depends on the order of operations
+
+OCR chain
+
+
+
+
+
+Core: tesseract or rapidocr
+Preprocess: opencv-python, pillow, graphicsmagick
+Image support: leptonica, libpng, libjpeg-turbo, tiff, webp related libs
+Watch-out: bad preprocessing can ruin OCR before the engine even starts
+
+subtitle chain
+
+
+
+
+
+Core: pysubs2, srt, pycaption
+Render support: libass, fontconfig, freetype, fribidi, harfbuzz
+Delivery: ffmpeg
+Watch-out: font fallback can alter line breaks and readability
+
+automation chain
+
+
+
+
+
+Core: python, numpy, ffmpeg-python
+Vision: opencv-python
+Media sources: yt-dlp, imageio-ffmpeg, vidgear
+Watch-out: batch jobs need logging, retries, and small test runs first
+
+9. Decision trees
+Need to cut, crop, convert, or burn subtitles? Start with ffmpeg.
+Need to inspect frames or detect what is inside the image? Start with OpenCV.
+Need to read text from pictures or frame grabs? Start with OCR tools plus preprocessing.
+Need to sync or stylize subtitles? Start with pysubs2 or pycaption, then finish with ffmpeg if rendering is
+needed.
+Need repeated edits across many files? Build a Python automation pipeline.
+
+10. 50 user instruction templates
+These are phrased like things a user might ask. They are meant to help the reader map a real request to the
+right package chain.
+
+Video editing
+
+
+
+
+
+
+
+
+
+
+
+Trim the dead intro from this clip and export a clean MP4.
+Convert this horizontal video into a vertical social media edit.
+Add a title card, logo, and lower-third to this video.
+Extract the audio from a video and reattach it after cleanup.
+Burn subtitles into the picture for a platform that does not support subtitle files.
+Change this clip from 60 fps delivery to 30 fps delivery without breaking sync.
+Crop the center region and remove the black bars.
+Join these five clips into one seamless output.
+Create a silent preview version with only key scenes.
+Auto-process a folder of raw clips into ready-to-post videos.
+
+Audio cleanup
+
+
+
+
+
+
+
+
+
+
+
+Remove background hiss from this recording.
+Normalize the loudness across all clips in this podcast.
+Cut out silence from the beginning and end of this audio.
+Change the pitch without making the voice sound broken.
+Stretch this audio to match the new video timing.
+Extract the soundtrack from video and clean it separately.
+Resample this file for web-friendly delivery.
+Split the long recording into smaller parts.
+Analyze beats so the cuts can land on rhythm.
+Batch-clean every audio file in this folder.
+
+OCR
+
+
+
+
+
+
+
+
+
+
+
+Read the text from this screenshot.
+Extract text from a frame captured from a video.
+Crop and deskew the image before OCR.
+Detect the text region automatically and only OCR that part.
+Turn scanned pages into searchable text.
+Run OCR on multiple posters and save the results.
+Capture frames every few seconds and OCR only the sharp ones.
+Clean the image contrast before text extraction.
+Compare OCR output against the original image and fix mistakes.
+Build a batch OCR pipeline for a whole folder of images.
+
+Subtitle work
+
+
+
+
+Fix subtitle timing after the video was trimmed.
+Convert SRT subtitles into another format.
+Style the subtitles with a different font and color.
+
+
+
+
+
+
+
+
+
+Burn subtitles directly into the video.
+Merge translated subtitle lines into the main file.
+Shift every subtitle by two seconds.
+Extract subtitle streams from the video container.
+Auto-generate captions from a transcript file.
+Check subtitle line length and break long lines cleanly.
+Create a subtitle workflow for repeated uploads.
+
+AI media automation
+
+
+
+
+
+
+
+
+
+
+
+Watch this folder and auto-convert every new clip.
+Create a script that detects scenes and cuts highlights.
+Generate short social clips from a long recording.
+Use frame analysis to find the best key moments.
+Download a video legally, process it, and export a summary cut.
+Auto-create subtitles and package them with the final video.
+Batch-process screenshots, OCR the text, and save JSON output.
+Chain video, audio, and transcript tools into one pipeline.
+Track progress and retry failed files automatically.
+Turn a repeat editing job into one command.
+
+11. Mini recipe book
+Recipe: clean social clip
+7. Trim to the highlight.
+8. Scale to target aspect ratio.
+9. Normalize audio.
+10. Add subtitles.
+11. Export an H.264 MP4.
+
+Recipe: OCR from video
+12. Extract frames every N seconds.
+13. Crop the text region.
+14. Denoise and boost contrast.
+15. Run OCR.
+16. Save the cleaned text.
+
+Recipe: subtitle rescue
+17. Load the subtitle file.
+18. Shift timing to match the cut.
+19. Fix line breaks.
+20. Validate against the final video.
+21. Mux or burn as needed.
+End of masterbook
+
+

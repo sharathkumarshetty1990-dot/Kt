@@ -1,0 +1,528 @@
+FFmpeg Mega Cookbook
+Command-first recipes for cutting, cleaning, subtitles, motion graphics, and automation
+Designed for Termux, Android workflows, and practical media editing on the go.
+
+How to read this book: Each recipe gives a use case, a user-style instruction, a copy-ready command, and
+short notes on what to change. Replace input/output names, inspect results, and keep an eye on codec
+compatibility.
+Core habits: use ffprobe first, keep -y and -hide_banner handy, choose -c copy when you only want
+remuxing, and re-encode when filters touch the media stream.
+
+Quick flags to remember:
+-hide_banner reduce noise
+-stats show progress
+-y overwrite output
+-ss seek
+-t trim duration
+-i input
+-map choose streams
+-c copy remux without re-encoding
+-crf quality control for x264/x265
+-movflags +faststart better web playback for MP4
+
+1. Inspect, probe, and understand media
+1.1. Read container and stream info
+When to use: When you need to see codecs, duration, frame rate, sample rate, and stream layout before
+editing.
+Example user instruction: Show me everything inside this file before I edit it.
+ffprobe -hide_banner -v error -show_format -show_streams input.mp4
+
+Notes: Use this before any serious edit. It tells you whether the file is video, audio, subtitles, or a bundle of all
+three.
+
+1.2. List only stream indexes and codecs
+When to use: When you want a compact report for choosing the right -map values.
+Example user instruction: Tell me which stream numbers I should map.
+ffprobe -v error -select_streams v:a:s -show_entries stream=index,codec_type,codec_name -of table
+input.mkv
+
+Notes: Great for deciding whether to keep or drop tracks.
+
+1.3. Show duration and bitrate
+When to use: When you are planning cuts, bitrate budgets, or upload size.
+Example user instruction: Tell me how long this video is and how heavy it is.
+ffprobe -v error -show_entries format=duration,bit_rate -of default=nw=1 input.mp4
+
+Notes: Duration helps with trimming and batching. Bitrate helps with storage and quality estimates.
+
+1.4. Extract a contact sheet of frames
+When to use: When you want a visual preview of a clip without scrubbing the whole thing.
+Example user instruction: Make me a thumbnail sheet from this video.
+ffmpeg -i input.mp4 -vf "select='not(mod(n,60))',scale=320:-1,tile=4x4" -frames:v 1 contact.png
+
+Notes: Change 60 to sample more or fewer frames.
+
+1.5. Inspect audio loudness roughly
+When to use: When a clip sounds too quiet, too loud, or wildly inconsistent.
+Example user instruction: Check if this audio needs normalization.
+ffmpeg -i input.mp4 -af volumedetect -f null /dev/null
+
+Notes: For proper loudness work, use loudnorm later.
+
+1.6. Print metadata only
+When to use: When you need tags, chapter data, and technical metadata without touching the file.
+Example user instruction: Show me the metadata in this file.
+ffprobe -v error -show_entries format_tags -of default=nw=1 input.mp4
+
+Notes: Useful for title, artist, encoder, and similar tags.
+
+2. Cut, trim, join, and remux
+2.1. Trim with stream copy
+When to use: When you want a fast cut and the source and target codecs are compatible.
+Example user instruction: Cut out the middle of this clip without re-encoding.
+ffmpeg -ss 00:00:10 -to 00:00:30 -i input.mp4 -c copy cut.mp4
+
+Notes: Fast, but cut points may land on keyframes. Use re-encode for frame-accurate cuts.
+
+2.2. Trim with re-encoding
+When to use: When you need accurate cuts at exact frames.
+Example user instruction: Make a frame-perfect 20 second segment.
+ffmpeg -ss 00:00:10 -to 00:00:30 -i input.mp4 -c:v libx264 -crf 18 -preset medium -c:a aac
+cut.mp4
+
+Notes: Slower, but precise.
+
+2.3. Remove audio
+When to use: When you want a silent video or are replacing sound later.
+Example user instruction: Export the video without its sound.
+ffmpeg -i input.mp4 -an -c:v copy silent.mp4
+
+Notes: Use -an to drop all audio streams.
+
+2.4. Remove video
+When to use: When you only need the audio track.
+Example user instruction: Extract the sound from this clip.
+ffmpeg -i input.mp4 -vn -c:a copy audio.m4a
+
+Notes: Change the output format if the audio codec needs it.
+
+2.5. Remux MP4 to MKV
+When to use: When you want to change container only, not the media itself.
+Example user instruction: Put this clip into MKV without re-encoding.
+ffmpeg -i input.mp4 -c copy output.mkv
+
+Notes: Good for subtitle-heavy or multi-track files.
+
+2.6. Concatenate same-format clips
+When to use: When several clips share the same codecs and parameters.
+Example user instruction: Join these clips into one file.
+printf "file 'part1.mp4'\nfile 'part2.mp4'\n" > list.txt
+ffmpeg -f concat -safe 0 -i list.txt -c copy joined.mp4
+
+Notes: Use the concat demuxer only when the files are compatible.
+
+2.7. Concatenate mixed clips by re-encoding
+When to use: When sources do not match exactly.
+Example user instruction: Join different clips safely.
+ffmpeg -i part1.mp4 -i part2.mp4 -filter_complex "[0:v][0:a][1:v][1:a]concat=n=2:v=1:a=1[v][a]"
+-map "[v]" -map "[a]" joined.mp4
+
+Notes: This re-encodes, but is more forgiving.
+
+2.8. Split a video into equal pieces
+When to use: When you need chapters, uploads, or batch delivery chunks.
+Example user instruction: Split this video into short pieces.
+ffmpeg -i input.mp4 -c copy -map 0 -f segment -segment_time 60 out_%03d.mp4
+
+Notes: Works best when segment boundaries can snap to keyframes.
+
+3. Convert codecs and control quality
+3.1. H.264 for broad compatibility
+When to use: When you need a safe default for most devices and platforms.
+Example user instruction: Make this video play almost everywhere.
+ffmpeg -i input.mov -c:v libx264 -crf 20 -preset medium -c:a aac output.mp4
+
+Notes: H.264 plus AAC is a dependable delivery combo.
+
+3.2. H.265 for smaller files
+When to use: When storage matters and your devices support it.
+Example user instruction: Shrink this video while keeping decent quality.
+ffmpeg -i input.mp4 -c:v libx265 -crf 24 -preset medium -c:a aac output.mp4
+
+Notes: Smaller files, heavier encode, slower playback on weak devices.
+
+3.3. Constant quality target
+When to use: When you care more about visual quality than exact bitrate.
+
+Example user instruction: Encode this clip at steady quality.
+ffmpeg -i input.mp4 -c:v libx264 -crf 18 -preset slow -c:a aac output.mp4
+
+Notes: Lower CRF usually means higher quality and larger files.
+
+3.4. Target bitrate encode
+When to use: When you need a size budget for upload or delivery.
+Example user instruction: Make this clip fit a bitrate cap.
+ffmpeg -i input.mp4 -c:v libx264 -b:v 2M -maxrate 2M -bufsize 4M -c:a aac output.mp4
+
+Notes: Useful when a platform has strict limits.
+
+3.5. Two-pass encode
+When to use: When you need better quality control at a fixed bitrate.
+Example user instruction: Use a two-pass encode for this video.
+ffmpeg -i input.mp4 -c:v libx264 -b:v 1500k -pass 1 -an -f mp4 /dev/null
+ffmpeg -i input.mp4 -c:v libx264 -b:v 1500k -pass 2 -c:a aac output.mp4
+
+Notes: Worth it for final delivery jobs.
+
+3.6. Convert to VP9 WebM
+When to use: When you want open-web delivery and compatible browsers.
+Example user instruction: Make a web-friendly WebM version.
+ffmpeg -i input.mp4 -c:v libvpx-vp9 -crf 32 -b:v 0 -c:a libopus output.webm
+
+Notes: Great for web, but slower to encode.
+
+3.7. Convert to AV1
+When to use: When compression efficiency matters and encode time is acceptable.
+Example user instruction: Make a modern AV1 version.
+ffmpeg -i input.mp4 -c:v libsvtav1 -crf 35 -preset 6 -c:a libopus output.mkv
+
+Notes: AV1 can be excellent for archives and efficient delivery.
+
+4. Resize, crop, rotate, and format frames
+4.1. Scale to 1080p
+When to use: When you need a standard delivery resolution.
+Example user instruction: Resize this clip to 1080p while keeping the aspect ratio.
+ffmpeg -i input.mp4 -vf scale=-2:1080 -c:a copy output.mp4
+
+Notes: The -2 keeps dimensions divisible by 2.
+
+4.2. Crop to a custom frame
+When to use: When you want to remove borders or focus the frame.
+Example user instruction: Crop this video to the center region.
+ffmpeg -i input.mp4 -vf "crop=1280:720:0:0" output.mp4
+
+Notes: Adjust width, height, and x,y offsets.
+
+4.3. Pad with background color
+When to use: When you need a specific canvas size.
+Example user instruction: Place this video on a square canvas.
+ffmpeg -i input.mp4 -vf "pad=ih:ih:(ow-iw)/2:(oh-ih)/2:black" output.mp4
+
+Notes: Useful for square social formats.
+
+4.4. Rotate the image
+When to use: When the clip was recorded sideways.
+Example user instruction: Fix this sideways recording.
+ffmpeg -i input.mp4 -vf "transpose=1" output.mp4
+
+Notes: Try transpose values 0 to 3 depending on direction.
+
+4.5. Convert landscape to vertical
+When to use: When you want a shorts or reels layout.
+Example user instruction: Turn this clip into a vertical format.
+ffmpeg -i input.mp4 -vf "scale=1080:-2,pad=1080:1920:(ow-iw)/2:(oh-ih)/2:black" output.mp4
+
+Notes: You can also add a blurred background instead of black.
+
+4.6. Create a blurred background version
+When to use: When you want a vertical frame filled gracefully.
+Example user instruction: Make the background blur behind the video.
+ffmpeg -i input.mp4 -filter_complex "[0:v]scale=1080:-2,boxblur=20:1[bg];[0:v]scale=1080:-2[fg];
+[bg][fg]overlay=(W-w)/2:(H-h)/2" output.mp4
+
+Notes: Useful for shorts from horizontal footage.
+
+5. Fix audio, clean noise, and shape loudness
+5.1. Convert to podcast-friendly WAV
+When to use: When another tool needs clean PCM audio first.
+Example user instruction: Extract the audio in a clean WAV format.
+ffmpeg -i input.mp4 -vn -ac 1 -ar 16000 -c:a pcm_s16le audio.wav
+
+Notes: Common prep step for speech tools and OCR pipelines.
+
+5.2. Normalize loudness
+When to use: When audio levels jump around between scenes.
+Example user instruction: Make this clip sound evenly loud.
+ffmpeg -i input.mp4 -af loudnorm=I=-16:LRA=11:TP=-1.5 output.mp4
+
+Notes: Excellent for podcasts, voiceovers, and dialogue cleanup.
+
+5.3. Reduce background hiss
+When to use: When you have soft constant noise in a recording.
+Example user instruction: Clean up this noisy clip.
+ffmpeg -i input.wav -af afftdn cleaned.wav
+
+Notes: Start gentle, then increase strength only if needed.
+
+5.4. Remove silence
+When to use: When pauses are too long and you need tighter pacing.
+Example user instruction: Cut the dead air from this recording.
+ffmpeg -i input.wav -af silenceremove=start_periods=1:start_duration=0.3:start_threshold=-45dB
+output.wav
+
+Notes: Great for rough dialogue cleanup.
+
+5.5. Convert stereo to mono
+When to use: When you need voice-first delivery or speech analysis.
+
+Example user instruction: Make this track mono.
+ffmpeg -i input.mp4 -ac 1 output.mp4
+
+Notes: Mono is often enough for speech and saves space.
+
+5.6. Apply fade in and fade out
+When to use: When you need smoother intros and endings.
+Example user instruction: Fade the audio in and out.
+ffmpeg -i input.mp4 -af "afade=t=in:ss=0:d=2,afade=t=out:st=28:d=2" output.mp4
+
+Notes: Adjust times to match your clip length.
+
+5.7. Resample audio
+When to use: When another platform or tool expects a specific sample rate.
+Example user instruction: Resample this audio to 48 kHz.
+ffmpeg -i input.mp4 -ar 48000 output.wav
+
+Notes: 48 kHz is common for video work.
+
+5.8. Mix two audio sources
+When to use: When you want voice plus music or two tracks together.
+Example user instruction: Blend these two audio files.
+ffmpeg -i voice.wav -i music.wav -filter_complex "[0:a]
+[1:a]amix=inputs=2:duration=first:dropout_transition=3" mixed.wav
+
+Notes: Control music volume separately if needed.
+
+6. Subtitles, captions, and timing
+6.1. Burn subtitles into video
+When to use: When you need subtitles visible on every player.
+Example user instruction: Hardcode this subtitle file into the video.
+ffmpeg -i input.mp4 -vf "subtitles=captions.srt" -c:a copy output.mp4
+
+Notes: Burned subtitles cannot be turned off.
+
+6.2. Mux soft subtitles
+When to use: When you want subtitles that can be toggled on and off.
+Example user instruction: Add this subtitle file without burning it in.
+ffmpeg -i input.mp4 -i captions.srt -c copy -c:s mov_text output.mp4
+
+Notes: MP4 prefers mov_text. MKV can store more subtitle formats.
+
+6.3. Extract subtitles from a file
+When to use: When the subtitle track already exists in the container.
+Example user instruction: Pull the subtitle track out of this video.
+ffmpeg -i input.mkv -map 0:s:0 subs.srt
+
+Notes: May need conversion depending on the subtitle codec.
+
+6.4. Shift subtitles forward
+When to use: When subtitle timing is late compared to the dialogue.
+Example user instruction: Move all subtitles forward by 2 seconds.
+ffmpeg -itsoffset 2 -i captions.srt shifted.srt
+
+Notes: For complex subtitle edits, tools like pysubs2 can be easier.
+
+6.5. Convert subtitles to ASS for styling
+When to use: When you need better visual styling for captions.
+Example user instruction: Make these captions stylable.
+ffmpeg -i captions.srt captions.ass
+
+Notes: ASS is strong for fonts, colors, outlines, and placement.
+
+6.6. Force subtitles into a specified language track
+When to use: When a file has many subtitle streams and you need a specific one.
+Example user instruction: Select the English subtitle track only.
+ffmpeg -i input.mkv -map 0:v -map 0:a -map 0:s:m:language:eng -c copy output.mkv
+
+Notes: Language tags help keep multi-language files organized.
+
+7. Motion graphics, overlays, and visual tricks
+7.1. Add a logo watermark
+When to use: When branding or ownership marks are needed.
+Example user instruction: Place my logo in the corner of the video.
+ffmpeg -i input.mp4 -i logo.png -filter_complex "overlay=W-w-20:20" output.mp4
+
+Notes: Use transparency in the logo PNG for cleaner placement.
+
+7.2. Add scrolling or static text
+When to use: When you need titles, labels, or warnings.
+Example user instruction: Write a title across the video.
+ffmpeg -i input.mp4 -vf "drawtext=text='Project Nyaya':fontcolor=white:fontsize=48:x=50:y=50"
+output.mp4
+
+Notes: Escape special characters carefully.
+
+7.3. Fade text in and out
+When to use: When titles should appear gently instead of popping in.
+Example user instruction: Make the title appear smoothly.
+ffmpeg -i input.mp4 -vf
+"drawtext=text='Intro':fontcolor=white:fontsize=48:x=50:y=50:enable='between(t,1,4)'" output.mp4
+
+Notes: Combine with fade filters for more polish.
+
+7.4. Blur a region
+When to use: When you need to hide faces, names, or sensitive info.
+Example user instruction: Blur the top-right corner of the clip.
+ffmpeg -i input.mp4 -vf "crop=200:100:W-220:20,boxblur=10:1,overlay=W-220:20" output.mp4
+
+Notes: For censorship, be precise with coordinates.
+
+7.5. Create picture in picture
+When to use: When you want a webcam over gameplay or a preview over a tutorial.
+Example user instruction: Put one video inside another.
+ffmpeg -i background.mp4 -i inset.mp4 -filter_complex "[1:v]scale=320:-1[small];[0:v]
+[small]overlay=20:20" output.mp4
+
+Notes: A classic tutorial and reaction-video pattern.
+
+7.6. Fade between two clips
+When to use: When you need a smooth transition.
+Example user instruction: Crossfade these two videos.
+ffmpeg -i a.mp4 -i b.mp4 -filter_complex "[0:v][1:v]xfade=transition=fade:duration=1:offset=4"
+output.mp4
+
+Notes: Audio can be crossfaded too with acrossfade.
+
+7.7. Side by side comparison
+When to use: When you want before and after in one frame.
+Example user instruction: Show two clips side by side.
+ffmpeg -i left.mp4 -i right.mp4 -filter_complex "[0:v]scale=iw/2:-1[left];[1:v]scale=iw/2:1[right];[left][right]hstack" compare.mp4
+
+Notes: Great for quality comparisons.
+
+7.8. Reverse a clip
+When to use: When you want a rewind effect or special transition.
+Example user instruction: Play this clip backward.
+ffmpeg -i input.mp4 -vf reverse -af areverse output.mp4
+
+Notes: Sometimes fun, sometimes genuinely useful for analysis.
+
+8. Slideshows, thumbnails, GIFs, and social formats
+8.1. Make a slideshow from images
+When to use: When you have still images and want a timed video.
+Example user instruction: Turn these images into a video.
+ffmpeg -framerate 1/3 -i img_%03d.jpg -c:v libx264 -r 30 -pix_fmt yuv420p slideshow.mp4
+
+Notes: Each image lasts 3 seconds in this example.
+
+8.2. Add smooth zoom to stills
+When to use: When still images need life and rhythm.
+Example user instruction: Make the slideshow feel animated.
+ffmpeg -loop 1 -i image.jpg -vf "zoompan=z='min(zoom+0.0015,1.5)':d=125" -t 5 output.mp4
+
+Notes: Useful for travel, documentary, and archive clips.
+
+8.3. Create a GIF preview
+When to use: When you need a quick shareable animation.
+Example user instruction: Make a GIF from this short clip.
+ffmpeg -i input.mp4 -vf "fps=12,scale=480:-1:flags=lanczos" output.gif
+
+Notes: GIFs are huge, so keep clips short.
+
+8.4. Create a high quality MP4 preview
+When to use: When a GIF would be too heavy.
+Example user instruction: Make a lightweight preview video instead of a GIF.
+ffmpeg -i input.mp4 -c:v libx264 -crf 28 -preset veryfast -an preview.mp4
+
+Notes: Usually better than GIF for social sharing.
+
+8.5. Make a thumbnail at a specific time
+When to use: When you need a cover image or preview frame.
+
+Example user instruction: Grab a still image from the middle of the video.
+ffmpeg -ss 00:00:10 -i input.mp4 -frames:v 1 thumb.jpg
+
+Notes: Change the seek time for a more representative frame.
+
+8.6. Create a sprite sheet
+When to use: When you want a grid of many frames in one image.
+Example user instruction: Build a frame contact sheet.
+ffmpeg -i input.mp4 -vf fps=1,scale=240:-1,tile=4x4 sheet.png
+
+Notes: Useful for previews, QA, and browsing footage.
+
+9. OCR, subtitles from speech, and text pipelines
+9.1. Extract frames for OCR
+When to use: When text appears on screen and you want to read it later with OCR.
+Example user instruction: Pull frames every second for text detection.
+ffmpeg -i input.mp4 -vf fps=1 frames/frame_%05d.png
+
+Notes: Adjust fps to match how often the text changes.
+
+9.2. Pre-clean frames before OCR
+When to use: When OCR struggles with low contrast or noisy text.
+Example user instruction: Make the text easier to read before OCR.
+ffmpeg -i input.mp4 -vf "scale=iw*2:ih*2,eq=contrast=1.4:brightness=0.03:saturation=0"
+cleaned.mp4
+
+Notes: Often helpful before feeding frames into OCR tools.
+
+9.3. Extract speech for transcription
+When to use: When you want subtitles or a transcript from spoken audio.
+Example user instruction: Prepare audio for speech recognition.
+ffmpeg -i input.mp4 -vn -ac 1 -ar 16000 -c:a pcm_s16le speech.wav
+
+Notes: A common prep step for Whisper or similar tools.
+
+9.4. Capture on-screen text with subtitles later
+When to use: When OCR text should become captions or annotations.
+Example user instruction: Build a text extraction workflow from video frames.
+ffmpeg -i input.mp4 -vf fps=2 ocr/frame_%04d.png
+
+Notes: Combine with Tesseract, RapidOCR, or your own parser.
+
+9.5. Create caption timing from scene chunks
+When to use: When OCR or speech output needs rough segment timing.
+Example user instruction: Split the video into timed chunks for transcription.
+ffmpeg -i input.mp4 -f segment -segment_time 10 -reset_timestamps 1 chunk_%03d.mp4
+
+Notes: Chunked processing makes large jobs easier to automate.
+
+9.6. Generate searchable media assets
+When to use: When you want a pipeline that supports search and indexing.
+Example user instruction: Prepare this clip for OCR and transcript indexing.
+ffmpeg -i input.mp4 -vf fps=1 -q:v 2 index_frames/frame_%05d.jpg
+
+Notes: Low-complexity frames are easier to process in batches.
+
+10. Automation, streaming, and batch work
+10.1. Batch convert a folder
+When to use: When you need to repeat the same encode on many files.
+Example user instruction: Convert all clips in this folder.
+for f in *.mov; do ffmpeg -i "$f" -c:v libx264 -crf 20 -c:a aac "${f%.mov}.mp4"; done
+
+Notes: Great for Termux scripts and automations.
+
+10.2. Create a watch-folder pipeline
+When to use: When new files arrive regularly and you want them processed automatically.
+Example user instruction: Keep converting new videos as they appear.
+while true; do for f in incoming/*; do [ -e "$f" ] || break; ffmpeg -i "$f" -c copy "done/$
+{f##*/}"; mv "$f" processed/; done; sleep 5; done
+
+Notes: Wrap this in a proper script for real use.
+
+10.3. Stream to RTMP
+When to use: When you want to publish live to a streaming server.
+Example user instruction: Send this feed to a streaming endpoint.
+ffmpeg -re -i input.mp4 -c copy -f flv rtmp://server/app/streamkey
+
+Notes: Replace the URL with your streaming service address.
+
+10.4. Create HLS segments
+When to use: When you need browser-friendly segmented playback.
+Example user instruction: Make this video into streaming chunks.
+ffmpeg -i input.mp4 -codec copy -start_number 0 -hls_time 6 -hls_list_size 0 -f hls index.m3u8
+
+Notes: Useful for adaptive streaming pipelines.
+
+10.5. Make MP4 web-ready
+When to use: When a file should start playing before it fully downloads.
+Example user instruction: Optimize this MP4 for web playback.
+ffmpeg -i input.mp4 -c copy -movflags +faststart web.mp4
+
+Notes: This moves metadata to the front of the file.
+
+10.6. Log and debug a failing command
+When to use: When FFmpeg errors out and you need more detail.
+Example user instruction: Tell me why this encode failed.
+ffmpeg -v verbose -report -i input.mp4 output.mp4
+
+Notes: The report file is gold when troubleshooting weird failures.
+
+Closing notes
+Good FFmpeg work is mostly habit. Probe first, choose the right stream map, separate copy-only remuxes
+from re-encodes, and keep a few trusted recipes nearby. For the hardest jobs, build a pipeline in small steps
+and inspect each stage instead of trying to win the whole dragon in one swing.
+Most useful companion tools: ffprobe, Tesseract or RapidOCR, pysubs2, Python, and a text editor that lets
+you tweak scripts quickly.
+
+

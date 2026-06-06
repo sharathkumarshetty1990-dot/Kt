@@ -1,0 +1,4 @@
+backend/__pycache__/
+backend/test_reports/
+.env
+*.pyc

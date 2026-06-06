@@ -1,0 +1,368 @@
+[
+  {
+    "id": "beat_violent_shake",
+    "category": "beat_sync",
+    "command": "do best sync and on every beat of the uploaded audio let the video frame shake violently",
+    "expect_plan": {
+      "required_analysis": ["beat_track"]
+    }
+  },
+  {
+    "id": "beat_flash_zoom",
+    "category": "beat_sync",
+    "command": "make the video pulse brighter and zoom slightly on every beat of the uploaded audio"
+  },
+  {
+    "id": "beat_cut_jump_cuts",
+    "category": "beat_sync",
+    "command": "make hard jump cuts on every beat of the uploaded audio",
+    "expect_plan": {
+      "required_analysis": ["beat_track"],
+      "required_special": ["beat_cut"]
+    }
+  },
+  {
+    "id": "energy_glitch",
+    "category": "analysis",
+    "command": "glitch harder as the music gets louder and flash on the loudest moments",
+    "expect_plan": {
+      "required_analysis": ["rms_energy"]
+    }
+  },
+  {
+    "id": "silence_remove",
+    "category": "special",
+    "command": "remove all silences and normalize the audio"
+  },
+  {
+    "id": "black_screen_removal",
+    "category": "special",
+    "command": "remove all black screens and blank frames",
+    "expect_plan": {
+      "required_special": ["black_remove"]
+    }
+  },
+  {
+    "id": "freeze_frame_removal",
+    "category": "special",
+    "command": "remove all frozen frames and stuck sections",
+    "expect_plan": {
+      "required_special": ["freeze_remove"]
+    }
+  },
+  {
+    "id": "duplicate_frame_removal",
+    "category": "special",
+    "command": "remove all duplicate and repeated frames",
+    "expect_plan": {
+      "required_special": ["dedupe_frames"]
+    }
+  },
+  {
+    "id": "crop_black_borders",
+    "category": "special",
+    "command": "remove the black bars around the video",
+    "expect_plan": {
+      "required_special": ["crop_borders"],
+      "forbidden_substrings": ["pad=1920:1080", "letterbox_239"]
+    }
+  },
+  {
+    "id": "reverse",
+    "category": "special",
+    "command": "reverse the entire clip including audio"
+  },
+  {
+    "id": "boomerang_loop",
+    "category": "special",
+    "command": "make this a boomerang ping-pong loop",
+    "expect_plan": {
+      "required_special": ["boomerang"],
+      "forbidden_special": ["reverse", "end_reverse"]
+    }
+  },
+  {
+    "id": "stabilize_fisheye",
+    "category": "special",
+    "command": "make it look like a fisheye action camera and stabilize the shaky motion"
+  },
+  {
+    "id": "pitch_cave",
+    "category": "audio",
+    "command": "make the audio sound like a cave echo and lower the pitch three semitones",
+    "expect_plan": {
+      "required_special": ["pitch_shift"],
+      "required_substrings": ["aecho"],
+      "forbidden_substrings": ["rubberband=tempo=1.0:pitch=0.75"]
+    }
+  },
+  {
+    "id": "telephone_audio",
+    "category": "audio",
+    "command": "make the audio sound like an old telephone call and normalize speech volume"
+  },
+  {
+    "id": "audio_denoise_dialogue",
+    "category": "audio",
+    "command": "remove background noise and make the dialogue clearer",
+    "expect_plan": {
+      "required_substrings": ["afftdn", "speechnorm"]
+    }
+  },
+  {
+    "id": "replace_uploaded_audio",
+    "category": "audio",
+    "command": "replace the original audio with the uploaded music track",
+    "expect_plan": {
+      "required_special": ["replace_audio"]
+    }
+  },
+  {
+    "id": "mix_uploaded_background_music",
+    "category": "audio",
+    "command": "add the uploaded audio as background music under the dialogue and duck it behind the voice",
+    "expect_plan": {
+      "required_special": ["mix_uploaded_audio"],
+      "forbidden_special": ["replace_audio"]
+    }
+  },
+  {
+    "id": "underwater",
+    "category": "look",
+    "command": "make it look underwater with wavy distortion and muffled audio"
+  },
+  {
+    "id": "vhs",
+    "category": "look",
+    "command": "make it look like a damaged VHS tape from the 90s with scanlines and color bleed"
+  },
+  {
+    "id": "comic_halftone",
+    "category": "look",
+    "command": "make it look like a comic book halftone with thick outlines",
+    "expect_plan": {
+      "required_substrings": ["pixelize", "edgedetect"]
+    }
+  },
+  {
+    "id": "security_camera",
+    "category": "look",
+    "command": "make it look like security camera footage with timestamp text scanlines and low saturation",
+    "expect_plan": {
+      "required_substrings": ["drawgrid", "drawtext"],
+      "required_any_substrings": [["hue=s=0.", "saturation=0."]]
+    }
+  },
+  {
+    "id": "dream_memory",
+    "category": "look",
+    "command": "make it feel like a memory fading, warm, dreamlike, slow, with reverb",
+    "expect_duration_min": 7.0,
+    "expect_duration_max": 9.5,
+    "expect_plan": {
+      "required_special": ["speed_ramp"]
+    }
+  },
+  {
+    "id": "cinematic_letterbox",
+    "category": "format",
+    "command": "make it cinematic with teal shadows, orange highlights, subtle grain, vignette, and 2.39 letterbox"
+  },
+  {
+    "id": "vertical_tiktok",
+    "category": "format",
+    "command": "turn it into a vertical TikTok with captions style text and bass boost",
+    "expect": { "width": 1080, "height": 1920 }
+  },
+  {
+    "id": "vertical_blurred_background",
+    "category": "format",
+    "command": "make it vertical for reels with a blurred background instead of cropping the subject",
+    "expect": { "width": 1080, "height": 1920 },
+    "expect_plan": {
+      "required_special": ["blur_background"]
+    }
+  },
+  {
+    "id": "instagram_portrait",
+    "category": "format",
+    "command": "export this as Instagram portrait 4:5 with warm color grade",
+    "expect": { "width": 1080, "height": 1350 }
+  },
+  {
+    "id": "square_export",
+    "category": "format",
+    "command": "make this a square 1:1 social post with sharp contrast",
+    "expect": { "width": 1080, "height": 1080 }
+  },
+  {
+    "id": "sharp_4k",
+    "category": "format",
+    "command": "export this as sharp 4k UHD while preserving the edit",
+    "expect": { "width": 3840, "height": 2160 },
+    "slow": true
+  },
+  {
+    "id": "subtitle_quotes",
+    "category": "text",
+    "command": "add a big subtitle that says Hello: it's working and fade it in"
+  },
+  {
+    "id": "auto_speech_captions",
+    "category": "text",
+    "command": "generate captions from the speech and burn them at the bottom",
+    "expect_plan": {
+      "required_special": ["auto_captions"]
+    }
+  },
+  {
+    "id": "text_rollout",
+    "category": "text",
+    "command": "fade in the text Hello World at first 3 seconds and let the text disappear with a rolling out animation",
+    "expect_plan": {
+      "required_substrings": ["(t-3)*220"],
+      "forbidden_substrings": ["drawbox", "y*(t-3)", ",0):"]
+    }
+  },
+  {
+    "id": "privacy_blur",
+    "category": "edge",
+    "command": "blur the center like a privacy blur and darken everything outside it"
+  },
+  {
+    "id": "ocr_text_redaction",
+    "category": "edge",
+    "command": "blur every visible license plate number and screen text",
+    "expect_plan": {
+      "required_special": ["ocr_redact"]
+    }
+  },
+  {
+    "id": "picture_in_picture",
+    "category": "edge",
+    "command": "create a picture in picture duplicate of the video in the top right corner",
+    "expect_plan": {
+      "required_special": ["picture_in_picture"],
+      "forbidden_substrings": ["split=2", "overlay=", "hstack"]
+    }
+  },
+  {
+    "id": "green_screen",
+    "category": "edge",
+    "command": "remove green screen background and replace it with black",
+    "expect_plan": {
+      "required_special": ["chroma_key"],
+      "forbidden_substrings": ["chromakey="]
+    }
+  },
+  {
+    "id": "red_isolation",
+    "category": "edge",
+    "command": "make everything black and white except red tones"
+  },
+  {
+    "id": "custom_lut_glow",
+    "category": "edge",
+    "command": "apply a custom cinematic cube LUT named teal_orange.cube and blend a soft glow over the footage"
+  },
+  {
+    "id": "strobe",
+    "category": "edge",
+    "command": "add harsh strobe light flashes every half second",
+    "expect_plan": {
+      "required_substrings": ["lt(mod(t,0.5),0.04)"],
+      "forbidden_substrings": ["lt(mod(t,0.5),0.25)"]
+    }
+  },
+  {
+    "id": "speed_pitch",
+    "category": "time",
+    "command": "make the whole clip 25 percent faster but keep audio pitch natural",
+    "expect_duration_min": 4.4,
+    "expect_duration_max": 5.2,
+    "expect_plan": {
+      "required_special": ["speed_ramp"],
+      "forbidden_substrings": ["setpts=0.8*PTS", "rubberband=tempo=1.25"]
+    }
+  },
+  {
+    "id": "scene_highlight_montage",
+    "category": "timeline",
+    "command": "create a fast highlight reel from the best moments",
+    "expect_plan": {
+      "required_special": ["scene_montage"]
+    }
+  },
+  {
+    "id": "energy_hype_montage",
+    "category": "timeline",
+    "command": "create a hype reel from the loudest moments in the music",
+    "expect_plan": {
+      "required_analysis": ["rms_energy"],
+      "required_special": ["energy_montage"]
+    }
+  },
+  {
+    "id": "visual_stress_no_audio_sync",
+    "category": "stress",
+    "command": "create a dramatic final sequence: start with a cinematic teal orange grade, add subtle film grain, add a white flash every second, make the final 1.5 seconds reverse back like a rewind ending, but do it without relying on audio synchronization",
+    "expect_plan": {
+      "required_special": ["end_reverse"],
+      "forbidden_special": ["pitch_shift", "reverse"],
+      "forbidden_keys": ["analysis", "audio_filters"],
+      "forbidden_substrings": ["drawbox=x=0:y=0:w=iw:h=ih:color=white@0.9:t=fill"]
+    },
+    "slow": true
+  },
+  {
+    "id": "old_film",
+    "category": "stress",
+    "command": "make it look like old damaged 16mm film with scratches dust flicker and gate weave",
+    "expect_plan": {
+      "required_special": ["film_damage"]
+    },
+    "slow": true
+  },
+  {
+    "id": "adversarial_lower_third_punctuation",
+    "category": "adversarial",
+    "command": "add a lower third caption that says Dr. Rao: we're live, don't blink and fade it out after four seconds"
+  },
+  {
+    "id": "adversarial_blue_square_bass",
+    "category": "adversarial",
+    "command": "make everything black and white except blue lights, turn it into a square 1:1 post, and add a clean bass boost",
+    "expect": { "width": 1080, "height": 1080 }
+  },
+  {
+    "id": "adversarial_face_license_blur",
+    "category": "adversarial",
+    "command": "blur faces and license plates for privacy, then darken the outside edges",
+    "expect_plan": {
+      "required_special": ["face_privacy_blur", "ocr_redact"]
+    }
+  },
+  {
+    "id": "adversarial_split_screen_mirror",
+    "category": "adversarial",
+    "command": "create a split screen mirrored duplicate, left side normal and right side flipped with a thin white divider",
+    "expect_plan": {
+      "required_special": ["split_screen_mirror"],
+      "forbidden_substrings": ["split=2", "hstack", "[0:v]"]
+    }
+  },
+  {
+    "id": "adversarial_impact_onset_glitch",
+    "category": "adversarial",
+    "command": "on every sharp impact in the audio, add a quick glitch burst, chromatic split, and tiny white flash",
+    "expect_plan": {
+      "required_analysis": ["onset_detect"]
+    }
+  },
+  {
+    "id": "adversarial_neon_caption_vertical",
+    "category": "adversarial",
+    "command": "make it vertical for reels with a neon cyberpunk grade and a bottom caption saying WATCH THIS",
+    "expect": { "width": 1080, "height": 1920 }
+  }
+]

@@ -1,0 +1,4 @@
+Flask>=3.0,<4
+gunicorn>=22,<24
+librosa>=0.10,<1
+numpy>=1.26
